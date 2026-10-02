@@ -20,7 +20,7 @@ p=R/'reports/twitter.tex';preamble=p.read_text().split(r'\begin{document}',1)[0]
 body=r'''
 \begin{document}
 \twocolumn[{
-\begin{center}{\LARGE\bfseries\sffamily ロボコンの通信を、他チームの負荷と一緒に測る\par}
+\begin{center}{\LARGE\bfseries\sffamily 他チーム通信負荷下におけるロボコン無線通信の評価\par}
 \vspace{1mm}{\normalsize 同一・隣接・分離チャネル、帯域幅、Wi-FiとBluetoothの実測\par}
 \vspace{.5mm}{\normalsize 貝淵蒼馬\par}\end{center}
 \noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
@@ -28,13 +28,13 @@ body=r'''
 100 Hz UDPの応答とESP32-C5の実測I/Qから、帯域の重なりを青〜緑で示す。
 今回の配置では他チーム負荷により、同一・隣接チャネルで遅延と期限超過が増えた。
 通常Wi-Fiの周期負荷、外部BLEの広告・通知も比較し、画像と通信性能の両方から考察する。}}\vspace{2mm}}]
-\section{測りたいのは「他チームも通信中」}
+\section{実験目的と通信構成}
 スマートフォンからの指令とロボットからの映像・点群は、同じAPや帯域を共有する。
 操縦だけが動く構成では、大容量通信中の他チームの影響を十分に再現できない。
 今回は自チームのUDP指令とTCP模擬データを\textbf{STA→AP→STA}へ通し、独立した他チームにもTCPを流した。
 スマートフォン、ROS 2、実映像やモータは使用していない。
 '''+fig('two-team-setup-compact','自チームは2端末間をAPが中継。他チームは独立APの飽和TCP通信。')+r'''
-\section{条件と、数値の読み方}
+\section{実験条件と評価指標}
 観測PC（Intel BE200）はCh6・20 MHz AP、ESP32-3はコントローラー役、ラップトップ2（MT7921E）はロボット役。
 ラップトップ1（Intel AX210）から有線でインターネットを共有した。
 他チームはESP32-2 AP→ESP32-1 STAで、Ch6・Ch7・Ch11、Ch1の20/40 MHzを比較する。
@@ -46,32 +46,32 @@ ESP32-1/2間75 cm、C5から両ボードへ約40 cm・90 cm、観測PCとラッ�
 p99は戻った応答の99パーセンタイル。\textbf{20 ms期限超過には欠落も含む}。
 20 msは比較用の目標で、ロボットの安全限界を示す値ではない。
 \newpage
-\section{両チームに負荷をかけた結果}
+\section{両チーム通信負荷下の評価結果}
 '''+table(keys,'自チーム大容量通信中の操縦応答。各9,000送信の統合値。期限は20 ms。')+r'''
 他チームを待機から負荷へ変えた時、統合p99は同一Ch6で'''+val('team-heavy-ch6-w20-b0')+'→'+val('team-heavy-ch6-w20-b1')+r''' ms、隣接Ch7で'''+val('team-heavy-ch7-w20-b0')+'→'+val('team-heavy-ch7-w20-b1')+r''' msとなった。
 分離Ch11は'''+val('team-heavy-ch11-w20-b0')+'→'+val('team-heavy-ch11-w20-b1')+r''' msで、今回の配置では増分が小さかった。
 20 ms期限超過も同一・隣接で増えた。欠落率だけなら逆方向に見える条件があり、\textbf{「届く率」と「間に合う率」を分ける必要がある}。
 
-\subsection{まず単独時の限界を見つける}
+\subsection{単独通信時の基準性能}
 操縦のみ・他待機でもp99は117--120 ms、期限超過は47--49\%だった。
 この実験系は既に20 ms目標を満たさない。AP、端末処理、無線のどこで遅れるかは未分離であり、全遅延を他チームの干渉へ帰属しない。
 RTTを半分にして片道値とみなすこともできない。
 
-\subsection{要求Mbpsより、実際に届いた量}
+\subsection{要求通信量と実受信量}
 TCP模擬データは192 KiBを10 Hzで送ろうとする、要求15.73 Mbpsの負荷である。
 実受信は今回約0.6--1.6 Mbpsにとどまり、要求量を達成していない。
 送信側の逆圧がかかる飽和状態を測っており、15.73 Mbpsの映像を再現したとは言わない。
 他チームもチャネル別に約0.4--4.7 Mbpsと異なる。
 自チームのデータはAPを通るため無線を2回通過する。Mbpsを揃えても空中時間は同じにならない。
 
-\subsection{ロボコンへ持ち帰る問い}
+\subsection{ロボコンへの適用上の示唆}
 自分のカメラを動かし、隣のチームにも実際の通信を流してもらった時、指令の期限は守れるか。
 その比較を\textbf{転送速度・RTT・期限超過・欠落}の組で行う。
 接続表示と平均Mbpsだけでは、今回の遅い応答を見抜けない。
 \clearpage
 \twocolumn[{
 '''+fig('two-team-blue-green-compact','自チームはCh6・20 MHzで大容量TCP＋操縦UDP。各画像は1反復目、p99注記は3反復統合。白破線は自チームの名目帯域。色尺度・ゲイン共通。',r'.98\textwidth')+r'''}]
-\section{チャネル番号より、帯域の重なり}
+\section{チャネル配置と帯域の重複}
 Ch6の2437 MHzとCh7の2442 MHzは5 MHzしか離れない。
 20 MHz幅で番号を1つずらすと広く重なり、画像でも他チームの帯域が主リンクへ重なる。
 Ch11の2462 MHzへ離すと、強い成分の位置が高周波側へ分かれる。
@@ -84,12 +84,12 @@ Ch11の2462 MHzへ離すと、強い成分の位置が高周波側へ分かれ�
 20→40 MHzでp99は'''+val('team-heavy-ch1-w20-b1')+'→'+val('team-heavy-ch1-w40-b1')+r''' ms、期限超過は'''+val('team-heavy-ch1-w20-b1','deadline20_pct')+'→'+val('team-heavy-ch1-w40-b1','deadline20_pct')+r'''\%だった。
 今回はp99の明確な悪化を示さず、「広いほど必ず悪い」とは言えない。
 接続幅の拡大と、全パケットが40 MHzで送信されることも別である。
-\subsection{画像の色は通信性能ではない}
+\subsection{SDR可視化の解釈と限界}
 {\small C5：80 MS/s・帯域48 MHz・ゲイン20・FFT1024。
 各行は約205 $\mu$s、名目RF観測時間比は約0.4\%。
 dBFSは未校正で感度も均一ではない。色を占有率や欠落率へ換算しない。外来信号も含む。}
 \newpage
-\section{意図的な周期負荷を加える}
+\section{周期的Wi-Fi負荷による評価}
 所有する実験リンクへ、通常のWi-Fi TCPを2 s ON・2 s OFFで流した。
 自チームの大容量通信は維持し、他チームCh6・Ch7・Ch11で各3反復測った。
 ON/OFF操作と実受信量を残し、単に「緑が多い」から性能を推測しない。
@@ -101,7 +101,7 @@ ON/OFF時刻も個々のRF送信時刻ではないため、マイクロ秒の因
 \clearpage
 \twocolumn[{
 '''+fig('ble-narrow-blue-green','BLE比較のCh6帯域上側2450--2470 MHzを拡大。通知時に短い狭帯域成分が見える。各画像は1反復目、色尺度はこの図内で共通の$-90$--$-60$ dBFS。前ページの同じ色とは電力が異なる。',r'.98\textwidth')+r'''}]
-\section{Bluetoothも実通信と合わせて測る}
+\section{Bluetooth LE通信との共存評価}
 ESP32-1/2を独立したBLEリンクへ切り替え、Wi-Fi側の端末は同じ構成を保った。
 BLE停止、20 ms設定の非接続広告、BLE 1MのGATT通知を、自チーム大容量通信あり・なしで各3反復比較した。
 広告は受信機の復号数、通知は実受信bytes、MTU・接続間隔も記録した。
@@ -111,7 +111,7 @@ Wi-Fi大容量通信中のp99は、BLE停止'''+val('ble-heavy-off')+r''' ms、�
 BLE通知の実受信量はWi-Fi待機'''+mean('ble-off-data','delivered_other_mbps')+r''' Mbps、Wi-Fi負荷'''+mean('ble-heavy-data','delivered_other_mbps')+r''' Mbps（試行平均）。
 片方の方式だけでなく、両リンクの通信量と操縦の期限超過を確認する。今回はBLE追加でWi-Fiのp99が大幅に増える結果ではなく、BLE通知の到達量の変化が比較の手掛かりになった。
 \newpage
-\section{細い信号が見えれば、何が分かるか}
+\section{狭帯域成分の観測と解釈}
 BLEの広告は2402・2426・2480 MHz、接続通信はデータチャネルを使う\cite{ble}。
 細い成分は広帯域Wi-Fiとの違いを観察する手掛かりになる。
 ただしC5は短い取得を間欠的に行うため、全パケットやホッピングの連続軌跡を捕らえたわけではない。
@@ -122,7 +122,7 @@ BLEの広告は2402・2426・2480 MHz、接続通信はデータチャネルを�
 通知の負荷、端末、位置、Bluetooth方式が変われば結果も変わる。
 今回はClassic、音声、BLE 2M、距離・向き・移動の掃引は未測定である。
 
-\section{会場で比較する時の手順}
+\section{競技会場における評価手順}
 \begin{enumerate}
 \item 操縦だけで期限超過を測り、まず主リンクの基準を作る。
 \item 自分の映像・点群を流し、要求量と実到達量を分ける。
@@ -153,9 +153,9 @@ abstract=r'''\begin{abstract}
 \end{abstract}'''
 a=t.index(r'\begin{abstract}');b=t.index(r'\end{abstract}',a)+len(r'\end{abstract}');t=t[:a]+abstract+t[b:]
 # These macros reuse the old supplemental values; leave their contents intact.
-pos=t.index(r'\section{目的：操縦通信にとっての無線品質}')
+pos=t.index(r'\section{操縦通信の無線品質評価}')
 full=marker+r'''
-\section{主実験：両チームが通信するロボコンの構成}
+\section{主実験の通信構成}
 本稿の主実験は、スマートフォンとロボットPCがルーターを通して指令・映像・点群を送る状況に近づけるため、UDPとTCPをいずれもSTA→AP→STAへ通した。自チームは観測PC（Intel BE200）をCh6・20 MHz AP、ESP32-3をコントローラー役、ラップトップ2（MT7921E）をロボットPC役とする。他チームはESP32-2 AP→ESP32-1 STAの独立した飽和TCP通信である。ラップトップ1（Intel AX210）のインターネット共有は有線で維持した。
 \plot{../two-team/two-team-setup}{1}{主実験の構成。自チームの指令と大容量模擬データはAPによる無線中継を通る。}
 実スマートフォン、ROS 2/DDS、実画像、点群内容、モーターは使っていない。100 Hz・64 byteのUDPを反射し、ESP32-3の同じ1 $\mu$s刻み時計で予定送信、実送信、応答時刻を記録する。RTTはアプリケーション往復時間で、片道遅延や制御応答ではない。3,000送信後に1秒の猶予を設け、返らなかった応答を欠落とする。p99は届いた応答だけ、20 ms期限超過は欠落も含む。20 msは比較用目標で安全停止のしきい値ではない。
@@ -166,7 +166,7 @@ ESP32-1/2間75 cm、C5から両ボードへ約40 cm・90 cm、観測PCとラッ�
 
 C5は80 MS/s、16,380 I/Q、48 MHzアナログ帯域、手動ゲイン20、FFT1024、DC除去とHann窓を使用した。全取得と時刻ダンプのCRC32を照合した。LOは2442 MHz、Ch1の幅比較だけ2427 MHz。dBFSは未校正で、RF観測時間比は約0.4\%。ESP時計とホストのUART開始時計は近似的に対応づけるため、パケット単位のI/Qとの一致判定には使わない。
 
-\section{同一・隣接・分離：両チーム負荷の結果}
+\section{同一・隣接・分離チャネルの比較結果}
 \begin{table}[htbp]\centering\small\caption{両チーム比較。各条件3反復9,000送信。自TCP・他TCPは各試行実受信Mbpsの範囲。期限は20 ms。}\begin{tabular}{llrrrrr}\toprule 自負荷 & 他条件 & p99 ms & 超過\% & 欠落\% & 自TCP & 他TCP\\\midrule
 '''
 for k,v in S.items():
@@ -178,11 +178,11 @@ full+=r'''\bottomrule\end{tabular}\end{table}
 
 Ch6とCh7の中心差は5 MHzで20 MHz幅の通信は大きく重なる。画像で重なる領域と、Ch11で分かれる領域を見られる。ただし同一Ch6が今回最も遅く、部分重複がいつでも最悪とは言えない。同一チャネルの送信待ち、部分重複の受信妨害、RF再送、APや端末の処理は候補になる\cite{ciscoRF}が、今回の測定はそれらを原因分離していない。他チームの受信量もCh6約2.5--4.7、Ch7約2.3--3.8、Ch11約1.0--1.3 Mbpsと異なり、等しい空中時間の周波数比較ではない。
 
-\subsection{基準が悪いと、干渉だけでは説明できない}
+\subsection{単独通信時の基準性能と干渉評価}
 操縦のみ・他待機でもp99は117--120 ms、20 ms期限超過は47--49\%であり、この系は既に目標を満たさない。自チーム模擬TCPは要求15.73 Mbpsに対して約0.6--1.6 Mbpsしか到達していない。これは今回の構成の処理・伝送限界を含む値で、競技用ルーターやPC同士のROS 2の上限を示すものではない。他チームの効果は同じ自負荷・他チャネルの待機との差として論じ、全遅延を干渉へ帰属しない。ユーザーが使う実システムでは、まず単独で期限を満たす基準を作り、双方が実負荷を流した時の差を見る手順が有用である。
 \plot{../two-team/two-team-interaction}{1}{各反復のp99と統合期限超過。自負荷なし・ありを分け、他負荷の効果と反復変動を確認する。}
 
-\section{帯域幅：スペクトルの拡大と操縦性能は別に確認する}
+\section{チャネル幅と操縦通信性能}
 \plot{../two-team/two-team-width}{1}{他チームCh1の20/40 MHz。クライアントの接続幅と副チャネルを読み出した。}
 Ch1の20 MHzとCh6は名目帯域が分かれるが、上側副チャネルを加えた40 MHzはCh6へ重なる。主実験の統合p99は20 MHz '''+val('team-heavy-ch1-w20-b1')+r''' ms、40 MHz '''+val('team-heavy-ch1-w40-b1')+r''' ms、期限超過はそれぞれ'''+val('team-heavy-ch1-w20-b1','deadline20_pct')+'\%、'+val('team-heavy-ch1-w40-b1','deadline20_pct')+r'''\%だった。p99の明確な悪化は確認しなかった。他チーム実受信量も20 MHz約0.9--1.2、40 MHz約0.4--0.8 Mbpsと違うため、「広いほど速い」「広いほど必ず操縦が悪い」のどちらもこの結果から言えない。
 
@@ -215,7 +215,7 @@ BLEの広告は2402・2426・2480 MHz、接続通信はデータチャネルを�
 主比較42、周期Wi-Fi9、BLE18の計'''+str(M['trials'])+'試行、'+f"{M['control_sent']:,}"+'送信、'+f"{M['control_received']:,}"+'応答、'+f"{M['iq_snapshots_original']:,}"+r''' I/Q取得を追加した。公開した相対時刻から統計を独立再計算し、全ファイルSHA-256を確認する。元I/Qとホストログ、元フラッシュは非公開保管する。公開FFTから図、公開時刻から表を再生成できるが、RF復号や元I/Qからの再FFTは公開ファイルだけでは再現できない。
 
 \clearpage
-\section{先行実験の位置付け：構成が異なる補足}
+\section{先行実験の位置付けと構成の相違}
 以下は先行56通信試行と115受信観測系列を保持した補足である。先行の別AP比較では主リンクが操縦中心であり、本稿前半の両チーム負荷とSTA→AP→STA構成とは異なる。数値を同じ群へ統合せず、設定依存性とSDR画像の読み方を支える結果として参照する。先行BLE観測だけでは性能劣化を評価していなかったが、前半には独立BLEリンクとWi-Fi性能の同時比較を追加した。
 '''+endmarker+'\n'
 t=t[:pos]+full+t[pos:];t=t.replace(r'\usepackage{amsmath,graphicx,booktabs,siunitx,hyperref,float,tikz}',r'\usepackage{amsmath,graphicx,booktabs,siunitx,hyperref,float,tikz,caption}')

@@ -38,7 +38,7 @@ Wi-Fi負荷を加えた時、ESP-NOWの統合p99は同一Ch6で'''+value(key('of
 
 '''+telemetry+r'''
 
-\subsection{ロボコンでの意味と運用上の条件}
+\subsection{ロボコンへの適用条件}
 AP経路を外した小さい指令でも同じ2.4 GHz帯を使い、外部Wi-Fiが動作する配置で評価する必要がある。1 Mbpsはbitrateで、電波の幅が1 MHzという意味ではない。小さい指令でも帯域幅を持つ成分として観測される。今回のESP-NOWは64 byteの指令試験であり、映像や点群を運ぶ大容量転送の性能を測っていない。ROS 2トピックがそのままESP-NOWになる実装でもなく、PCやコントローラーとの橋渡しは別途必要で、その遅延は今回含まない。同じESP32無線にWi-Fi接続とESP-NOWを併用する場合、接続APとpeerのチャネル条件を考慮する必要がある\cite{espnowGuide}。今回の独立無線によるチャネル分離結果をそのまま同一チップへ適用しない。
 
 距離、向き、移動、暗号化、通信途絶時の停止動作は未比較である。無線が接続しているかより、届いた指令の新しさと途絶を判断する方法が検討対象になるが、本測定だけで安全な停止期限を決められない。
@@ -48,8 +48,8 @@ t=t.replace('独立した外部BLEリンクを変え、','独立した外部BLE�
 t=t.replace('追加69試行',f'追加{alltrials}試行').replace('主比較42、周期Wi-Fi9、BLE18の計69試行、207,000送信、189,858応答、39,149 I/Q取得',f'主比較42、周期Wi-Fi9、BLE18、ESP-NOW18の計{alltrials}試行、{allsent:,}送信、{allgot:,}応答、{allshots:,} I/Q取得')
 if r'\bibitem{espnowGuide}' not in t:t=t.replace(r'\begin{thebibliography}{99}',r'\begin{thebibliography}{99}'+'\n'+r'\bibitem{espnowGuide} Espressif, ESP-NOW Programming Guide, \url{https://docs.espressif.com/projects/esp-idf/en/v6.0/esp32/api-reference/network/esp_now.html}.')
 p.write_text(t)
-p=R/'reports/twitter.tex';t=p.read_text();a=t.index(r'\section{細い信号が見えれば、何が分かるか}');b=t.index(r'\section{データと再現範囲}',a)
-new=r'''\section{ESP-NOWにも近くのWi-Fiは影響する？}
+p=R/'reports/twitter.tex';t=p.read_text();a=t.index(r'\section{狭帯域成分の観測と解釈}');b=t.index(r'\section{データと再現範囲}',a)
+new=r'''\section{外部Wi-Fi負荷下のESP-NOW指令通信}
 ESP32-1/2間で64 byte・100 Hzの未暗号化unicastを往復させた。APを通らず、PHYは1 Mbps。MAC送信成功とアプリ応答を分ける\cite{espnow}。
 他チームWi-FiはCh6 APで大容量TCPを流し、ESP-NOW側をCh6・Ch7・Ch11へ変えた。各30 s・3反復。
 \begin{center}\includegraphics[width=\linewidth]{../experiments/figures/espnow/espnow-compact.pdf}\captionof{figure}{同一Ch6・Wi-Fi負荷の反復1と3。p99は8.6 / 123.8 ms。共通$-90$--$-45$ dBFS。白破線はWi-Fiの名目帯域。}\end{center}
@@ -61,8 +61,8 @@ ESP32-1/2間で64 byte・100 Hzの未暗号化unicastを往復させた。APを�
 '''
 t=t[:a]+new+t[b:]
 # Put the BLE interpretation under its table, leaving the opposite column for ESP-NOW.
-pos=t.index(r'\newpage',t.index(r'\section{Bluetoothも実通信と合わせて測る}'))
-note=r'''\subsection{BLE画像で言える範囲}
+pos=t.index(r'\newpage',t.index(r'\section{Bluetooth LE通信との共存評価}'))
+note=r'''\subsection{BLE可視化の解釈と限界}
 広告2426 MHzは表示外である。通知時の細い成分は方式の違いを見る手掛かりだが、外来RFも含み、全てをBLEへ同定しない。間欠取得から全パケットやホッピングの連続軌跡は復元できない。
 '''
 t=t[:pos]+note+t[pos:];t=t.replace('今回の追加実験は69試行、207,000送信、39,149 I/Q取得',f'今回の追加実験は{alltrials}試行、{allsent:,}送信、{allshots:,} I/Q取得')
@@ -75,7 +75,7 @@ source=t[a:b]
 source=source.replace('先行実験は構成が異なる補足として詳細版へ統合し、今回の表と混ぜていない。','先行実験は構成を区別して詳細版へ統合した。')
 source='{\\footnotesize\n'+source.replace(r'\begin{thebibliography}{9}\small',r'\begin{thebibliography}{9}\footnotesize')+'}\n'
 t=t[:a]+t[b:]
-pos=t.index(r'\newpage',t.index(r'\subsection{BLE画像で言える範囲}'))
+pos=t.index(r'\newpage',t.index(r'\subsection{BLE可視化の解釈と限界}'))
 t=t[:pos]+source+t[pos:]
 t=t.replace('外部BLEの広告・通知も比較し、','外部BLEの広告・通知、ESP-NOW指令も比較し、')
 p.write_text(t)
