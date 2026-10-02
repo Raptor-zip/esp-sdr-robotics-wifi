@@ -19,7 +19,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-ロボコンで操縦・映像・点群が同じWi-Fiを共有する状況を模し、STA→AP→STAのUDP応答と大容量TCPを、他チームも通信中の条件で比較した。同一・隣接・分離チャネル、20/40 MHz幅、通常Wi-Fiの周期負荷、独立した外部BLEリンクを変え、実測I/Qの青〜緑画像と応答遅延・期限超過・欠落・実受信量を対応づける。追加69試行を、構成の異なる先行56通信試行および115受信観測系列と区別して統合した。実ROS 2や実ロボットの試験ではなく、未校正の間欠SDRとUDP/TCP模擬負荷による固定室内配置の比較である。
+ロボコンで操縦・映像・点群が同じWi-Fiを共有する状況を模し、STA→AP→STAのUDP応答と大容量TCPを、他チームも通信中の条件で比較した。同一・隣接・分離チャネル、20/40 MHz幅、通常Wi-Fiの周期負荷、独立した外部BLEリンクとESP-NOW指令を変え、実測I/Qの青〜緑画像と応答遅延・期限超過・欠落・実受信量を対応づける。追加87試行を、構成の異なる先行56通信試行および115受信観測系列と区別して統合した。実ROS 2や実ロボットの試験ではなく、未校正の間欠SDRとUDP/TCP模擬負荷による固定室内配置の比較である。
 \end{abstract}
 \newcommand{\SameIdlePninetyNine}{10.6}
 \newcommand{\SameTwentyPninetyNine}{21.0}
@@ -61,6 +61,9 @@
 \newcommand{\LowPowerDeadline}{0.2}
 \newcommand{\LowPowerLoss}{0.00}
 \newcommand{\LowPowerGap}{39.3}
+
+
+
 
 
 
@@ -133,12 +136,39 @@ Wi-Fi大容量通信中のp99はBLE停止126.2 ms、広告126.0 ms、通知126.3
 
 BLEの広告は2402・2426・2480 MHz、接続通信はデータチャネルを使う\cite{blePrimer}。細い信号と広帯域Wi-Fiの違いが観察の手掛かりになる。ただし間欠取得からホッピングの連続軌跡や全パケットを復元したとは扱わない。LO2442 MHzでは2426 MHz以外の広告周波数が遠く、全広告チャネルを均一感度で観測していない。室内外来信号が混ざるため細線の全てをBLEへ帰属しない。これは外部の独立BLEリンクの比較であり、同一チップ内の共存制御、Bluetooth Classic、音声、BLE 2Mの測定ではない。
 
+% BEGIN ESPNOW STUDY
+\section{ESP-NOWの指令と独立したWi-Fi大容量通信}
+ESP32-1からESP32-2へ64 byte・100 Hzの未暗号化unicast指令を送り、受信タスクが同じ内容をアプリ応答として返す。APを通らない経路である。Wi-Fi側は観測PC（Intel BE200）Ch6・20 MHz APに固定し、ラップトップ2からESP32-3へ大容量TCP模擬データを流す。ESP-NOWをCh6・Ch7・Ch11へ動かし、Wi-Fi待機・負荷の6条件、各30 s・3反復、18試行を実施した。条件順は反復内で無作為化した。
+
+ESP-NOWは1 Mbps・long preambleへ明示設定し、受信metadataのrate=0、sig\_mode=0を両端で確認した。PHY設定と受信結果を区別して残す。MACの送信成功はアプリ応答の成功ではない\cite{espnowGuide}ため、後者のRTTと欠落を測り、送信callbackの成功・失敗、APIエラー、echoキューの取りこぼしも保存した。アプリ再送は行わない。API受付失敗も送信要求の分母に含め、応答欠落を物理層の損失率へ読み替えない。時刻列は送信側の同じµs時計で、終了後1 sを応答猶予とする。UART115200によるCRC付き読み出しは測定後に行い、RTTへ含めない。Wi-Fi受信量には読み出しを含むカウンタ区間の実時間を使う。
+
+ESP32-1/2間75 cmを維持した。送受信機、無線経路、PHYがAP中継のUDP比較と異なるので、その差をESP-NOWという方式だけの因果効果として扱わない。C5の80 MS/s・48 MHz・ゲイン20・FFT1024・LO2442 MHzは同じで、間欠取得と未校正dBFSの制約も同じである。
+\begin{table}[htbp]\centering\small\caption{ESP-NOW操縦応答。表のChはESP-NOW側、Wi-Fi APはCh6固定。各9,000送信。Wi-Fi実受信は試行範囲Mbps。}\begin{tabular}{lrrrr}\toprule Wi-Fi / ESP-NOW & p99 ms & 20 ms超過\% & 欠落\% & Wi-Fi Mbps\\\midrule
+待機 / Ch6 & 9.4 & 0.1 & 0.00 & 0.00--0.00\\
+待機 / Ch7 & 14.5 & 0.4 & 0.00 & 0.00--0.00\\
+待機 / Ch11 & 288.5 & 15.4 & 0.32 & 0.00--0.00\\
+負荷 / Ch6 & 85.6 & 4.7 & 0.02 & 1.11--1.45\\
+負荷 / Ch7 & 18.4 & 0.6 & 0.00 & 1.06--1.37\\
+負荷 / Ch11 & 91.1 & 20.5 & 0.46 & 1.22--1.37\\\bottomrule\end{tabular}\end{table}
+\plot{../espnow/espnow-blue-green}{1}{ESP-NOWとWi-Fiの実測RF。各画像は1反復目、注記は3反復統合値。Wi-Fiの名目帯域を白破線で示す。}
+Wi-Fi負荷を加えた時、ESP-NOWの統合p99は同一Ch6で9.4→85.6 ms、隣接Ch7で14.5→18.4 ms、分離Ch11で288.5→91.1 msだった。数値の比較には欠落と期限超過も使い、遅い応答が欠落したことによる見かけのp99低下を改善と扱わない。各反復p99は公開JSONに残し、9,000パケットを9,000の独立な環境反復とはみなしていない。Ch11待機の各反復p99は37.0--341.3 msとばらついた。分離Ch11にも待機状態で大きな遅延があり、今回の結果は「周波数を離すと常に良い」ではない。試験用Wi-Fiを止めても室内の他の送信機やリンクの状態は残る。外来通信、受信余裕、送信待ち、処理のどれが主因かは今回分離していない。
+
+\plot{../espnow/espnow-repeat-variation}{1}{同一Ch6・Wi-Fi負荷の全3反復。下段は届いた応答のRTT、赤破線は20 ms。欠落は点として現れない。上段と下段はUART開始時刻に基づく近似対応であり、パケット単位の時刻相関ではない。}
+同じCh6・負荷ありでも反復p99は8.6--123.8 msだった。1・2反復目では20 ms期限超過が0\%、3反復目では14.1\%に増えた。チャネルと負荷設定を固定しても尾部遅延は再現しなかった。Wi-Fi実受信も変わるため、一定の干渉強度を与えた比較ではない。単独基準、反復、期限超過、応答途絶を組み合わせ、1回の平均速度やスペクトルの見栄えから指令品質を判断しないことが実践上の学びである。原因を処理待ちとRF干渉へ分解するには、追加の処理時刻と送受信フレームの観測が必要となる。
+
+全54,000送信要求に対し、送信側API受付エラー23、送信側MAC失敗36、echo側MAC失敗68を記録した。echoキューの取りこぼしは0だった。これらはパケットごとの因果対応を持たず、合計をそのままアプリ応答欠落へ割り当てない。
+
+\subsection{ロボコンでの意味と運用上の条件}
+AP経路を外した小さい指令でも同じ2.4 GHz帯を使い、外部Wi-Fiが動作する配置で評価する必要がある。1 Mbpsはbitrateで、電波の幅が1 MHzという意味ではない。小さい指令でも帯域幅を持つ成分として観測される。今回のESP-NOWは64 byteの指令試験であり、映像や点群を運ぶ大容量転送の性能を測っていない。ROS 2トピックがそのままESP-NOWになる実装でもなく、PCやコントローラーとの橋渡しは別途必要で、その遅延は今回含まない。同じESP32無線にWi-Fi接続とESP-NOWを併用する場合、接続APとpeerのチャネル条件を考慮する必要がある\cite{espnowGuide}。今回の独立無線によるチャネル分離結果をそのまま同一チップへ適用しない。
+
+距離、向き、移動、暗号化、通信途絶時の停止動作は未比較である。無線が接続しているかより、届いた指令の新しさと途絶を判断する方法が検討対象になるが、本測定だけで安全な停止期限を決められない。
+% END ESPNOW STUDY
 \section{主実験の結論と公開データの範囲}
 両チームが負荷を流す今回の固定配置では同一・隣接チャネルで操縦期限超過が増え、分離Ch11では増分が小さかった。帯域の重なりをSDRで見ながら、待機との差、実受信量、RTTと欠落を同時に比較する方法を示した。ただし主リンクの単独基準も不良であり、端末構成とRFを原因分離せずに競技場へ外挿できない。帯域幅の比較は単調な悪化を示さず、Bluetooth比較も指定のBLE負荷と配置に限定する。
 
 ロボコンでは単独時の期限をまず満たし、自分の映像・点群と他チーム通信を同時に動かす。その時の期限超過や最長応答間隔に基づいて、負荷制限・古い指令の破棄・通信途絶の検出などを検討する。それらの改善効果と安全な停止しきい値は本実験では検証していない。
 
-主比較42、周期Wi-Fi9、BLE18の計69試行、207,000送信、189,858応答、39,149 I/Q取得を追加した。公開した相対時刻から統計を独立再計算し、全ファイルSHA-256を確認する。元I/Qとホストログ、元フラッシュは非公開保管する。公開FFTから図、公開時刻から表を再生成できるが、RF復号や元I/Qからの再FFTは公開ファイルだけでは再現できない。
+主比較42、周期Wi-Fi9、BLE18、ESP-NOW18の計87試行、261,000送信、243,786応答、49,359 I/Q取得を追加した。公開した相対時刻から統計を独立再計算し、全ファイルSHA-256を確認する。元I/Qとホストログ、元フラッシュは非公開保管する。公開FFTから図、公開時刻から表を再生成できるが、RF復号や元I/Qからの再FFTは公開ファイルだけでは再現できない。
 
 \clearpage
 \section{先行実験の位置付け：構成が異なる補足}
@@ -594,6 +624,7 @@ BLEのON/OFFは信号源へ操作を加えた比較であり、周波数だけ�
 公開資料は、実験日ではなくデータ・解析コード・図・レポートの役割で整理した。匿名化した解析統計、操縦UDPの相対時刻列、FFT電力列と取得コードを公開する。生I/Q、PCAP、元の実行ログは非公開で保管するため、公開データからPCAP照合やSTF探索そのものを再実行することはできない。操縦遅延の集計は\texttt{make check}、青・緑の図は\texttt{make figures}、詳細版と投稿版は\texttt{make reports}で再生成できる。詳細なデータ形式と再現範囲はリポジトリの説明文書を参照する。実験終了時に両PCのWi-Fiと有線共有を復元し、実験AP、モニター、BLE広告、スリープ抑止を停止した。C5は2412 MHz・自動帯域・Hardware AGCとVMIN=1へ戻した。
 \begin{thebibliography}{99}
 \bibitem{blePrimer} \href{https://www.bluetooth.com/bluetooth-le-primer/}{Bluetooth SIG, Bluetooth LE Primer.}
+\bibitem{espnowGuide} Espressif, ESP-NOW Programming Guide, \url{https://docs.espressif.com/projects/esp-idf/en/v6.0/esp32/api-reference/network/esp_now.html}.
 \bibitem{sdr} ESPARGOS, ESP-SDR, \url{https://github.com/ESPARGOS/esp-sdr}.
 \bibitem{intel} Intel, Do Intel Wireless Adapters Support Master or AP Mode?, \url{https://www.intel.com/content/www/us/en/support/articles/000030429/wireless.html}.
 \bibitem{iwl} Linux Wireless, iwlwifi, \url{https://wireless.docs.kernel.org/en/latest/en/users/drivers/iwlwifi.html}.

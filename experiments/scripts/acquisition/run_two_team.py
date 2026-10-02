@@ -24,7 +24,7 @@ def capture(receiver,path,seconds,lo):
  meta=dict(lo_mhz=lo,sample_rate_hz=80000000,bandwidth_mhz=48,gain='MANUAL 20',frames=len(shots),samples=16380,clock_before=before,clock_after=receiver.clock(16),timing=timing,all_crcs_verified=True)
  np.savez_compressed(str(path)+'-iq.npz',iq=np.stack(shots));Path(str(path)+'-iq.json').write_text(json.dumps(meta,indent=2)+'\n')
 
-def measure_controller(board,run_id,seconds):
+def measure_controller(board,run_id,seconds,transport='udp'):
  n=int(seconds*100);host_start=time.monotonic_ns();board.command(f'BENCH {run_id} {n}')
  until=time.monotonic()+seconds+8
  while time.monotonic()<until:
@@ -37,7 +37,8 @@ def measure_controller(board,run_id,seconds):
  if len(data)!=int(size) or zlib.crc32(data)!=int(crc,16):raise RuntimeError('Controller timing dump CRC mismatch')
  rows=np.frombuffer(data,dtype='<u4').reshape(n,3).astype(np.int64)*1000
  ok=rows[:,2]>0;rtt=(rows[ok,2]-rows[ok,1])/1e6;end=int(seconds*1e9);ordered=np.sort(rows[ok & (rows[:,2]<=end),2]);gaps=np.diff(np.r_[0,ordered,end])/1e6
- result=dict(run_id=run_id,seconds=seconds,hz=100,payload_bytes=64,sent=n,received=int(ok.sum()),loss_pct=float((~ok).mean()*100),rtt_ms={f'p{q}':float(np.percentile(rtt,q)) if len(rtt) else None for q in (50,95,99)},max_rtt_ms=float(rtt.max()) if len(rtt) else None,longest_echo_gap_ms=float(gaps[gaps>=0].max()),missed_deadline_pct={str(d):float((~ok | ((rows[:,2]-rows[:,1])>d*1e6)).mean()*100) for d in (10,20,50,100)},send_lateness_p99_ms=float(np.percentile((rows[:,1]-rows[:,0])/1e6,99)),delivered_payload_mbps=[state['bench_rx_bytes']*8/seconds/1e6,0],semantics='ESP32-3 local-clock UDP application echo RTT via AP to robot laptop; paced synthetic TCP bulk in reverse; not ROS 2; host command time is an approximate SDR alignment anchor')
+ result=dict(run_id=run_id,seconds=seconds,hz=100,payload_bytes=64,sent=n,received=int(ok.sum()),loss_pct=float((~ok).mean()*100),rtt_ms={f'p{q}':float(np.percentile(rtt,q)) if len(rtt) else None for q in (50,95,99)},max_rtt_ms=float(rtt.max()) if len(rtt) else None,longest_echo_gap_ms=float(gaps[gaps>=0].max()),missed_deadline_pct={str(d):float((~ok | ((rows[:,2]-rows[:,1])>d*1e6)).mean()*100) for d in (10,20,50,100)},send_lateness_p99_ms=float(np.percentile((rows[:,1]-rows[:,0])/1e6,99)),delivered_payload_mbps=[state.get('bench_rx_bytes',0)*8/seconds/1e6,0],semantics='ESP32-3 local-clock UDP application echo RTT via AP to robot laptop; paced synthetic TCP bulk in reverse; not ROS 2; host command time is an approximate SDR alignment anchor')
+ if transport=='espnow':result['semantics']='ESP32-1 local-clock ESP-NOW application echo RTT to ESP32-2; unencrypted unicast, configured 1 Mbps long preamble; independent Wi-Fi bulk to ESP32-3; not UDP/ROS 2; approximate host UART anchor for SDR'
  raw=dict(host_start_ns=host_start,sent_ns=host_start+rows[:,1],received_ns=np.where(ok,host_start+rows[:,2],0),planned_ns=host_start+rows[:,0],bulk_records=np.zeros((0,5),dtype=np.int64))
  return result,raw
 

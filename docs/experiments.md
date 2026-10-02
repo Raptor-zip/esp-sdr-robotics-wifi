@@ -1,6 +1,6 @@
 # 実験資料の区分
 
-追加の主実験は[両チーム負荷・周期Wi-Fi・外部BLE](two-team-method.md)です。自チームの指令と大容量通信はSTA→AP→STAを通し、他チームの実通信がある状態を比較します。データは`experiments/data/two-team/`に保存しています。
+追加の主実験は[両チーム負荷・周期Wi-Fi・外部BLE](two-team-method.md)です。自チームの指令と大容量通信はSTA→AP→STAを通し、他チームの実通信がある状態を比較します。データは`experiments/data/two-team/`に保存しています。さらに[ESP-NOW指令と外部Wi-Fi](espnow-method.md)を`experiments/data/espnow/`へ追加しています。
 
 以下は構成が異なる先行実験です。旧数値を主実験の条件として読み替えず、補足として参照してください。
 

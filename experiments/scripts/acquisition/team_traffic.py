@@ -24,9 +24,10 @@ class Traffic:
   while not self.stop.is_set():
    try:s,_=listener.accept()
    except socket.timeout:continue
-   s.setblocking(False);s.setsockopt(socket.IPPROTO_TCP,socket.TCP_NODELAY,1);s.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,32768);self.connected=True
+   s.setblocking(False);s.setsockopt(socket.SOL_SOCKET,socket.SO_KEEPALIVE,1);s.setsockopt(socket.IPPROTO_TCP,socket.TCP_KEEPIDLE,2);s.setsockopt(socket.IPPROTO_TCP,socket.TCP_KEEPINTVL,1);s.setsockopt(socket.IPPROTO_TCP,socket.TCP_KEEPCNT,3);s.setsockopt(socket.IPPROTO_TCP,socket.TCP_NODELAY,1);s.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,32768);self.connected=True
    try:
     while not self.stop.is_set():
+     if select.select([s],[],[],0)[0] and not s.recv(1,socket.MSG_PEEK):break
      with self.lock:
       now=time.monotonic();frame={'off':0,'medium':98304,'heavy':196608}[self.level] if now<self.until else 0
       budget=max(0,int((now-self.start)*10+1)*frame-self.bytes)

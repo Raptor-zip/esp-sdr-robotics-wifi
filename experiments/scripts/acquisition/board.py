@@ -15,7 +15,7 @@ class Board:
    # ROM boot output can use a different baud rate and lack a final newline.
    # Accept a complete response following those non-text boot bytes.
    offset=line.find(prefix)
-   if offset>0 and any(c=='\ufffd' or ord(c)<32 for c in line[:offset]):return line[offset:]
+   if offset>0 and (line[:offset]=='x' or any(c=='\ufffd' or ord(c)<32 for c in line[:offset])):return line[offset:]
   raise TimeoutError(f'{text}: {seen}')
  def state(self):return json.loads(self.command('STATUS','STATE ').split(' ',1)[1])
  def close(self):self.port.close()

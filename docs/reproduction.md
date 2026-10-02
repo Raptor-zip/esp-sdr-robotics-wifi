@@ -2,9 +2,9 @@
 
 ## 公開データからの再生成
 
-リポジトリ直下で`make check`を実行すると、公開データの全SHA-256を確認し、先行56試行と追加69試行のRTT p99、損失率、20 ms期限超過、送信ジッターおよび条件群の統計を相対時刻から再計算します。原集計と一致しない場合はエラーになります。
+リポジトリ直下で`make check`を実行すると、公開データの全SHA-256を確認し、先行56試行と追加87試行のRTT p99、損失率、20 ms期限超過、送信ジッターおよび条件群の統計を相対時刻から再計算します。原集計と一致しない場合はエラーになります。
 
-`make figures`は操縦通信の主要な青・緑パネルと遅延比較図を、公開した実測FFT電力とJSONから生成します。取得反復1の画像と全反復の集計値を明記しています。基礎観測・受信系の既存図はそのまま添付しています。公開データだけで生I/QのFFT長変更、STF探索、生PCAPとの照合をやり直すことはできません。
+`make figures`は操縦通信の主要な青・緑パネルと遅延比較図を、公開した実測FFT電力とJSONから生成します。主比較は反復1の画像と全反復の集計値を区別しています。ESP-NOWの反復変動図は同一条件の全3反復、X用小図は反復1・3を明記します。基礎観測・受信系の既存図はそのまま添付しています。公開データだけで生I/QのFFT長変更、STF探索、生PCAPとの照合をやり直すことはできません。
 
 `make reports`で自己完結した2本のLaTeXをLuaLaTeXで各2回コンパイルします。必要パッケージはluatexja、fontspec、geometry、graphicx、booktabs、siunitx、hyperref、TikZ、titlesec、placeinsなどです。見出しの英字・日本語はHaranoAjiGothic-Mediumで統一しています。著者名は貝淵蒼馬、紙面の日付はありません。`make images`はX用3ページのPDFを300 dpi PNGへ書き出します。
 
@@ -82,3 +82,9 @@ make reports images
 USB割当は取得コード既定でESP32-1=ttyUSB0、2=ttyUSB1、3=ttyUSB2、C5=ttyACM0です。変わった場合は必ず識別して合わせます。実験終了後にHTTP `/stop`でロボット側を復帰させてから観測PCの一時APを終了・削除し、元接続を戻します。ESP32の電波出力と負荷を停止し、C5を通常表示用設定へ戻します。
 
 主実験の相対時刻とFFTからは統計・図を再生成できます。時刻とI/Qの厳密なパケット一致、連続占有率、元I/Qの再FFT、ROS 2トピックの評価は再現範囲に含みません。
+
+## ESP-NOW指令の追加測定
+
+[ESP-NOWの測定条件](espnow-method.md)を参照してください。ESP32-1/2を`espnow-link`へ書き換え、UART115200で動作させます。ESP32-3は`team-controller`の460800 baudです。独立Wi-Fi負荷用のAPとロボットhelperを起動してから、`run_espnow.py --pilot`、`run_espnow.py`を実行します。MACはUARTで取得してその場でpeer設定し、公開時には除去します。元フラッシュと元I/Qは非公開保管します。
+
+公開処理は`analyze_espnow.py --raw /非公開の保存先/raw`、検算は`make check`、画像は`make figures`、表と考察の数値反映は`make report-sources`、組版は`make reports images`です。読み出しのUARTが遅くても、ベンチマーク時刻はESP内部で記録します。追加ESP-NOWの負荷helperはkeepaliveを加えた版で、先行69試行で使用した版はコミット`b5af98b`に保持しています。

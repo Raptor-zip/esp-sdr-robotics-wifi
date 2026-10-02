@@ -51,3 +51,6 @@ experiments/firmware/team-controller/sdkconfig.old
 
 experiments/firmware/ble-link/sdkconfig
 experiments/firmware/ble-link/sdkconfig.old
+
+experiments/firmware/espnow-link/sdkconfig
+experiments/firmware/espnow-link/sdkconfig.old

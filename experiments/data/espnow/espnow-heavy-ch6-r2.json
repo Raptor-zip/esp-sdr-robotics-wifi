@@ -1,0 +1,155 @@
+{
+  "run_id": 502008,
+  "seconds": 30,
+  "hz": 100,
+  "payload_bytes": 64,
+  "sent": 3000,
+  "received": 3000,
+  "loss_pct": 0.0,
+  "rtt_ms": {
+    "p50": 3.1544999999999996,
+    "p95": 7.328299999999999,
+    "p99": 8.857169999999995
+  },
+  "max_rtt_ms": 13.298,
+  "longest_echo_gap_ms": 18.401,
+  "missed_deadline_pct": {
+    "10": 0.33333333333333337,
+    "20": 0.0,
+    "50": 0.0,
+    "100": 0.0
+  },
+  "send_lateness_p99_ms": 1.001,
+  "semantics": "ESP32-1 local-clock ESP-NOW application echo RTT to ESP32-2; unencrypted unicast, configured 1 Mbps long preamble; independent Wi-Fi bulk to ESP32-3; not UDP/ROS 2; approximate host UART anchor for SDR",
+  "wifi_delivered_mbps": 1.4525819403269815,
+  "counter_window_seconds": 34.315458988,
+  "condition": {
+    "repeat": 2,
+    "wifi_load": "heavy",
+    "espnow_channel": 6,
+    "wifi_channel": 6,
+    "wifi_width_mhz": 20,
+    "phy_rate_mbps": 1,
+    "encrypted": false
+  },
+  "radio": {
+    "sender": {
+      "before": {
+        "version": 1,
+        "role": 2,
+        "paired": 1,
+        "running": 0,
+        "done": 1,
+        "run_id": 502007,
+        "primary": 6,
+        "tx_qdbm": 78,
+        "rssi": -61,
+        "rx_rate": 0,
+        "rx_sig_mode": 0,
+        "tx_success": 23975,
+        "tx_fail": 21,
+        "tx_api_errors": 4,
+        "rx_messages": 23971,
+        "queue_drops": 0
+      },
+      "after": {
+        "version": 1,
+        "role": 2,
+        "paired": 1,
+        "running": 0,
+        "done": 1,
+        "run_id": 502008,
+        "primary": 6,
+        "tx_qdbm": 78,
+        "rssi": -62,
+        "rx_rate": 0,
+        "rx_sig_mode": 0,
+        "tx_success": 26975,
+        "tx_fail": 21,
+        "tx_api_errors": 4,
+        "rx_messages": 26971,
+        "queue_drops": 0
+      }
+    },
+    "echo": {
+      "before": {
+        "version": 1,
+        "role": 1,
+        "paired": 1,
+        "running": 0,
+        "done": 0,
+        "run_id": 0,
+        "primary": 6,
+        "tx_qdbm": 78,
+        "rssi": -39,
+        "rx_rate": 0,
+        "rx_sig_mode": 0,
+        "tx_success": 26958,
+        "tx_fail": 38,
+        "tx_api_errors": 0,
+        "rx_messages": 26996,
+        "queue_drops": 0
+      },
+      "after": {
+        "version": 1,
+        "role": 1,
+        "paired": 1,
+        "running": 0,
+        "done": 0,
+        "run_id": 0,
+        "primary": 6,
+        "tx_qdbm": 78,
+        "rssi": -38,
+        "rx_rate": 0,
+        "rx_sig_mode": 0,
+        "tx_success": 29958,
+        "tx_fail": 38,
+        "tx_api_errors": 0,
+        "rx_messages": 29996,
+        "queue_drops": 0
+      }
+    },
+    "wifi": {
+      "before": {
+        "version": 1,
+        "connected": 1,
+        "tcp_connected": 1,
+        "running": 0,
+        "done": 0,
+        "run_id": 0,
+        "rx_bytes": 25284704,
+        "bench_rx_bytes": 0,
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "rssi": -42
+      },
+      "after": {
+        "version": 1,
+        "connected": 1,
+        "tcp_connected": 1,
+        "running": 0,
+        "done": 0,
+        "run_id": 0,
+        "rx_bytes": 31515456,
+        "bench_rx_bytes": 0,
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "rssi": -44
+      }
+    }
+  },
+  "sdr": {
+    "frames": 567,
+    "sample_rate_hz": 80000000,
+    "samples": 16380,
+    "lo_mhz": 2442,
+    "bandwidth_mhz": 48,
+    "gain": "MANUAL 20",
+    "fft_length": 1024,
+    "all_crcs_verified": true,
+    "rail_pct": 0.0,
+    "nominal_observation_pct": 0.38683542339538896
+  }
+}

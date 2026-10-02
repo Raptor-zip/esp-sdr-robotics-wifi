@@ -19,7 +19,7 @@
 
 FFT電力はDC除去・Hann窓・窓和の二乗による規格化・区間の線形電力平均を用います。C5の符号規約に合わせRF周波数はLOからベースバンド周波数を引いています。`power_dbfs`は保存容量のためfloat32で、図の表示に必要な精度を保持します。FFTから元の位相やWi-Fiフレームは復元できません。
 
-青・緑の色尺度は全比較で−90〜−45 dBFS。各行は1つの間欠取得で、取得番号の軸を実時間の連続ウォーターフォールとして解釈しないでください。dBFSはdBmへの校正値でもチャネル占有率でもありません。
+主要な青・緑比較は−90〜−45 dBFS。BLEの狭帯域拡大図だけは弱い信号を見るため−90〜−60 dBFSで、図内の共通尺度を明記します。各行は1つの間欠取得で、取得番号の軸を実時間の連続ウォーターフォールとして解釈しないでください。dBFSはdBmへの校正値でもチャネル占有率でもありません。
 
 ## 両チーム・周期Wi-Fi・BLE (`two-team`)
 
@@ -30,3 +30,7 @@ FFT電力はDC除去・Hann窓・窓和の二乗による規格化・区間の�
 試行JSONには`condition`、`rtt_ms`、`loss_pct`、`missed_deadline_pct`、`delivered_payload_mbps`（自チーム実受信）、`source_payload_mbps`（TCP送信受付）、`other_delivered_mbps`（他チーム実受信）、SDR設定とCRC照合結果があります。周期Wi-Fiには`load_transitions`（ON/OFF、操作前後の相対秒）、BLEには送受信状態、広告復号数、MTUと接続間隔が加わります。BLE接続間隔の`interval_units`は1.25 ms単位です。送信APIエラー率はPHYパケット損失率とは違います。
 
 `summary.json`は各条件の反復数、全応答を統合したp99、期限超過、各反復のp99・実受信速度を残します。要求15.73 Mbpsを実到達量と置換していません。`manifest.json`の`two_team`は主42・周期9・BLE18試行を先行群と分けて集計します。`make check`が全SHA-256と時刻からの独立再計算を行います。
+
+## ESP-NOW (`espnow`)
+
+時刻NPZの欠落印は`received_ns == -1`で、相対ns単位、実時計の分解能は1µsです。`radio`には送信側・echo側・独立Wi-Fi受信側の前後カウンタ、実チャネル、受信rate・sig_modeがあります。MACは除去します。`wifi_delivered_mbps`を実受信bytes差と`counter_window_seconds`で検算します。`sent`はAPI受付失敗を含む送信要求数で、欠落をそのままPHY損失率としません。FFTとSDR設定は`two-team`と同じ形式です。`manifest.espnow`と`summary.json`は先行群と分けた18試行の集計です。
