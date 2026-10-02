@@ -1,0 +1,162 @@
+{
+  "run_id": 302007,
+  "seconds": 30,
+  "hz": 100,
+  "payload_bytes": 64,
+  "sent": 3000,
+  "received": 2729,
+  "loss_pct": 9.033333333333333,
+  "rtt_ms": {
+    "p50": 12.291,
+    "p95": 112.22899999999998,
+    "p99": 120.53251999999993
+  },
+  "max_rtt_ms": 132.404,
+  "longest_echo_gap_ms": 136.647,
+  "missed_deadline_pct": {
+    "10": 57.833333333333336,
+    "20": 50.46666666666667,
+    "50": 40.5,
+    "100": 18.4
+  },
+  "send_lateness_p99_ms": 1.5312199999999947,
+  "delivered_payload_mbps": [
+    0.0,
+    0
+  ],
+  "semantics": "ESP32-3 local-clock UDP application echo RTT via AP to robot laptop; paced synthetic TCP bulk in reverse; not ROS 2; host command time is an approximate SDR alignment anchor",
+  "other_delivered_mbps": 0.0,
+  "ble_advertisements_received": 0,
+  "counter_window_seconds": 31.891788727,
+  "controller_after": {
+    "version": 1,
+    "connected": 1,
+    "tcp_connected": 1,
+    "running": 0,
+    "done": 1,
+    "run_id": 302007,
+    "rx_bytes": 22929408,
+    "bench_rx_bytes": 0,
+    "primary": 6,
+    "secondary": 0,
+    "ap_bw": 1,
+    "rssi": -32
+  },
+  "other_receiver_counters": {
+    "before": 3113440,
+    "after": 3113440
+  },
+  "source_counters": {
+    "before": [
+      0,
+      0
+    ],
+    "after": [
+      0,
+      0
+    ]
+  },
+  "condition": {
+    "repeat": 2,
+    "own_load": "off",
+    "radio_mode": "ble",
+    "radio_condition": "off",
+    "own_channel": 6,
+    "own_width_mhz": 20
+  },
+  "controller_radio": {
+    "version": 1,
+    "connected": 1,
+    "tcp_connected": 1,
+    "running": 0,
+    "done": 1,
+    "run_id": 302006,
+    "rx_bytes": 22929408,
+    "bench_rx_bytes": 4530624,
+    "primary": 6,
+    "secondary": 0,
+    "ap_bw": 1,
+    "rssi": -32
+  },
+  "external_radio_before": {
+    "version": 1,
+    "role": 0,
+    "synced": 1,
+    "connected": 0,
+    "subscribed": 0,
+    "value_handle": 16,
+    "mtu": 0,
+    "interval_units": 0,
+    "tx_bytes": 0,
+    "rx_bytes": 3113440,
+    "tx_messages": 0,
+    "rx_messages": 12760,
+    "tx_errors": 0,
+    "advertisements": 2082
+  },
+  "external_radio_after": {
+    "version": 1,
+    "role": 0,
+    "synced": 1,
+    "connected": 0,
+    "subscribed": 0,
+    "value_handle": 16,
+    "mtu": 0,
+    "interval_units": 0,
+    "tx_bytes": 0,
+    "rx_bytes": 3113440,
+    "tx_messages": 0,
+    "rx_messages": 12760,
+    "tx_errors": 0,
+    "advertisements": 2082
+  },
+  "external_transmitter_before": {
+    "version": 1,
+    "role": 0,
+    "synced": 1,
+    "connected": 0,
+    "subscribed": 0,
+    "value_handle": 16,
+    "mtu": 0,
+    "interval_units": 0,
+    "tx_bytes": 4773128,
+    "rx_bytes": 0,
+    "tx_messages": 19562,
+    "rx_messages": 0,
+    "tx_errors": 32860,
+    "advertisements": 0
+  },
+  "external_transmitter_after": {
+    "version": 1,
+    "role": 0,
+    "synced": 1,
+    "connected": 0,
+    "subscribed": 0,
+    "value_handle": 16,
+    "mtu": 0,
+    "interval_units": 0,
+    "tx_bytes": 4773128,
+    "rx_bytes": 0,
+    "tx_messages": 19562,
+    "rx_messages": 0,
+    "tx_errors": 32860,
+    "advertisements": 0
+  },
+  "load_transitions": [],
+  "source_payload_mbps": [
+    0.0,
+    0.0
+  ],
+  "sdr": {
+    "frames": 569,
+    "samples": 16380,
+    "sample_rate_hz": 80000000,
+    "lo_mhz": 2442,
+    "bandwidth_mhz": 48,
+    "gain": "MANUAL 20",
+    "fft_length": 1024,
+    "all_crcs_verified": true,
+    "nominal_observation_pct": 0.3878907625470479,
+    "rail_pct": 0.0
+  }
+}

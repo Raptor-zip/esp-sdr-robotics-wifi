@@ -2,7 +2,7 @@
 
 ## 公開データからの再生成
 
-リポジトリ直下で`make check`を実行すると、公開データの全SHA-256を確認し、56試行のRTT p99、損失率、20 ms期限超過、送信ジッターおよび19条件群の統計を相対時刻から再計算します。原集計と一致しない場合はエラーになります。
+リポジトリ直下で`make check`を実行すると、公開データの全SHA-256を確認し、先行56試行と追加69試行のRTT p99、損失率、20 ms期限超過、送信ジッターおよび条件群の統計を相対時刻から再計算します。原集計と一致しない場合はエラーになります。
 
 `make figures`は操縦通信の主要な青・緑パネルと遅延比較図を、公開した実測FFT電力とJSONから生成します。取得反復1の画像と全反復の集計値を明記しています。基礎観測・受信系の既存図はそのまま添付しています。公開データだけで生I/QのFFT長変更、STF探索、生PCAPとの照合をやり直すことはできません。
 
@@ -10,7 +10,7 @@
 
 ## 実機取得コード
 
-`experiments/scripts/acquisition/`には使用した取得コードを、ホスト名や元Wi-Fiプロファイルを設定で渡す形に整理してあります。移行後の検証はオフラインの構文確認と解析整合性確認です。実機実験を再実行した結果ではありません。
+`experiments/scripts/acquisition/`には使用した取得コードを、ホスト名や元Wi-Fiプロファイルを設定で渡す形に整理してあります。先行取得コードと、追加の両チーム・周期負荷・BLE実機測定コードを含みます。測定構成の違いは[主実験の方法](two-team-method.md)を参照してください。
 
 - `capture.py`: ESP32-C5のCRC付きI/Q取得。終了時にシリアルのVMIN/VTIMEを復元。
 - `timed_capture.py`: `CLOCK?`と`CAPTIME?`を使った時刻付き取得。
@@ -54,8 +54,31 @@ idf.py -p /dev/ttyUSB0 flash
 
 公開先は [Raptor-zip/esp-sdr-robotics-wifi](https://github.com/Raptor-zip/esp-sdr-robotics-wifi) です。`origin`は個人公開フォーク、`upstream`は`ESPARGOS/esp-sdr`です。上流の更新と実験資料の履歴を両方保持しています。
 
-計測時のC5ソースはコミット`4d990f76538109a7769b632471a411a186b97a8e`に残っています。これは`ff1966a`に局所的な時計応答・初期帯域選択の修正を加えた版です。現在の`main`は上流の更新を統合しているため、計測実行版とは区別してください。公開整理時の統合に伴う実機への再書込みや再測定は行っていません。
+計測時のC5ソースはコミット`4d990f76538109a7769b632471a411a186b97a8e`に残っています。これは`ff1966a`に局所的な時計応答・初期帯域選択の修正を加えた版です。現在の`main`は上流の更新を統合しているため、計測実行版とは区別してください。公開整理時の上流統合自体ではC5へ再書込みしていません。今回の追加通信試験にも、この既存C5ファームウェアを使用しています。
 
 元資料はローカルの`artifacts/private-originals.tar`へ非公開で保管しています。公開用コミットの`artifacts/publication.bundle`と`artifacts/publication.patch`もローカルに保存します。GitHubからcloneした環境には、これらのバックアップは付属しません。
 
 `scripts/publish.sh`は、ローカルのGit bundleから個人アカウントの公開フォークへ資料を送るための補助スクリプトです。既存の`main`をfetch・mergeしてからpushします。競合があれば作業コピーの場所を表示して終了します。通常の更新は公開リポジトリでコミットし、`git push origin main`を実行してください。
+
+## 両チーム通信・周期Wi-Fi・BLEの再測定
+
+`team_traffic.py`はロボット側のUDP echoとTCP模擬データ、`team_robot_wrapper.py`は一時NetworkManager接続と期限付きの元Wi-Fi復帰を担当します。観測PCにはCh6・20 MHz、192.168.8.1/24、SSID `ESP-SDR-TEAM-A`のAP接続 `sdr-team-a-controller`を事前作成します。SSID、IP、ポートは取得コードとファームウェアの実験定数です。実機のインターフェースや元接続は各環境で確認します。
+
+元のフラッシュを退避し、ESP32-1/2はrobotics v3/v5、ESP32-3はteam-controller、C5は時刻付きSDRを使用します。`TWO_TEAM_ROOT`で非公開の計測保存先を指定し、`evidence/http-token`へ認証用文字列を600権限で保存します。ロボット側へ同じ値を渡します。秘密と元I/Qは公開ツリーへ置きません。
+
+```sh
+python3 experiments/scripts/acquisition/run_two_team.py
+python3 experiments/scripts/acquisition/run_radio_coexist.py burst
+# この段階でESP32-1/2をble-linkへ書き換える
+python3 experiments/scripts/acquisition/run_radio_coexist.py ble --pilot
+python3 experiments/scripts/acquisition/run_radio_coexist.py ble
+python3 experiments/scripts/analyze_two_team.py --raw /非公開の保存先/raw
+make check
+make figures
+make report-sources
+make reports images
+```
+
+USB割当は取得コード既定でESP32-1=ttyUSB0、2=ttyUSB1、3=ttyUSB2、C5=ttyACM0です。変わった場合は必ず識別して合わせます。実験終了後にHTTP `/stop`でロボット側を復帰させてから観測PCの一時APを終了・削除し、元接続を戻します。ESP32の電波出力と負荷を停止し、C5を通常表示用設定へ戻します。
+
+主実験の相対時刻とFFTからは統計・図を再生成できます。時刻とI/Qの厳密なパケット一致、連続占有率、元I/Qの再FFT、ROS 2トピックの評価は再現範囲に含みません。

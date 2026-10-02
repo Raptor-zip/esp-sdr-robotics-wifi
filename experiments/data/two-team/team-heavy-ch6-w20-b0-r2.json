@@ -1,0 +1,111 @@
+{
+  "run_id": 102024,
+  "seconds": 30,
+  "hz": 100,
+  "payload_bytes": 64,
+  "sent": 3000,
+  "received": 2759,
+  "loss_pct": 8.033333333333333,
+  "rtt_ms": {
+    "p50": 21.131,
+    "p95": 113.88900000000001,
+    "p99": 125.20912000000001
+  },
+  "max_rtt_ms": 137.044,
+  "longest_echo_gap_ms": 130.564,
+  "missed_deadline_pct": {
+    "10": 70.93333333333334,
+    "20": 54.46666666666666,
+    "50": 38.166666666666664,
+    "100": 17.5
+  },
+  "send_lateness_p99_ms": 1.849079999999998,
+  "delivered_payload_mbps": [
+    1.3474133333333334,
+    0
+  ],
+  "semantics": "ESP32-3 local-clock UDP application echo RTT via AP to robot laptop; paced synthetic TCP bulk in reverse; not ROS 2; host command time is an approximate SDR alignment anchor",
+  "other_delivered_mbps": 0.0,
+  "counter_window_seconds": 32.039249836,
+  "controller_after": {
+    "version": 1,
+    "connected": 1,
+    "tcp_connected": 1,
+    "running": 0,
+    "done": 1,
+    "run_id": 102024,
+    "rx_bytes": 86894720,
+    "bench_rx_bytes": 5052800,
+    "primary": 6,
+    "secondary": 0,
+    "ap_bw": 1,
+    "rssi": -33
+  },
+  "other_receiver_counters": {
+    "before": 141197376,
+    "after": 141197376
+  },
+  "source_counters": {
+    "before": [
+      417792,
+      0
+    ],
+    "after": [
+      5644288,
+      0
+    ]
+  },
+  "condition": {
+    "repeat": 2,
+    "own_load": "heavy",
+    "other_load": false,
+    "other_channel": 6,
+    "other_width_mhz": 20,
+    "own_channel": 6,
+    "own_width_mhz": 20,
+    "requested_power_qdbm": 76
+  },
+  "actual_radio": {
+    "primary": 6,
+    "secondary": 0,
+    "configured_bw": 1,
+    "ap_bw": 0,
+    "tx_qdbm": 56
+  },
+  "controller_radio": {
+    "version": 1,
+    "connected": 1,
+    "tcp_connected": 1,
+    "running": 0,
+    "done": 1,
+    "run_id": 102023,
+    "rx_bytes": 81647872,
+    "bench_rx_bytes": 0,
+    "primary": 6,
+    "secondary": 0,
+    "ap_bw": 1,
+    "rssi": -34
+  },
+  "other_station_radio": {
+    "primary": 6,
+    "secondary": 0,
+    "ap_bw": 1,
+    "rssi": -40
+  },
+  "source_payload_mbps": [
+    1.30502331402963,
+    0.0
+  ],
+  "sdr": {
+    "frames": 567,
+    "samples": 16380,
+    "sample_rate_hz": 80000000,
+    "lo_mhz": 2442,
+    "bandwidth_mhz": 48,
+    "gain": "MANUAL 20",
+    "fft_length": 1024,
+    "all_crcs_verified": true,
+    "nominal_observation_pct": 0.3865266949722574,
+    "rail_pct": 0.0
+  }
+}

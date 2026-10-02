@@ -46,140 +46,142 @@
 \setsansfont{HaranoAjiGothic-Medium.otf}[BoldFont=HaranoAjiGothic-Medium.otf]
 \setsansjfont{HaranoAjiGothic-Medium.otf}[BoldFont=HaranoAjiGothic-Medium.otf]
 
+
+
+
+
 \begin{document}
 \twocolumn[{
-\begin{center}{\LARGE\bfseries\sffamily ロボコンの操縦通信とWi-Fi干渉を可視化する\par}
-\vspace{1mm}{\normalsize 同じチャネル・隣接チャネル・20/40 MHz幅を実測で比較\par}
+\begin{center}{\LARGE\bfseries\sffamily ロボコンの通信を、他チームの負荷と一緒に測る\par}
+\vspace{1mm}{\normalsize 同一・隣接・分離チャネル、帯域幅、Wi-FiとBluetoothの実測\par}
 \vspace{.5mm}{\normalsize 貝淵蒼馬\par}\end{center}
 \noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
-\textbf{要旨}\quad 操縦用の短い通信は、全て届いていても遅れることがある。
-100 HzのUDP往復通信とESP32-C5の生I/Qを同時に記録し、映像相当負荷と別APの周波数・幅を変えた。
-同一APの高負荷では欠落0\%でもRTT p99が10.6から36.9 ms、20 ms期限超過が7.42\%へ増加した。
-青〜緑のSDR画像で帯域の重なりを見て、遅延・欠落を別に測る。
-会場の設定選びに使える比較手順と、今回の配置で言える範囲を示す。}}\vspace{2mm}}]
+\textbf{要旨}\quad 操縦と映像相当通信を同じAPへ通し、別チームも通信中の条件を比較した。
+100 Hz UDPの応答とESP32-C5の実測I/Qから、帯域の重なりを青〜緑で示す。
+今回の配置では他チーム負荷により、同一・隣接チャネルで遅延と期限超過が増えた。
+通常Wi-Fiの周期負荷、外部BLEの広告・通知も比較し、画像と通信性能の両方から考察する。}}\vspace{2mm}}]
+\section{測りたいのは「他チームも通信中」}
+スマートフォンからの指令とロボットからの映像・点群は、同じAPや帯域を共有する。
+操縦だけが動く構成では、大容量通信中の他チームの影響を十分に再現できない。
+今回は自チームのUDP指令とTCP模擬データを\textbf{STA→AP→STA}へ通し、独立した他チームにもTCPを流した。
+スマートフォン、ROS 2、実映像やモータは使用していない。
+\begin{center}\includegraphics[width=\linewidth]{../experiments/figures/two-team/two-team-setup-compact.pdf}\captionof{figure}{自チームは2端末間をAPが中継。他チームは独立APの飽和TCP通信。}\end{center}
+\section{条件と、数値の読み方}
+観測PC（Intel BE200）はCh6・20 MHz AP、ESP32-3はコントローラー役、ラップトップ2（MT7921E）はロボット役。
+ラップトップ1（Intel AX210）から有線でインターネットを共有した。
+他チームはESP32-2 AP→ESP32-1 STAで、Ch6・Ch7・Ch11、Ch1の20/40 MHzを比較する。
 
-\section{「つながる」と「間に合う」を分ける}
-映像のMbpsやWi-Fi接続表示だけでは、操縦指令が期限に間に合うか分からない。
-観測PCから64 byteのUDPを10 msごとに送り、ESP32-1が同じ内容を返す通信を用いた。
-測ったのはアプリケーションの\textbf{往復遅延（RTT）}で、モータ応答や片道の到着時刻ではない。
-p99は受信応答の99\%が収まる遅延、20 ms超過率は20 ms以内に応答が戻らなかった割合で、欠落も含む。
-平均値と欠落率だけでは短い詰まりを見落とすため、最長応答間隔も残した。
-
-\section{操縦側を固定し、別の通信を加える}
-観測PC（Intel BE200）をCh6・20 MHz APとし、ESP32-1を操縦相手に固定した。
-ラップトップ1（Intel AX210）から有線LANでインターネットを共有し、観測PCのWi-Fiを実験に使った。
-同一AP比較ではラップトップ2（MT7921E）へTCPを流す。
-別AP比較ではESP32-2をAP兼送信機にし、ラップトップ2を接続する。
-操縦側を変えず、別APの同一Ch6・隣接Ch7・分離Ch11、Ch1の20/40 MHzを比較した。
-
-追加ESP32間750 mm、C5から両ボードは約40 cm・90 cm、観測PCとラップトップ2は約30 cm。
-位置は固定で、\textbf{距離掃引ではない}。近づけると何倍悪化するかは未測定である。
-1試行30 s・3,000応答機会、主要条件3反復、反復ごとに条件順を入れ替えた。
-省電力の補助比較だけ2反復とした。
-
-\begin{center}\includegraphics[width=\linewidth]{../experiments/figures/robotics/robotics-setup.pdf}
-\captionof{figure}{独立AP比較の構成。別APの設定を変え、主リンクの操縦応答と周囲のRFを同時記録する。}\end{center}
+ESP32-1/2間75 cm、C5から両ボードへ約40 cm・90 cm、観測PCとラップトップ2間約30 cm。
+位置固定で距離掃引ではなく、ESP32-3の距離は未測定。
+1試行30 s・3,000送信、各条件3反復、反復内の順序を入れ替えた。
+64 byte・100 Hz UDPを反射し、送信側の同じ時計で往復遅延（RTT）を測る。
+p99は戻った応答の99パーセンタイル。\textbf{20 ms期限超過には欠落も含む}。
+20 msは比較用の目標で、ロボットの安全限界を示す値ではない。
 \newpage
-\section{映像相当通信を増やすと？}
-\begin{center}\captionof{table}{同一APの操縦応答。3反復の統合値。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 20 ms超過\% & 欠落\%\\\midrule 待機 & 10.6 & 0.00 & 0.00\\
-約20 Mbps & 21.0 & 1.32 & 0.00\\
-約38–41 Mbps & 36.9 & 7.42 & 0.00\\
-\bottomrule\end{tabular}\end{center}
-\begin{center}\includegraphics[width=.95\linewidth]{../experiments/figures/robotics/robotics-control.pdf}
-\captionof{figure}{点は各反復p99、赤線は統合p99。下段は20 ms期限超過率。}\end{center}
-主要3条件の欠落は0\%だったが、高負荷でp99は36.9 ms、最長応答間隔は102.9 msとなった。
-これは100 Hzで約10周期分の\textbf{応答が戻らない時間}である。
-片道指令も同じだけ途切れたという意味ではないが、「ロスがないので良好」は不十分である。
-60 Mbps指定でも実測は38.4–40.6 Mbpsで、転送速度が頭打ちになった一方、遅延の裾は伸びた。
+\section{両チームに負荷をかけた結果}
+\begin{center}\captionof{table}{自チーム大容量通信中の操縦応答。各9,000送信の統合値。期限は20 ms。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 期限超過\% & 欠落\%\\\midrule 他待機 Ch6 & 125.8 & 55.0 & 9.2\\
+両負荷 Ch6 & 148.4 & 67.7 & 6.1\\
+他待機 Ch7 & 123.8 & 53.8 & 9.8\\
+両負荷 Ch7 & 132.3 & 63.0 & 7.0\\
+他待機 Ch11 & 126.5 & 54.4 & 10.6\\
+両負荷 Ch11 & 127.4 & 57.2 & 11.3\\\bottomrule\end{tabular}\end{center}
+他チームを待機から負荷へ変えた時、統合p99は同一Ch6で125.8→148.4 ms、隣接Ch7で123.8→132.3 msとなった。
+分離Ch11は126.5→127.4 msで、今回の配置では増分が小さかった。
+20 ms期限超過も同一・隣接で増えた。欠落率だけなら逆方向に見える条件があり、\textbf{「届く率」と「間に合う率」を分ける必要がある}。
 
-\subsection{設計へ持ち帰ること}
-映像と操縦を共有するなら、映像負荷を増やした時の期限超過を測る。
-再送、APの送信待ち、端末処理を分離した測定ではないが、平均転送速度だけより操縦上の問題が分かる。
-古い指令をためず最新値を優先する、期限切れを破棄する、通信途絶時の停止を決める設計は候補になる。
-それらの改善効果や安全な停止しきい値は今回検証していない。
+\subsection{まず単独時の限界を見つける}
+操縦のみ・他待機でもp99は117--120 ms、期限超過は47--49\%だった。
+この実験系は既に20 ms目標を満たさない。AP、端末処理、無線のどこで遅れるかは未分離であり、全遅延を他チームの干渉へ帰属しない。
+RTTを半分にして片道値とみなすこともできない。
+
+\subsection{要求Mbpsより、実際に届いた量}
+TCP模擬データは192 KiBを10 Hzで送ろうとする、要求15.73 Mbpsの負荷である。
+実受信は今回約0.6--1.6 Mbpsにとどまり、要求量を達成していない。
+送信側の逆圧がかかる飽和状態を測っており、15.73 Mbpsの映像を再現したとは言わない。
+他チームもチャネル別に約0.4--4.7 Mbpsと異なる。
+自チームのデータはAPを通るため無線を2回通過する。Mbpsを揃えても空中時間は同じにならない。
+
+\subsection{ロボコンへ持ち帰る問い}
+自分のカメラを動かし、隣のチームにも実際の通信を流してもらった時、指令の期限は守れるか。
+その比較を\textbf{転送速度・RTT・期限超過・欠落}の組で行う。
+接続表示と平均Mbpsだけでは、今回の遅い応答を見抜けない。
+\clearpage
+\twocolumn[{
+\begin{center}\includegraphics[width=.98\textwidth]{../experiments/figures/two-team/two-team-blue-green-compact.pdf}\captionof{figure}{自チームはCh6・20 MHzで大容量TCP＋操縦UDP。各画像は1反復目、p99注記は3反復統合。白破線は自チームの名目帯域。色尺度・ゲイン共通。}\end{center}}]
+\section{チャネル番号より、帯域の重なり}
+Ch6の2437 MHzとCh7の2442 MHzは5 MHzしか離れない。
+20 MHz幅で番号を1つずらすと広く重なり、画像でも他チームの帯域が主リンクへ重なる。
+Ch11の2462 MHzへ離すと、強い成分の位置が高周波側へ分かれる。
+\textbf{同一Ch6が今回最も遅く、隣接が常に最悪という結果ではない}。
+
+同一チャネルでの送信待ち、部分重複による受信妨害、再送、APや端末の処理が候補になる\cite{rf}。
+再送やキャリアセンスを測っていないため、画像で原因を決められない。
+チャネル別の実負荷量も違い、周波数だけを揃えた因果実験ではない。
+\begin{center}\includegraphics[width=\linewidth]{../experiments/figures/two-team/two-team-width-compact.pdf}\captionof{figure}{他チームCh1の接続幅を20/40 MHzへ変更。副チャネル追加でCh6と名目帯域が重なる。}\end{center}
+20→40 MHzでp99は128.6→127.5 ms、期限超過は55.0→56.8\%だった。
+今回はp99の明確な悪化を示さず、「広いほど必ず悪い」とは言えない。
+接続幅の拡大と、全パケットが40 MHzで送信されることも別である。
+\subsection{画像の色は通信性能ではない}
+{\small C5：80 MS/s・帯域48 MHz・ゲイン20・FFT1024。
+各行は約205 $\mu$s、名目RF観測時間比は約0.4\%。
+dBFSは未校正で感度も均一ではない。色を占有率や欠落率へ換算しない。外来信号も含む。}
+\newpage
+\section{意図的な周期負荷を加える}
+所有する実験リンクへ、通常のWi-Fi TCPを2 s ON・2 s OFFで流した。
+自チームの大容量通信は維持し、他チームCh6・Ch7・Ch11で各3反復測った。
+ON/OFF操作と実受信量を残し、単に「緑が多い」から性能を推測しない。
+\begin{center}\includegraphics[width=\linewidth]{../experiments/figures/two-team/wifi-burst-single.pdf}\captionof{figure}{上：実測FFT。下：同じ試行の応答RTT。緑帯はUARTによるON操作区間。両時計の対応は近似で、パケット単位の同期ではない。}\end{center}
+波形は連続送信ではなく、TCPのバースト・再送・送信待ちを含む。
+下図にない応答は欠落であり、遅い点が減ったことを改善と判断しない。
+ON/OFF時刻も個々のRF送信時刻ではないため、マイクロ秒の因果対応は評価していない。
 
 \clearpage
 \twocolumn[{
-\begin{center}\includegraphics[width=.98\textwidth]{../experiments/figures/robotics/robotics-blue-green.pdf}
-\captionof{figure}{操縦APはCh6に固定。画像は各条件の1反復目、RTT注記は3反復の統合値。
-色尺度・LO・ゲインは共通。白点線は操縦側の名目20 MHz範囲。1行は約205 $\mu$sの間欠取得。}\end{center}\vspace{1mm}}]
-
-\section{番号を1つずらせば避けられる？}
-Ch6中心は2437 MHz、Ch7は2442 MHzで5 MHzしか離れない。
-20 MHzの通信を番号1つだけずらしても帯域は大きく重なる。
-中央は主リンクと別APの成分が同じ領域へ重なる条件、右は別APの成分が高周波側へ分かれる条件である。
-2418 MHz付近の強い成分など室内の外来通信も含む。全ての緑を実験APだけに帰属していない。
-\begin{center}\captionof{table}{飽和TCP時の操縦応答。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 20 ms超過\% & 欠落\%\\\midrule 同一 Ch6 & 26.5 & 1.77 & 0.00\\
-隣接 Ch7 & 15.6 & 0.26 & 0.00\\
-分離 Ch11 & 13.1 & 0.16 & 0.00\\
-\bottomrule\end{tabular}\end{center}
-\subsection{同一・隣接のどちらが悪いかは配置次第}
-同一チャネルでは、互いを認識できるWi-Fi機器が送信機会を分け合う。
-部分重複は中心が違っても受信帯域へ入り、受信妨害や送信待ちを起こし得る\cite{rf}。
-本実験は再送数やキャリアセンスを同定しておらず、図だけで原因を決められない。
-TCP比較の統合p99はCh6 26.5、Ch7 15.6、Ch11 13.1 msだった。
-\textbf{この配置では同一Ch6が大きく、隣接が常に最悪という結果ではない。}
-TCP実効速度も3.6–6.3、3.0–8.1、8.6–9.8 Mbpsと違い、空中時間をそろえた周波数だけの比較ではない。
-番号ではなく帯域の重なりを確認し、負荷中の応答を測る判断につながる。
-
+\begin{center}\includegraphics[width=.98\textwidth]{../experiments/figures/two-team/ble-narrow-blue-green.pdf}\captionof{figure}{BLE比較のCh6帯域上側2450--2470 MHzを拡大。通知時に短い狭帯域成分が見える。各画像は1反復目、色尺度はこの図内で共通の$-90$--$-60$ dBFS。前ページの同じ色とは電力が異なる。}\end{center}}]
+\section{Bluetoothも実通信と合わせて測る}
+ESP32-1/2を独立したBLEリンクへ切り替え、Wi-Fi側の端末は同じ構成を保った。
+BLE停止、20 ms設定の非接続広告、BLE 1MのGATT通知を、自チーム大容量通信あり・なしで各3反復比較した。
+広告は受信機の復号数、通知は実受信bytes、MTU・接続間隔も記録した。
+同じチップ内の共存制御やBluetooth音声の試験ではない。
+\begin{center}\captionof{table}{外部BLEと操縦応答。期限は20 ms、各3反復。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 期限超過\% & 欠落\%\\\midrule 操縦 / BLE停止 & 118.9 & 49.2 & 8.6\\
+操縦 / BLE広告 & 118.4 & 47.5 & 6.8\\
+操縦 / BLE通知 & 121.6 & 48.6 & 6.6\\
+重負荷 / BLE停止 & 126.2 & 54.6 & 8.1\\
+重負荷 / BLE広告 & 126.0 & 58.2 & 9.3\\
+重負荷 / BLE通知 & 126.3 & 56.8 & 9.3\\\bottomrule\end{tabular}\end{center}
+Wi-Fi大容量通信中のp99は、BLE停止126.2 ms、広告126.0 ms、通知126.3 msだった。
+BLE通知の実受信量はWi-Fi待機0.36 Mbps、Wi-Fi負荷0.33 Mbps（試行平均）。
+片方の方式だけでなく、両リンクの通信量と操縦の期限超過を確認する。今回はBLE追加でWi-Fiのp99が大幅に増える結果ではなく、BLE通知の到達量の変化が比較の手掛かりになった。
 \newpage
-\section{SDR画像と通信測定の役割}
-画像は「どこに、どの幅の成分があるか」を見る。
-緑が増えることは、そのまま指令の欠落率や占有率を意味しない。
-強い信号、バーストと取得窓が重なる回数、外来通信など、色が変わる理由は複数ある。
-離れた帯域に見えても、主リンクへの無影響は保証しない。
-同じ配置・同じ受信設定で画像を比較し、RTT・期限超過・欠落を併記して判断する。
-\subsection{別の負荷方式でも確認する}追加のUDP 20 Mbps要求では、主リンクの統合p99はCh6 19.4、Ch7 18.3、Ch11 58.4 ms。送信API受付量と受信到着数を別に残した。要求20 Mbpsは達成20 Mbpsや等しい空中時間を保証しない。TCPだけの順位を別の負荷へ一般化せず、リンクの実通信量と遅延を合わせて見る。
+\section{細い信号が見えれば、何が分かるか}
+BLEの広告は2402・2426・2480 MHz、接続通信はデータチャネルを使う\cite{ble}。
+細い成分は広帯域Wi-Fiとの違いを観察する手掛かりになる。
+ただしC5は短い取得を間欠的に行うため、全パケットやホッピングの連続軌跡を捕らえたわけではない。
+2426 MHz以外の広告周波数は今回のLOから遠く、3広告チャネルを均一感度で比較していない。
+外来RFもあり、画像だけで全ての細線をBLEへ同定しない。
 
-\begin{center}\includegraphics[width=.95\linewidth]{../experiments/figures/robotics/robotics-channel-metrics.pdf}
-\captionof{figure}{TCP比較の各反復p99と20 ms期限超過。画像と同じ条件でも、繰返しの幅を見て判断する。}\end{center}
-\clearpage
-\twocolumn[{
-\begin{center}\includegraphics[width=.98\textwidth]{../experiments/figures/robotics/robotics-width-blue-green.pdf}
-\captionof{figure}{別APのCh1を20/40 MHzへ変更。操縦APはCh6・20 MHzのまま。
-40 MHzの接続幅をクライアントで確認。広い接続でも全送信が40 MHz波形になるとは限らない。}\end{center}\vspace{1mm}}]
+この測定からBluetooth全般が無害／有害とは決められない。
+通知の負荷、端末、位置、Bluetooth方式が変われば結果も変わる。
+今回はClassic、音声、BLE 2M、距離・向き・移動の掃引は未測定である。
 
-\section{広いチャネルは何を増やし、何を減らす？}
-Ch1の名目20 MHz範囲は約2402–2422 MHz、Ch6は約2427–2447 MHzで離れる。
-Ch1へ上側の副チャネルを足す40 MHz設定では中心2422 MHz、約2402–2442 MHzとなりCh6へ重なる。
-幅を広げると1回で運べる情報を増やせる一方、隣へ配置できる通信リンクの余裕を減らす\cite{rf}。
-幅は「自分の最高速度」と「会場の帯域の取り合い」の両方を変える。
-\begin{center}\captionof{table}{別APの幅と負荷方式を変えた時の操縦応答。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 20 ms超過\% & 欠落\%\\\midrule TCP：20 MHz & 13.8 & 0.19 & 0.00\\
-TCP：40 MHz & 20.0 & 1.00 & 0.00\\
-UDP要求20：20 MHz & 16.1 & 0.24 & 0.00\\
-UDP要求20：40 MHz & 133.9 & 40.59 & 0.00\\
-\bottomrule\end{tabular}\end{center}
-TCP比較では統合p99が13.8から20.0 ms、20 ms超過率が0.19から1.00\%へ増えた。
-ただし反復のp99範囲には重なりがあり、負荷速度も違う。「40 MHzで必ずこの量だけ悪化する」とは言えない。
-狭い帯域は重複を避けやすいが、単位データの送信時間が増える可能性もある。
-\textbf{速い設定が複数ロボットの操縦に最適とは限らない}という問いを実機で比較できる。
-
-UDP要求20 Mbpsの40 MHz条件は3反復p99が23.6–157.3 msと大きくばらついた。
-実際の受付量も0.35–5.07 Mbpsで要求値を下回った。TCPの結果だけで幅の影響を代表せず、
-自分が使う通信方式・負荷で期限超過を測る必要がある。悪化の原因は今回の測定だけでは特定できない。
-
-\newpage
-\section{会場で試すなら、この順で測る}
+\section{会場で比較する時の手順}
 \begin{enumerate}
-\item 操縦だけのRTT p99・期限超過・最長応答間隔を残す。
-\item 自分の映像負荷を増やし、遅延の裾を見る。
-\item 別リンクを同一・隣接・分離へ動かし、SDRと操縦応答を同時に比較する。
-\item 幅を比較し、通信量・実接続幅も記録する。
+\item 操縦だけで期限超過を測り、まず主リンクの基準を作る。
+\item 自分の映像・点群を流し、要求量と実到達量を分ける。
+\item 他チームにも通信してもらい、同一・隣接・分離と幅を比較する。
+\item Bluetoothなどの別方式も動かし、両方の性能を見る。
 \end{enumerate}
-今回の測定手順に基づく評価案である。空いて見えるチャネルを選んで終えるより、他チームも通信中の配置で期限を確かめる。
-近接・遮蔽・隠れ端末・移動の効果は別途検証が必要で、今回の数値を会場へそのまま外挿しない。
+設定変更の判断には、各反復の変動と本来の制御周期を使う。
+今回の固定室内配置とESP32を含む通信系の数値を、実ロボットや競技用ルーターへそのまま外挿しない。
+改善策の候補は映像負荷の制限、古い指令を捨てる処理、通信途絶の検出であり、効果と停止しきい値は別途検証が必要である。
 
-\section{5 GHzの先行観測と、画像の限界}
-先行実験では既存5 GHz APの80 MHz通信をC5で受信し、LOを分けて合成した。
-広い通信を俯瞰できるが同時取得ではなく、5 GHzへ移した操縦の遅延改善を比較した結果でもない。
-追加ESP32の2台は2.4 GHzのみである。
-
-今回のC5設定は80 MS/s、48 MHzアナログ帯域、ゲイン指数20、FFT長1024。
-CRCを照合したがdBFSは絶対電力へ未校正で、受信感度は表示端で落ちる。
-名目RF観測時間比は約0.42\%で、各行の間はほとんど見ていない。
-画像から連続占有率やパケットごとの原因を求めない。先行受信系評価はこの解釈を支える補足として統合版へ残した。
-今回の追加主比較は56試行・168,000応答機会・34,320 I/Q取得。各反復と原データを保持した。
-\begin{thebibliography}{9}\footnotesize\setlength{\itemsep}{0pt}
-\bibitem{rf} Cisco, Wireless RF Reference Guide, \url{https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/technical-reference/wireless-rf-reference-guide.html}.
-\bibitem{sdr} ESP-WebSDR, \url{https://espargos.net/espsdr/app/}.
-\end{thebibliography}\end{document}
+\section{データと再現範囲}
+今回の追加実験は69試行、207,000送信、39,149 I/Q取得。
+相対時刻・FFT電力・匿名条件・取得用コードと詳細版を公開した。
+先行実験は構成が異なる補足として詳細版へ統合し、今回の表と混ぜていない。
+\url{https://github.com/Raptor-zip/esp-sdr-robotics-wifi}
+\begin{thebibliography}{9}\small
+\bibitem{rf} \href{https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/technical-reference/wireless-rf-reference-guide.html}{Cisco, Wireless RF Reference Guide.}
+\bibitem{ble} \href{https://www.bluetooth.com/bluetooth-le-primer/}{Bluetooth SIG, Bluetooth LE Primer.}
+\end{thebibliography}
+\end{document}

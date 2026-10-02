@@ -1,0 +1,6 @@
+{
+  "app.bin": "34a9efd883eccb7dda9726bd4886e518cc44f8b51c027d0310601e3a0eb40db2",
+  "bootloader.bin": "eba7d91b93691660ccd5a52335ea8293dc4145368f8659e08824285246015435",
+  "partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820",
+  "sdkconfig.measured": "3a39ce6b353c20ae85cd91c30e3d50a0bba67f534fb16c3c2431d6e2033ca884"
+}

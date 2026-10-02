@@ -20,3 +20,13 @@
 FFT電力はDC除去・Hann窓・窓和の二乗による規格化・区間の線形電力平均を用います。C5の符号規約に合わせRF周波数はLOからベースバンド周波数を引いています。`power_dbfs`は保存容量のためfloat32で、図の表示に必要な精度を保持します。FFTから元の位相やWi-Fiフレームは復元できません。
 
 青・緑の色尺度は全比較で−90〜−45 dBFS。各行は1つの間欠取得で、取得番号の軸を実時間の連続ウォーターフォールとして解釈しないでください。dBFSはdBmへの校正値でもチャネル占有率でもありません。
+
+## 両チーム・周期Wi-Fi・BLE (`two-team`)
+
+`*-control.npz`はESP32-3のBENCH開始を基準としたns単位の`sent_ns`・`planned_ns`・`received_ns`です。**このデータ群の欠落印は`received_ns == -1`**で、先行`robotics`の0とは異なります。元のµs時計をnsへ変換しただけで1 ns精度にはなりません。空の`bulk_records`は互換のための形状で、センサー時刻列は測っていません。
+
+`*-spectrum.npz`はRFの`frequency_mhz`、取得行×1024 binのfloat32 `power_dbfs`、`capture_start_s`と`capture_end_s`です。取得時刻はホストUARTコマンド開始からの相対秒で、ESP時計との対応は近似です。パケットとFFTの厳密な同期には使えません。
+
+試行JSONには`condition`、`rtt_ms`、`loss_pct`、`missed_deadline_pct`、`delivered_payload_mbps`（自チーム実受信）、`source_payload_mbps`（TCP送信受付）、`other_delivered_mbps`（他チーム実受信）、SDR設定とCRC照合結果があります。周期Wi-Fiには`load_transitions`（ON/OFF、操作前後の相対秒）、BLEには送受信状態、広告復号数、MTUと接続間隔が加わります。BLE接続間隔の`interval_units`は1.25 ms単位です。送信APIエラー率はPHYパケット損失率とは違います。
+
+`summary.json`は各条件の反復数、全応答を統合したp99、期限超過、各反復のp99・実受信速度を残します。要求15.73 Mbpsを実到達量と置換していません。`manifest.json`の`two_team`は主42・周期9・BLE18試行を先行群と分けて集計します。`make check`が全SHA-256と時刻からの独立再計算を行います。

@@ -45,3 +45,9 @@ experiments/firmware/robotics/build/
 experiments/firmware/robotics/managed_components/
 experiments/firmware/robotics/sdkconfig
 experiments/firmware/robotics/sdkconfig.old
+
+experiments/firmware/team-controller/sdkconfig
+experiments/firmware/team-controller/sdkconfig.old
+
+experiments/firmware/ble-link/sdkconfig
+experiments/firmware/ble-link/sdkconfig.old
