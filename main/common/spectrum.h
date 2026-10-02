@@ -8,3 +8,13 @@ typedef bool (*spectrum_acquire_fn)(unsigned n, unsigned rate,
 bool spectrum_command(const char *line, unsigned frequency_mhz, spectrum_acquire_fn acquire);
 
 bool spectrum_fft_init(void);
+
+/* Snapshot and continuous backends run exclusively. Reuse their large buffers
+ * on SRAM-constrained targets; acquiring this workspace invalidates the cached
+ * snapshot window so a later transport switch rebuilds it. */
+typedef struct {
+    int16_t *fft, *window;
+    float *power;
+    uint8_t *frame;
+} spectrum_workspace_t;
+spectrum_workspace_t spectrum_workspace(void);

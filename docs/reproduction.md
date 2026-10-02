@@ -50,14 +50,12 @@ idf.py build
 idf.py -p /dev/ttyUSB0 flash
 ```
 
-## 初回公開のローカル成果物
+## 公開リポジトリとローカル保管
 
-整理前の資料は、ローカルの`artifacts/private-originals.tar`にまとめています。このバックアップは公開対象に含めません。公開用コミットの`artifacts/publication.bundle`と`artifacts/publication.patch`もローカルで保存します。
+公開先は [Raptor-zip/esp-sdr-robotics-wifi](https://github.com/Raptor-zip/esp-sdr-robotics-wifi) です。`origin`は個人公開フォーク、`upstream`は`ESPARGOS/esp-sdr`です。上流の更新と実験資料の履歴を両方保持しています。
 
-この作業環境では元リポジトリの`.git`が読取専用で、端末からGitHubへ接続できませんでした。公開用コミットは別のGit作業コピーで作成しています。通常の端末で次を実行すると、認証中の個人アカウントへ公開フォークを作成し、検証済みコミットをpushできます。既に同じ上流のフォークを所有していて新規フォークを作れない場合は、履歴を保持した新規公開リポジトリを作ります。元の作業ツリーを変更する処理はありません。
+計測時のC5ソースはコミット`4d990f76538109a7769b632471a411a186b97a8e`に残っています。これは`ff1966a`に局所的な時計応答・初期帯域選択の修正を加えた版です。現在の`main`は上流の更新を統合しているため、計測実行版とは区別してください。公開整理時の統合に伴う実機への再書込みや再測定は行っていません。
 
-```sh
-bash scripts/publish.sh
-```
+元資料はローカルの`artifacts/private-originals.tar`へ非公開で保管しています。公開用コミットの`artifacts/publication.bundle`と`artifacts/publication.patch`もローカルに保存します。GitHubからcloneした環境には、これらのバックアップは付属しません。
 
-既定のリポジトリ名は`esp-sdr-robotics-wifi`です。既存の同名リポジトリが非公開、または別プロジェクトの場合は中止します。公開済みリポジトリをcloneした環境には、これらのローカルbundleや非公開バックアップは付属しません。
+`scripts/publish.sh`は、ローカルのGit bundleから個人アカウントの公開フォークへ資料を送るための補助スクリプトです。既存の`main`をfetch・mergeしてからpushします。競合があれば作業コピーの場所を表示して終了します。通常の更新は公開リポジトリでコミットし、`git push origin main`を実行してください。

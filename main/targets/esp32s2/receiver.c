@@ -235,7 +235,7 @@ static void handle_command(char *line) {
         else if(!strcmp(line,"ADCCLOCK?")){char h[64];snprintf(h,sizeof(h),"ADC %u\n",rom_chip_i2c_readReg(0x66,0,4));reply(h);}
 #endif
         else if(!strcmp(line,"CAPS")) {
-            reply("CAPS SPEC SPECN SPECCAPS UARTBAUD RXLIMITS SERIALLEASE "
+            reply("CAPS SPEC SPECN SPECCAPS SPECSTAT DCT UARTBAUD RXLIMITS SERIALLEASE "
 #if CONFIG_ESP_SDR_UART_ENABLED
                   "DUALSERIAL "
 #endif

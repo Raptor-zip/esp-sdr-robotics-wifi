@@ -16,6 +16,17 @@
     .type   s3_fft2r_sc16_rnd, @function
 s3_fft2r_sc16_rnd:
     entry   a1, 64
+    movi    a12, -1                // whole transform
+    j       .Lr_init
+
+    .align 4
+    .global s3_fft2r_sc16_rnd_stage
+    .type s3_fft2r_sc16_rnd_stage, @function
+// Same arguments plus stage (0..log2(N)-1); one radix-2 stage per call.
+s3_fft2r_sc16_rnd_stage:
+    entry   a1, 64
+    mov.n   a12, a5
+.Lr_init:
     mov.n   a9, a1
     movi.n  a8, 1
     slli    a8, a8, 15
@@ -34,6 +45,14 @@ s3_fft2r_sc16_rnd:
     bltui   a6, 3, .Lr_short
 
     movi.n  a5, 1
+    bltz    a12, .Lr_stage
+    ssr     a12
+    srl     a6, a6
+    ssl     a12
+    sll     a5, a5
+    movi.n  a10, 16
+    wsr.sar a10
+    bltui   a6, 3, .Lr_tail
 .Lr_stage:
     mov.n   a13, a4
     mov.n   a9, a2
@@ -60,10 +79,16 @@ s3_fft2r_sc16_rnd:
     add.n   a8, a15, a9
     bne     a14, a5, .Lr_group
 .Lr_next:
+    bgez    a12, .Lr_return
     slli    a5, a5, 1
     srli    a6, a6, 1
     bgeui   a6, 3, .Lr_stage
 
+.Lr_tail:
+    bnei    a6, 1, .Lr_stage2
+    srli    a5, a5, 1              // final vector loop handles eight samples
+    j       .Lr_skip2
+.Lr_stage2:
     srli    a10, a5, 1
     beqz.n  a10, .Lr_skip2
     mov.n   a9, a4
@@ -90,6 +115,7 @@ s3_fft2r_sc16_rnd:
     ee.vst.h.64.ip  q2, a8, 8
     ee.vst.h.64.ip  q3, a8, 8
 .Lr_s2_end:
+    bgez    a12, .Lr_return
     st.qr   q4, a1, 16
 .Lr_last:
     ld.qr   q3, a1, 16
@@ -110,6 +136,7 @@ s3_fft2r_sc16_rnd:
     ee.vst.128.ip   q0, a2, 16
     ee.vst.128.ip   q1, a2, 16
 .Lr_s1_end:
+.Lr_return:
     movi.n  a2, 0
     retw.n
 .Lr_short:
@@ -119,3 +146,4 @@ s3_fft2r_sc16_rnd:
     st.qr   q1, a1, 16
     j       .Lr_last
     .size   s3_fft2r_sc16_rnd, . - s3_fft2r_sc16_rnd
+    .size   s3_fft2r_sc16_rnd_stage, . - s3_fft2r_sc16_rnd_stage

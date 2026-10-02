@@ -39,6 +39,7 @@ static unsigned esp_cpu_get_cycle_count(void){return 0;}
 static unsigned esp_timer_get_time(void){return 0;}
 static unsigned esp_rom_crc32_le(unsigned c,const void*p,unsigned n){return 0;}
 static bool txq_push(const void*p,unsigned n){return true;}
+#define scalar_telemetry(cycles,complete) ((void)0)
 #include "ring_scalar.h"
 static unsigned rev(unsigned x,unsigned bits){unsigned r=0;while(bits--){r=r*2+(x&1);x>>=1;}return r;}
 int main(void){
@@ -73,4 +74,34 @@ int main(void){
             src=Path(tmp)/'numeric.c';src.write_text(source)
             exe=Path(tmp)/'numeric'
             subprocess.run(['cc','-std=gnu11','-O2','-I'+str(ROOT/'main/common'),str(src),'-lm','-o',str(exe)],check=True)
+            subprocess.run([str(exe)],check=True)
+
+    @unittest.skipUnless(shutil.which('cc'), 'Host C compiler unavailable')
+    def test_dc_tracker_preserves_changes_and_bounds_hann_correction(self):
+        source = r'''
+#include "spectrum_dc.h"
+#include <assert.h>
+#include <string.h>
+unsigned spectrum_dc_mode=1;
+int main(void) {
+ for(unsigned n=256;n<=2048;n*=2) {
+  spectrum_dc_t dc={0};int16_t x[4096]={0};
+  x[0]=1000;x[1]=-800;x[n]=-500;x[n+1]=400;x[2*n-2]=-500;x[2*n-1]=400;
+  spectrum_dc_apply(&dc,x,n);
+  for(unsigned j=0;j<2*n;j++)assert(x[j]==0);
+  x[0]=2000;x[1]=-1600;x[8]=1234;x[9]=-2345;
+  spectrum_dc_apply(&dc,x,n);
+  assert(x[0]>900 && x[1]<-700);assert(x[8]==1234 && x[9]==-2345);
+  for(unsigned k=0;k<1024;k++){memset(x,0,sizeof(x));x[0]=2000;x[1]=-1600;spectrum_dc_apply(&dc,x,n);}
+  assert(x[0]>=-1 && x[0]<=1);assert(x[1]>=-1 && x[1]<=1);
+  spectrum_dc_mode=0;memset(x,0,sizeof(x));x[0]=32767;x[1]=-32768;x[n]=32767;x[n+1]=-32768;
+  spectrum_dc_apply(&dc,x,n);assert(x[0]==0 && x[1]==0);assert(x[n]==32767 && x[n+1]==-32768);
+  spectrum_dc_mode=1;
+ }
+}
+'''
+        with tempfile.TemporaryDirectory() as tmp:
+            src=Path(tmp)/'dc.c';src.write_text(source)
+            exe=Path(tmp)/'dc'
+            subprocess.run(['cc','-std=c11','-O2','-fsanitize=undefined','-I'+str(ROOT/'main/common'),str(src),'-o',str(exe)],check=True)
             subprocess.run([str(exe)],check=True)

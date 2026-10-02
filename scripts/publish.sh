@@ -31,6 +31,14 @@ git clone --branch main "$bundle_path" "$publish_root/repository"
 origin_url="$(gh repo view "$repo" --json sshUrl --jq '.sshUrl')"
 git -C "$publish_root/repository" remote set-url origin "$origin_url"
 git -C "$publish_root/repository" remote add upstream https://github.com/ESPARGOS/esp-sdr.git
+# The fork can contain newer upstream commits than the saved bundle.
+git -C "$publish_root/repository" fetch origin main
+author_name="$(git -C "$publish_root/repository" log -1 --format=%an)"
+author_email="$(git -C "$publish_root/repository" log -1 --format=%ae)"
+if ! git -C "$publish_root/repository" -c user.name="$author_name" -c user.email="$author_email" merge --no-edit origin/main; then
+  printf 'リモートとの競合を解決する必要があります。作業コピー: %s\n' "$publish_root/repository" >&2
+  exit 1
+fi
 git -C "$publish_root/repository" push -u origin main
 gh repo edit "$repo" --default-branch main --description 'ロボコンの操縦UDP遅延とWi-Fi干渉の実測・ESP32-C5 SDR可視化・LaTeXレポート'
 gh repo view "$repo" --json url,visibility,defaultBranchRef

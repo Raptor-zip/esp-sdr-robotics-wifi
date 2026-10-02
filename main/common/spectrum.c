@@ -2,6 +2,9 @@
  * Each frame is an independent snapshot. Frame indices use elapsed wall time,
  * and flag bit 3 explicitly marks the gaps between acquisitions. */
 #include "spectrum.h"
+#include "spectrum_dc.h"
+#include "spectrum_stats.h"
+#include "esp_cpu.h"
 #include "burst_serial.h"
 #include "dsps_fft2r.h"
 #include "esp_rom_crc.h"
@@ -25,6 +28,11 @@ static float powers[MAX_FFT];
 static uint8_t frame[HEADER_BYTES + MAX_FFT + 4];
 static unsigned setup_n;
 static bool ready;
+spectrum_workspace_t spectrum_workspace(void) {
+    setup_n=0;
+    return (spectrum_workspace_t){fft_data,window,powers,frame};
+}
+
 static int16_t twiddles[MAX_FFT] __attribute__((aligned(16)));
 bool spectrum_fft_init(void) {
     if(!ready) ready=dsps_fft2r_init_sc16(twiddles,MAX_FFT)==ESP_OK;
@@ -72,11 +80,14 @@ static void capabilities(void) {
 }
 
 bool spectrum_command(const char *line, unsigned frequency_mhz, spectrum_acquire_fn acquire) {
+    unsigned dc_mode;char dc_extra;
+    if(!strcmp(line,"DC?")){char text[16];snprintf(text,sizeof(text),"DC %u\n",spectrum_dc_mode);send_text(text);return true;}
+    if(sscanf(line,"DC %u %c",&dc_mode,&dc_extra)==1 && dc_mode<2){spectrum_dc_mode=dc_mode;send_text("OK\n");return true;}
     if(!strcmp(line,"SPECINFO?")) {capabilities();return true;}
     if(strncmp(line,"SPEC ",5)) return false;
-    unsigned ms,stride,units,det,rate,n; char extra;
-    int fields=sscanf(line,"SPEC %u %u %u %u %u %u %c",&ms,&stride,&units,&det,&rate,&n,&extra);
-    if(fields!=6 || ms>86400000u || stride!=1 || !units || units>8 || det>1 ||
+    unsigned ms,stride,units,det,rate,n,stats=0; char extra;
+    int fields=sscanf(line,"SPEC %u %u %u %u %u %u %u %c",&ms,&stride,&units,&det,&rate,&n,&stats,&extra);
+    if((fields!=6 && fields!=7) || stats>1 || ms>86400000u || stride!=1 || !units || units>8 || det>1 ||
        !rate_hz(rate) || n<256 || n>MAX_FFT || (n&(n-1))) {
         send_text("ERR spec_args\n");return true;
     }
@@ -93,25 +104,25 @@ bool spectrum_command(const char *line, unsigned frequency_mhz, spectrum_acquire
     int64_t start=esp_timer_get_time(),yield_at=start;
     uint32_t frames=0,ffts=0,status=0;uint64_t pairs=0;
     bool stopped=false;
+    spectrum_dc_t dc={0};spectrum_stats_t telemetry;spectrum_stats_init(&telemetry);
     do {
         if(burst_serial_stop_requested()) {stopped=true;break;}
         memset(powers,0,n*sizeof(*powers));
         uint64_t index=(uint64_t)(esp_timer_get_time()-start)*rate_hz(rate)/1000000u;
         uint8_t gain=0;
+        uint32_t busy_start=esp_cpu_get_cycle_count();
         for(unsigned u=0;u<units;u++) {
             const uint32_t *words; unsigned elapsed;
             if(!acquire(n,rate,&words,&elapsed)) {status=1;break;}
             if(!u) gain=words[0]>>20;
-            int32_t mi=0,mq=0;
-            for(unsigned j=0;j<n;j++) {mi+=(int32_t)(words[j]<<22)>>22;mq+=(int32_t)(words[j]<<12)>>22;}
-            mi/=(int32_t)n;mq/=(int32_t)n;
             for(unsigned j=0;j<n;j++) {
-                int32_t i=((int32_t)(words[j]<<22)>>22)-mi, q=((int32_t)(words[j]<<12)>>22)-mq;
+                int32_t i=((int32_t)(words[j]<<22)>>22), q=((int32_t)(words[j]<<12)>>22);
                 fft_data[2*j]=clamp16((i*window[j])>>9);
                 fft_data[2*j+1]=clamp16((q*window[j])>>9);
             }
             /* The ANSI kernel rounds correctly on all architectures. */
             dsps_fft2r_sc16_ansi(fft_data,n);
+            spectrum_dc_apply(&dc,fft_data,n);
             for(unsigned j=0;j<n;j++) {
                 float re=fft_data[2*j],im=fft_data[2*j+1],p=re*re+im*im;
                 unsigned k=reverse(j,log2n);
@@ -129,8 +140,10 @@ bool spectrum_command(const char *line, unsigned frequency_mhz, spectrum_acquire
             frame[HEADER_BYTES+j]=db>=255?255:(uint8_t)(db+0.5f);
         }
         put32(HEADER_BYTES+n,esp_rom_crc32_le(0,frame,HEADER_BYTES+n));
+        telemetry.busy+=(uint32_t)(esp_cpu_get_cycle_count()-busy_start);
         if(!burst_serial_send(frame,HEADER_BYTES+n+4)) {status=7;break;}
         frames++;
+        if(stats)spectrum_stats_emit(&telemetry,n,rate_hz(rate),ffts,0,0,0,0,burst_serial_send);
         if(esp_timer_get_time()-yield_at>=20000) {vTaskDelay(1);yield_at=esp_timer_get_time();}
     } while(!ms || esp_timer_get_time()-start<(int64_t)ms*1000);
     snprintf(text,sizeof(text),"SPECEND %u 0 %u %"PRIu64" %"PRIi64" 0 0 %u 0 0 %u %u\n",

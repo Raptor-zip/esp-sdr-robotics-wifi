@@ -61,6 +61,8 @@ static bool scalar_work(void) {
         }
     }
     uint32_t cycles=esp_cpu_get_cycle_count()-start;
+    scalar_telemetry(cycles,scalar.phase==0);
+    cycles=esp_cpu_get_cycle_count()-start;
     if(cycles>st.res->work_max)st.res->work_max=cycles;
     return true;
 }

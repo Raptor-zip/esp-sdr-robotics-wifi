@@ -217,8 +217,9 @@ static bool capture(unsigned n,unsigned divider,unsigned format) {
 
 #if CONFIG_IDF_TARGET_ESP32C61 || CONFIG_IDF_TARGET_ESP32C6
 static bool ring_test(const char *line) {
-    unsigned ms,rate,stride=1,upf=1,det=0,n=256; char extra;
-    bool spec=sscanf(line,"SPEC %u %u %u %u %u %u %c",&ms,&stride,&upf,&det,&rate,&n,&extra)==6;
+    unsigned ms,rate,stride=1,upf=1,det=0,n=256,stats=0; char extra;
+    int fields=sscanf(line,"SPEC %u %u %u %u %u %u %u %c",&ms,&stride,&upf,&det,&rate,&n,&stats,&extra);
+    bool spec=fields==6 || fields==7;
     if(spec && (n!=256 || burst_serial_port()==BURST_SERIAL_UART))return false;
 #ifdef RING_PROBE
     if(!spec)spec=sscanf(line,"RINGSPEC %u %u %u %u %u %u %c",&ms,&stride,&upf,&det,&rate,&n,&extra)==6;
@@ -226,7 +227,7 @@ static bool ring_test(const char *line) {
 #else
     if(!spec)return false;
 #endif
-    if(ms>86400000u || rate>5 || !stride || !upf || det>1 || n!=256
+    if(ms>86400000u || rate>5 || !stride || !upf || det>1 || stats>1 || stride>64 || upf>1000 || n!=256
 #if CONFIG_IDF_TARGET_ESP32C6
         || rate!=0
 #endif
@@ -234,7 +235,7 @@ static bool ring_test(const char *line) {
     if(spec){ring_capture_init();char h[80];snprintf(h,sizeof(h),"SPEC %u %u %u %u\n",n,ring_capture_rate_hz(rate),RING_THRESHOLD,frequency_mhz);reply(h);}
     prepare_rx();
     unsigned saved[2];rx_analog_apply(saved);
-    ring_config_t cfg={.mode=spec?RING_MODE_SPEC:RING_MODE_STATS,.rate=rate,.duration_ms=ms,.nfft=n,.stride=stride,.units_per_frame=upf,.max_hold=det==1};
+    ring_config_t cfg={.mode=spec?RING_MODE_SPEC:RING_MODE_STATS,.rate=rate,.duration_ms=ms,.nfft=n,.stride=stride,.units_per_frame=upf,.max_hold=det==1,.stats=stats!=0};
     ring_result_t r;ring_capture_run(&cfg,&r);rx_analog_restore(saved);
     char h[200];snprintf(h,sizeof(h),"%s %u %u %u %llu %llu %u %u %u %u %u %u %u\n",spec?"SPECEND":"RINGTEST",(unsigned)r.status,(unsigned)r.detail,
         (unsigned)r.units,(unsigned long long)r.pairs,(unsigned long long)r.elapsed_us,(unsigned)r.late_max,(unsigned)r.work_max,(unsigned)r.frames,(unsigned)r.drops,(unsigned)r.abandoned,(unsigned)r.ffts,r.stopped_by_host);
@@ -346,7 +347,7 @@ static void handle_command(char *line) {
         else if(sscanf(line,"ADCCLOCK %u %c",&n,&extra)==1 && (n<2 || n==4)) {probe_adc=n;reply("OK\n");}
 #endif
         else if(!strcmp(line,"CAPS")) {
-            reply("CAPS SPEC SPECN SPECCAPS UARTBAUD RXLIMITS GAIN HWAGC IQ8 SERIALLEASE"
+            reply("CAPS SPEC SPECN SPECCAPS SPECSTAT DCT UARTBAUD RXLIMITS GAIN HWAGC IQ8 SERIALLEASE"
                   " TUNEEXT"
 #if !CONFIG_IDF_TARGET_ESP32C6
                   " LPF LPF12"

@@ -124,6 +124,7 @@ static bool rx_ready,hardware_agc;
 static int rx_filter;
 static char response[256];
 #define spectrum_acquire NULL
+static bool s31_spectrum_command(const char *s){return false;}
 static bool spectrum_command(const char *s,unsigned f,void *acquire){return false;}
 static bool ring_test(const char *s){return false;}
 static void reply(const char *fmt,...){va_list a;va_start(a,fmt);vsnprintf(response,sizeof(response),fmt,a);va_end(a);}

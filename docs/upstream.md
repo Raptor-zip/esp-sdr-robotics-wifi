@@ -61,8 +61,8 @@ transport before offering this mode.
 | ESP32-C6 | 256 bins; 80 MS/s; native USB | 512–2048 bins over USB; 256–2048 over UART |
 | ESP32-C61 | 256 bins; 4/8/10/20/40/80 MS/s; native USB | 512/1024 bins over USB; 256–1024 over UART |
 | ESP32-S2 | — | 256–2048 bins; 16/40/80 MS/s; USB or UART |
-| ESP32-S3 | 256/1024/2048 bins at 16/40 MS/s; 256 at 80 MS/s; native USB | — |
-| ESP32-S31 | — | 256–2048 bins; 4/8/10/20/40/80 MS/s |
+| ESP32-S3 | 256–2048 bins; 16/40/80 MS/s; native USB | — |
+| ESP32-S31 | 256–2048 bins; 4/8/10/20/40/80 MS/s; native USB | Same FFT sizes and rates over UART |
 
 Continuous capture keeps the RF writer running, but the CPU analyzes only
 selected FFT windows. It does **not** deliver every sample or guarantee that
@@ -72,10 +72,11 @@ available separately.
 
 The original S3 Turbo Mode was developed by Zoltan Doczi from
 [Z2Labs](https://www.z2labs.io/). The shared implementation extends it with
-C6/C61 bank rotation, C3 live-bank reads, and portable snapshot FFTs.
+C6/C61 bank rotation, C3 live-bank reads, S31 dual-core SIMD processing with
+continuous bank rotation, and portable snapshot FFTs.
 See [spectrum protocol and hardware validation](spectrum.md) for the
 wire format, limitations and test results. The S3 ring diagnostic host tool
-is [tools/s3_ring.py](tools/s3_ring.py).
+is [tools/s3_ring.py](../tools/s3_ring.py).
 
 ## Commands and transport
 
@@ -192,7 +193,7 @@ See [receive-control details](rx-controls.md).
 
 ESP-SDR is licensed under the GNU General Public License as published by the
 Free Software Foundation, either version 3 of the License, or (at your option)
-any later version (`GPL-3.0-or-later`). See [LICENSE](LICENSE) for the full terms.
+any later version (`GPL-3.0-or-later`). See [LICENSE](../LICENSE) for the full terms.
 It is provided without any warranty, including implied warranties of
 merchantability or fitness for a particular purpose.
 
@@ -212,5 +213,5 @@ the mechanism in your own projects under a license of your choice**.
 Third-party components retain their own licenses and copyright notices,
 including the Apache-2.0 ESP-IDF compatibility code in
 `platform/esp32s2/esp_usb_cdc_rom_console/`, the pinned
-[ESP-DSP component](components/esp-dsp/LICENSE), and the derived S3 FFT kernel
-in `main/targets/esp32s3/s3_fft_rnd.S`.
+[ESP-DSP component](../components/esp-dsp/LICENSE), and the derived FFT kernels
+in `main/targets/esp32s3/s3_fft_rnd.S` and `main/targets/esp32s31/s31_fft_rnd.S`.
