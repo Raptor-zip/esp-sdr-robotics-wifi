@@ -1,0 +1,30 @@
+{
+  "run": "5g-lo5195-r1",
+  "frames": 180,
+  "frequency_mhz": 5195,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "immediate",
+  "rms_median": -42.05840087262055,
+  "rms_p95": -25.880383188345263,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.5,
+  "frame_rate": 20.4106709798398,
+  "nominal_ratio": 0.004179084883122199,
+  "call_duration_median_ms": 1.8760000002657762,
+  "clock_uncertainty_ms": 0.5843366304789186,
+  "device_clock_relative_ppm": 2.643157797965756,
+  "band2433_2441_mean_db": null,
+  "band2433_2441_p90_db": null,
+  "period_mean_ms": 48.99981967563736,
+  "period_std_ms": 0.0015559334621691216,
+  "utc": "2026-10-01T23:19:44.239932+00:00",
+  "traffic": {
+    "bytes_received": 45006848,
+    "elapsed_s": 18.012564740001835,
+    "actual_mbps": 19.9890903487164,
+    "requested_mbps": 20.0,
+    "requested_seconds": 18.0
+  }
+}

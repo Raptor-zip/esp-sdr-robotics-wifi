@@ -1,0 +1,26 @@
+{
+  "frequency_mhz": 2440,
+  "sample_rate_hz": 80000000,
+  "bandwidth_mhz": 0,
+  "gain": "MANUAL 40",
+  "frames": 240,
+  "samples": 16380,
+  "rate_index": 0,
+  "run": "off-wide-r2",
+  "metrics": {
+    "run": "off-wide-r2",
+    "frames": 240,
+    "nfft": 2048,
+    "bin_spacing_hz": 39062.5,
+    "host_duration_s": 11.533755799988285,
+    "frames_per_second": 20.808486338877035,
+    "nominal_sample_time_s": 0.04914,
+    "sample_time_to_host_time": 0.004260537577885073,
+    "median_capture_us": 1877.0,
+    "median_ac_rms_dbfs": -36.907932301741226,
+    "snapshot_above_minus40_fraction": 1.0,
+    "p95_ac_rms_dbfs": -17.17975305367695,
+    "median_frame_rms_dbfs": -34.12925882013942,
+    "clipping_fraction": 0.0055499592999593
+  }
+}

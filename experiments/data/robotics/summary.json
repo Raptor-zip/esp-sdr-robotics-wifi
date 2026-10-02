@@ -1,0 +1,1037 @@
+{
+  "independent-ch11": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.780411,
+    "pooled_p95_ms": 8.148504849999997,
+    "pooled_p99_ms": 13.102677790000005,
+    "run_p99_ms": [
+      12.874972749999984,
+      13.930129919999949,
+      12.64693544999999
+    ],
+    "max_rtt_ms": 37.576417,
+    "longest_echo_gap_ms": 42.644442,
+    "deadline20_pct": 0.15555555555555556,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      8.635391420160481,
+      9.826015763606186,
+      9.756591528134038
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1650363599999995,
+      1.1330752599999998,
+      1.16726954
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch11idle": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.740827,
+    "pooled_p95_ms": 7.922709049999999,
+    "pooled_p99_ms": 10.774399690000001,
+    "run_p99_ms": [
+      12.649579899999999,
+      10.36592548999998,
+      10.604556899999995
+    ],
+    "max_rtt_ms": 26.868876,
+    "longest_echo_gap_ms": 33.019276,
+    "deadline20_pct": 0.022222222222222223,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.08461541,
+      1.1431333599999995,
+      1.1099235199999997
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch1w20": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.75509,
+    "pooled_p95_ms": 8.294875399999999,
+    "pooled_p99_ms": 13.837333010000034,
+    "run_p99_ms": [
+      16.29003052999993,
+      13.424661349999996,
+      10.348874869999998
+    ],
+    "max_rtt_ms": 45.225264,
+    "longest_echo_gap_ms": 44.2956,
+    "deadline20_pct": 0.18888888888888888,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      2.6825761005621835,
+      5.598176784553712,
+      9.753443798943099
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1468397700000001,
+      1.1047263599999995,
+      1.10538915
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 1,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch1w40": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.9543239999999997,
+    "pooled_p95_ms": 10.182810249999998,
+    "pooled_p99_ms": 19.998419470000034,
+    "run_p99_ms": [
+      14.926930059999966,
+      23.593688309999983,
+      23.596934969999896
+    ],
+    "max_rtt_ms": 55.474063,
+    "longest_echo_gap_ms": 62.559294,
+    "deadline20_pct": 1.0,
+    "deadline50_pct": 0.011111111111111112,
+    "interferer_mbps": [
+      6.281314235346509,
+      6.040860241989109,
+      5.274048308841595
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.0666047499999998,
+      1.1307003799999984,
+      1.1660380499999998
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 1,
+        "secondary": 1,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 1,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 1,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch6": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 4.1596385,
+    "pooled_p95_ms": 12.27227164999998,
+    "pooled_p99_ms": 26.45986441000001,
+    "run_p99_ms": [
+      33.80539273999985,
+      22.450621819999956,
+      24.169805989999805
+    ],
+    "max_rtt_ms": 82.276116,
+    "longest_echo_gap_ms": 68.291176,
+    "deadline20_pct": 1.7666666666666666,
+    "deadline50_pct": 0.16666666666666669,
+    "interferer_mbps": [
+      3.6174602067938144,
+      4.790119519581921,
+      6.257965995806126
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1830895199999998,
+      1.1327567199999997,
+      1.1337189499999998
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch6idle": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.6977409999999997,
+    "pooled_p95_ms": 7.671478549999997,
+    "pooled_p99_ms": 10.188995750000004,
+    "run_p99_ms": [
+      10.508197599999992,
+      10.146249389999983,
+      9.718030759999994
+    ],
+    "max_rtt_ms": 37.053038,
+    "longest_echo_gap_ms": 43.124497,
+    "deadline20_pct": 0.05555555555555555,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.0890606399999998,
+      1.1064483699999998,
+      1.1438891799999997
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch7": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.986113,
+    "pooled_p95_ms": 9.872149649999995,
+    "pooled_p99_ms": 15.601505290000006,
+    "run_p99_ms": [
+      16.414077299999995,
+      16.426431709999978,
+      14.079788849999987
+    ],
+    "max_rtt_ms": 34.177092,
+    "longest_echo_gap_ms": 40.35587,
+    "deadline20_pct": 0.25555555555555554,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      6.665903879302229,
+      8.06672393726241,
+      3.0389415034659324
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1425440799999997,
+      1.1200578499999998,
+      1.1136941999999994
+    ],
+    "sdr_frames": 1837,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch7idle": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.7384364999999997,
+    "pooled_p95_ms": 7.6819109999999995,
+    "pooled_p99_ms": 10.36664792,
+    "run_p99_ms": [
+      10.316444989999999,
+      10.561409069999993,
+      10.261732809999998
+    ],
+    "max_rtt_ms": 20.945807,
+    "longest_echo_gap_ms": 27.148305,
+    "deadline20_pct": 0.03333333333333333,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1218003499999998,
+      1.1424401099999997,
+      1.1556103799999997
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "independent-ch7low": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.9376775000000004,
+    "pooled_p95_ms": 9.18400069999999,
+    "pooled_p99_ms": 15.139862940000006,
+    "run_p99_ms": [
+      15.060524919999986,
+      14.045493129999997,
+      15.914362769999993
+    ],
+    "max_rtt_ms": 35.245844,
+    "longest_echo_gap_ms": 39.264664,
+    "deadline20_pct": 0.24444444444444444,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      2.2315226076973906,
+      4.797477910901689,
+      5.719540282057014
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.125033159999999,
+      1.1356200999999997,
+      1.1749836199999995
+    ],
+    "sdr_frames": 1838,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 4
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 4
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 4
+      }
+    ]
+  },
+  "sameap-load0": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 3.850085,
+    "pooled_p95_ms": 7.7212551,
+    "pooled_p99_ms": 10.563494610000019,
+    "run_p99_ms": [
+      10.694715759999989,
+      10.365911209999991,
+      10.563494609999982
+    ],
+    "max_rtt_ms": 18.330528,
+    "longest_echo_gap_ms": 24.534836,
+    "deadline20_pct": 0.0,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      0,
+      0,
+      0
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1602834299999998,
+      1.1596093499999995,
+      1.06217759
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      }
+    ]
+  },
+  "sameap-load20": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 4.4263840000000005,
+    "pooled_p95_ms": 14.443565199999991,
+    "pooled_p99_ms": 20.96483437000004,
+    "run_p99_ms": [
+      21.930823089999922,
+      20.91287843999999,
+      20.544403049999953
+    ],
+    "max_rtt_ms": 42.755644,
+    "longest_echo_gap_ms": 48.82519,
+    "deadline20_pct": 1.3222222222222222,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      0,
+      0,
+      0
+    ],
+    "video_actual_mbps": [
+      19.997503611488938,
+      19.998039431243456,
+      19.95537435990002
+    ],
+    "send_jitter_p99_ms": [
+      1.1743625799999968,
+      1.1958925899999993,
+      1.2088723899999998
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      }
+    ]
+  },
+  "sameap-load60": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 7.291036,
+    "pooled_p95_ms": 22.99448374999998,
+    "pooled_p99_ms": 36.931420200000105,
+    "run_p99_ms": [
+      31.53401970999997,
+      28.720366099999968,
+      49.682187809999945
+    ],
+    "max_rtt_ms": 96.800065,
+    "longest_echo_gap_ms": 102.889572,
+    "deadline20_pct": 7.4222222222222225,
+    "deadline50_pct": 0.4,
+    "interferer_mbps": [
+      0,
+      0,
+      0
+    ],
+    "video_actual_mbps": [
+      38.3961578448369,
+      38.83965382274462,
+      40.60741254205609
+    ],
+    "send_jitter_p99_ms": [
+      1.58724364,
+      1.7905724599999961,
+      1.5903541199999982
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      }
+    ]
+  },
+  "sameap-ps-load20": {
+    "runs": 2,
+    "sent": 6000,
+    "received": 5997,
+    "loss_pct": 0.04999999999999449,
+    "pooled_p50_ms": 4.47969,
+    "pooled_p95_ms": 14.465089799999996,
+    "pooled_p99_ms": 21.414034039999994,
+    "run_p99_ms": [
+      23.259920279999996,
+      18.896825749999977
+    ],
+    "max_rtt_ms": 97.599446,
+    "longest_echo_gap_ms": 97.602166,
+    "deadline20_pct": 1.3833333333333333,
+    "deadline50_pct": 0.13333333333333333,
+    "interferer_mbps": [
+      0,
+      0
+    ],
+    "video_actual_mbps": [
+      19.94277521857011,
+      19.936551269842372
+    ],
+    "send_jitter_p99_ms": [
+      1.2031747599999996,
+      1.1918770699999999
+    ],
+    "sdr_frames": 1226,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 0
+      }
+    ]
+  },
+  "udp20-ch11": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 8999,
+    "loss_pct": 0.011111111111106187,
+    "pooled_p50_ms": 4.741554,
+    "pooled_p95_ms": 22.806398600000023,
+    "pooled_p99_ms": 58.36125898000009,
+    "run_p99_ms": [
+      79.38888139999999,
+      24.277092319999973,
+      38.91281922999995
+    ],
+    "max_rtt_ms": 131.841997,
+    "longest_echo_gap_ms": 130.71143,
+    "deadline20_pct": 5.644444444444445,
+    "deadline50_pct": 1.5,
+    "interferer_mbps": [
+      0.9607610226893878,
+      5.719700850395674,
+      6.4231029087387475
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.4661817699999988,
+      1.14159009,
+      1.2860698399999992
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 61
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 61
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 61
+      }
+    ]
+  },
+  "udp20-ch11idle": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 4.4039585,
+    "pooled_p95_ms": 8.918090999999995,
+    "pooled_p99_ms": 13.692253940000002,
+    "run_p99_ms": [
+      12.090589639999957,
+      15.23432459,
+      11.90212656999987
+    ],
+    "max_rtt_ms": 30.168238,
+    "longest_echo_gap_ms": 37.462328,
+    "deadline20_pct": 0.07777777777777778,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1247831899999994,
+      1.1509874799999997,
+      1.1077702299999996
+    ],
+    "sdr_frames": 1838,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 61
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 61
+      },
+      {
+        "primary": 11,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 61
+      }
+    ]
+  },
+  "udp20-ch1w20": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 4.464164,
+    "pooled_p95_ms": 9.720960299999996,
+    "pooled_p99_ms": 16.10070285000001,
+    "run_p99_ms": [
+      16.978411769999965,
+      14.973808979999992,
+      16.569554299999925
+    ],
+    "max_rtt_ms": 28.604057,
+    "longest_echo_gap_ms": 33.608161,
+    "deadline20_pct": 0.24444444444444444,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      3.4458263872249932,
+      7.465634522340761,
+      5.406402054769782
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1389943999999994,
+      1.1450178299999991,
+      1.3098400199999973
+    ],
+    "sdr_frames": 1838,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 1,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "udp20-ch1w40": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 12.6763125,
+    "pooled_p95_ms": 83.87876104999992,
+    "pooled_p99_ms": 133.86602093000013,
+    "run_p99_ms": [
+      133.47262373999993,
+      23.56593388,
+      157.2770648999999
+    ],
+    "max_rtt_ms": 207.412374,
+    "longest_echo_gap_ms": 192.681344,
+    "deadline20_pct": 40.58888888888889,
+    "deadline50_pct": 16.155555555555555,
+    "interferer_mbps": [
+      0.18702398803247477,
+      5.346579297254499,
+      1.4329079342741238
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.975782509999999,
+      1.1500212799999998,
+      1.9593194999999999
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 1,
+        "secondary": 1,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 1,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 54
+      },
+      {
+        "primary": 1,
+        "secondary": 1,
+        "ap_bw": 2,
+        "ap_tx_qdbm": 54
+      }
+    ]
+  },
+  "udp20-ch6": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 4.729013999999999,
+    "pooled_p95_ms": 10.774569549999999,
+    "pooled_p99_ms": 19.36919164000002,
+    "run_p99_ms": [
+      19.181283849999996,
+      21.24293896999998,
+      16.655370039999955
+    ],
+    "max_rtt_ms": 57.517409,
+    "longest_echo_gap_ms": 60.611478,
+    "deadline20_pct": 0.8222222222222222,
+    "deadline50_pct": 0.03333333333333333,
+    "interferer_mbps": [
+      5.364220917559409,
+      6.985033735275353,
+      8.630687790256394
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1034693999999998,
+      1.2217873599999998,
+      1.1427780199999997
+    ],
+    "sdr_frames": 1839,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 56
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 56
+      },
+      {
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 56
+      }
+    ]
+  },
+  "udp20-ch7": {
+    "runs": 3,
+    "sent": 9000,
+    "received": 9000,
+    "loss_pct": 0.0,
+    "pooled_p50_ms": 4.7691025,
+    "pooled_p95_ms": 11.22884444999999,
+    "pooled_p99_ms": 18.32357608000001,
+    "run_p99_ms": [
+      19.010020529999966,
+      17.886201329999988,
+      16.97818318999999
+    ],
+    "max_rtt_ms": 48.426156,
+    "longest_echo_gap_ms": 53.521238,
+    "deadline20_pct": 0.5555555555555556,
+    "deadline50_pct": 0.0,
+    "interferer_mbps": [
+      2.903634074248598,
+      7.584544058806114,
+      5.271124057654453
+    ],
+    "video_actual_mbps": [
+      0,
+      0,
+      0
+    ],
+    "send_jitter_p99_ms": [
+      1.1603773599999987,
+      1.3621663899999985,
+      1.1341675199999992
+    ],
+    "sdr_frames": 1836,
+    "rails_max_pct": 0.0,
+    "negotiation": [
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 57
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 57
+      },
+      {
+        "primary": 7,
+        "secondary": 0,
+        "ap_bw": 1,
+        "ap_tx_qdbm": 57
+      }
+    ]
+  }
+}

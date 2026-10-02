@@ -1,0 +1,23 @@
+{
+  "run": "beacon50-random",
+  "frames": 500,
+  "frequency_mhz": 2437,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "random",
+  "rms_median": -47.54653100219286,
+  "rms_p95": -28.39455663519609,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.062,
+  "frame_rate": 9.803424852928677,
+  "nominal_ratio": 0.0020072512386371468,
+  "call_duration_median_ms": 1.8770000000358777,
+  "clock_uncertainty_ms": 0.5580687159712314,
+  "device_clock_relative_ppm": 0.9699233705084964,
+  "band2433_2441_mean_db": -47.18296675888059,
+  "band2433_2441_p90_db": -53.28998251326752,
+  "period_mean_ms": 102.11410168894307,
+  "period_std_ms": 21.75872966917127,
+  "utc": "2026-10-01T22:48:18.569643+00:00"
+}

@@ -1,0 +1,26 @@
+{
+  "frequency_mhz": 5210,
+  "sample_rate_hz": 80000000,
+  "bandwidth_mhz": 0,
+  "gain": "MANUAL 40",
+  "frames": 180,
+  "samples": 16380,
+  "rate_index": 0,
+  "run": "router5g-load20-r2",
+  "metrics": {
+    "run": "router5g-load20-r2",
+    "frames": 180,
+    "nfft": 2048,
+    "bin_spacing_hz": 39062.5,
+    "host_duration_s": 8.643520316923968,
+    "frames_per_second": 20.824848371971882,
+    "nominal_sample_time_s": 0.036855,
+    "sample_time_to_host_time": 0.004263887704161243,
+    "median_capture_us": 1877.0,
+    "median_ac_rms_dbfs": -45.07031644928584,
+    "snapshot_above_minus40_fraction": 0.4444444444444444,
+    "p95_ac_rms_dbfs": -3.33782414869463,
+    "median_frame_rms_dbfs": -41.958395177619074,
+    "clipping_fraction": 0.005124304707638041
+  }
+}

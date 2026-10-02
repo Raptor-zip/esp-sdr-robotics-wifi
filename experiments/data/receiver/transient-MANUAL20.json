@@ -1,0 +1,23 @@
+{
+  "run": "transient-MANUAL20",
+  "frames": 1100,
+  "frequency_mhz": 2437,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "immediate",
+  "rms_median": -47.61477021200952,
+  "rms_p95": -35.09980059064145,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.14,
+  "frame_rate": 20.408256840001485,
+  "nominal_ratio": 0.004178590587990304,
+  "call_duration_median_ms": 1.8770000001495646,
+  "clock_uncertainty_ms": 0.6164261238869428,
+  "device_clock_relative_ppm": -0.7201201192019724,
+  "band2433_2441_mean_db": -45.967411510068715,
+  "band2433_2441_p90_db": -39.82820586734539,
+  "period_mean_ms": 49.000930742744536,
+  "period_std_ms": 0.03060259053125089,
+  "utc": "2026-10-01T23:13:02.583732+00:00"
+}

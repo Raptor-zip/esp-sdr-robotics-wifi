@@ -1,0 +1,23 @@
+{
+  "run": "beacon50-fixed",
+  "frames": 500,
+  "frequency_mhz": 2437,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "fixed",
+  "rms_median": -47.980813947799575,
+  "rms_p95": -46.610412786840044,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.018,
+  "frame_rate": 9.775927157868665,
+  "nominal_ratio": 0.002001621085573609,
+  "call_duration_median_ms": 1.8770000000358777,
+  "clock_uncertainty_ms": 0.6485357137096524,
+  "device_clock_relative_ppm": 2.579865560958794,
+  "band2433_2441_mean_db": -47.97484455738973,
+  "band2433_2441_p90_db": -53.36562023263979,
+  "period_mean_ms": 102.40052553838146,
+  "period_std_ms": 0.4903313187656504,
+  "utc": "2026-10-01T22:47:25.306823+00:00"
+}

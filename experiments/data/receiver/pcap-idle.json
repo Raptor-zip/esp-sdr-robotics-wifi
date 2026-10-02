@@ -1,0 +1,23 @@
+{
+  "run": "pcap-idle",
+  "frames": 1000,
+  "frequency_mhz": 2437,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "immediate",
+  "rms_median": -47.41973426771817,
+  "rms_p95": -35.614105023507264,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.054,
+  "frame_rate": 20.371483340678445,
+  "nominal_ratio": 0.004171061214003911,
+  "call_duration_median_ms": 1.8769999999790343,
+  "clock_uncertainty_ms": 0.617016466322422,
+  "device_clock_relative_ppm": 0.7228580731766243,
+  "band2433_2441_mean_db": -44.464518078809746,
+  "band2433_2441_p90_db": -52.68824148916882,
+  "period_mean_ms": 49.08903057988103,
+  "period_std_ms": 0.503501494127751,
+  "utc": "2026-10-01T22:45:11.397022+00:00"
+}

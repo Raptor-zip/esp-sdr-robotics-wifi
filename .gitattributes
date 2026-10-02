@@ -10,3 +10,8 @@
 *.ico binary
 *.woff binary
 *.woff2 binary
+
+# Preserve measured dataset bytes, including existing CSV line endings.
+experiments/data/** -text
+# Existing measurement CSV uses CRLF; CR is part of the line ending.
+experiments/data/**/*.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -1,0 +1,30 @@
+{
+  "run": "lo2427-bw48-r2",
+  "frames": 150,
+  "frequency_mhz": 2427,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "immediate",
+  "rms_median": -47.28692026142856,
+  "rms_p95": -34.4256384321123,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.2866666666666667,
+  "frame_rate": 20.411535223063346,
+  "nominal_ratio": 0.00417926183692222,
+  "call_duration_median_ms": 1.876999999922191,
+  "clock_uncertainty_ms": 0.5547534921213388,
+  "device_clock_relative_ppm": 2.38189596202254,
+  "band2433_2441_mean_db": -42.958886177327706,
+  "band2433_2441_p90_db": -39.24548873703253,
+  "period_mean_ms": 48.999843981442034,
+  "period_std_ms": 0.0014341474060368948,
+  "utc": "2026-10-01T23:04:52.857565+00:00",
+  "traffic": {
+    "bytes_received": 45006848,
+    "elapsed_s": 18.011466824998934,
+    "actual_mbps": 19.990308812620615,
+    "requested_mbps": 20.0,
+    "requested_seconds": 18.0
+  }
+}

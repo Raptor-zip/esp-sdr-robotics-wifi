@@ -1,0 +1,26 @@
+{
+  "frequency_mhz": 2437,
+  "sample_rate_hz": 80000000,
+  "bandwidth_mhz": 0,
+  "gain": "MANUAL 20",
+  "frames": 300,
+  "samples": 16380,
+  "rate_index": 0,
+  "run": "g20-beacon50-idle",
+  "metrics": {
+    "run": "g20-beacon50-idle",
+    "frames": 300,
+    "nfft": 2048,
+    "bin_spacing_hz": 39062.5,
+    "host_duration_s": 14.410984290996566,
+    "frames_per_second": 20.817453821487305,
+    "nominal_sample_time_s": 0.061425,
+    "sample_time_to_host_time": 0.004262373669949526,
+    "median_capture_us": 1877.0,
+    "median_ac_rms_dbfs": -51.185711322278806,
+    "snapshot_above_minus40_fraction": 0.043333333333333335,
+    "p95_ac_rms_dbfs": -43.83133230954155,
+    "median_frame_rms_dbfs": -51.027054772460545,
+    "clipping_fraction": 0.0
+  }
+}

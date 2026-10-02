@@ -1,0 +1,62 @@
+[
+  {
+    "run": "ble0-lo2414",
+    "center_mhz": 2402,
+    "frames": 600,
+    "band_halfwidth_mhz": 0.75,
+    "mean_power_db": -58.13932534596263,
+    "p99_db": -60.52471278811994,
+    "maximum_db": -35.66133928916786,
+    "above_minus40_fraction": 0.0033333333333333335
+  },
+  {
+    "run": "ble0-lo2414",
+    "center_mhz": 2426,
+    "frames": 600,
+    "band_halfwidth_mhz": 0.75,
+    "mean_power_db": -60.02267311705009,
+    "p99_db": -60.36301439824435,
+    "maximum_db": -38.64281208676552,
+    "above_minus40_fraction": 0.0033333333333333335
+  },
+  {
+    "run": "ble1-lo2414",
+    "center_mhz": 2402,
+    "frames": 600,
+    "band_halfwidth_mhz": 0.75,
+    "mean_power_db": -59.629744098084146,
+    "p99_db": -61.1790673454447,
+    "maximum_db": -34.99818394972661,
+    "above_minus40_fraction": 0.0016666666666666668
+  },
+  {
+    "run": "ble1-lo2414",
+    "center_mhz": 2426,
+    "frames": 600,
+    "band_halfwidth_mhz": 0.75,
+    "mean_power_db": -59.90842579536475,
+    "p99_db": -60.00923207831119,
+    "maximum_db": -37.82846492771299,
+    "above_minus40_fraction": 0.0016666666666666668
+  },
+  {
+    "run": "ble0-lo2475",
+    "center_mhz": 2480,
+    "frames": 600,
+    "band_halfwidth_mhz": 0.75,
+    "mean_power_db": -60.20612287429438,
+    "p99_db": -59.039696403430305,
+    "maximum_db": -58.73971306825939,
+    "above_minus40_fraction": 0.0
+  },
+  {
+    "run": "ble1-lo2475",
+    "center_mhz": 2480,
+    "frames": 600,
+    "band_halfwidth_mhz": 0.75,
+    "mean_power_db": -58.937729335704645,
+    "p99_db": -58.81787691242739,
+    "maximum_db": -38.16445514749428,
+    "above_minus40_fraction": 0.0016666666666666668
+  }
+]

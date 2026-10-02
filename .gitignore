@@ -33,3 +33,15 @@ Thumbs.db
 
 # CI SDK checkout
 /.esp-idf/
+
+# Rebuildable LaTeX intermediates; retain the two sources and final PDF/PNG
+reports/*.aux
+reports/*.out
+reports/*.toc
+reports/*.synctex.gz
+reports/*.fls
+reports/*.fdb_latexmk
+experiments/firmware/robotics/build/
+experiments/firmware/robotics/managed_components/
+experiments/firmware/robotics/sdkconfig
+experiments/firmware/robotics/sdkconfig.old

@@ -38,6 +38,10 @@ extern void phy_chip_set_chan(unsigned,unsigned);
 extern void phy_rx_filter_mode(unsigned);
 static unsigned frequency_mhz=2412;
 static bool rx_ready;
+#ifdef SDR_TIMING_PROBE
+/* Bounds around the vendor capture call, not exact ADC trigger timestamps. */
+static int64_t capture_begin_us, capture_end_us;
+#endif
 #if CONFIG_IDF_TARGET_ESP32C5
 static unsigned rx_channel_mode;
 #endif
@@ -147,6 +151,9 @@ static bool acquire_iq(unsigned n,unsigned divider,unsigned *capture_us) {
 #endif
     bool done=true;
     int64_t start=esp_timer_get_time();
+#ifdef SDR_TIMING_PROBE
+    capture_begin_us=start;
+#endif
     /* Vendor selector 0 maps to raw source 15 and pulses the software trigger.
      * In particular, do NOT set CTRL bit 17 as in the C61 continuous backend:
      * on this C5 it produced only a short, incomplete snapshot. */
@@ -168,7 +175,11 @@ static bool acquire_iq(unsigned n,unsigned divider,unsigned *capture_us) {
 #else
     done=stock_capture(n,divider);
 #endif
-    uint32_t elapsed=(uint32_t)(esp_timer_get_time()-start);
+    int64_t end=esp_timer_get_time();
+    uint32_t elapsed=(uint32_t)(end-start);
+#ifdef SDR_TIMING_PROBE
+    capture_end_us=end;
+#endif
 #if defined(SAMPLE_RATE_PROBE) && CONFIG_IDF_TARGET_ESP32C5
     if(probe_adc<2){phy_i2c_writeReg(0x66,0,4,adc_saved);REG_WRITE(0x600a0448,adc_digital_saved);}
 #endif
@@ -252,6 +263,11 @@ void app_main(void) {
     ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_NULL));
     ESP_ERROR_CHECK(esp_wifi_start());
+#if CONFIG_IDF_TARGET_ESP32C5
+    /* Explicitly select the 2.4 GHz path before initializing channel 1
+     * with the dual-band driver. Exact SDR tuning follows in prepare_rx. */
+    ESP_ERROR_CHECK(esp_wifi_set_band_mode(WIFI_BAND_MODE_2G_ONLY));
+#endif
     ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_NONE));
     ESP_ERROR_CHECK(esp_wifi_set_promiscuous(true));
     ESP_ERROR_CHECK(esp_wifi_set_channel(1,WIFI_SECOND_CHAN_NONE));
@@ -276,6 +292,16 @@ void app_main(void) {
 }
 
 static void handle_command(char *line) {
+#ifdef SDR_TIMING_PROBE
+    if(!strcmp(line,"CLOCK?")) {
+        char h[64];snprintf(h,sizeof(h),"CLOCK %" PRId64 "\n",esp_timer_get_time());
+        reply(h);return;
+    }
+    if(!strcmp(line,"CAPTIME?")) {
+        char h[96];snprintf(h,sizeof(h),"CAPTIME %" PRId64 " %" PRId64 "\n",capture_begin_us,capture_end_us);
+        reply(h);return;
+    }
+#endif
 #ifdef RING_PROBE
     if(ring_probe_command(line)) return;
 #endif

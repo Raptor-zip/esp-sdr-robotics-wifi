@@ -1,0 +1,23 @@
+{
+  "run": "ble1-lo2414",
+  "frames": 600,
+  "frequency_mhz": 2414,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "immediate",
+  "rms_median": -47.6047429104446,
+  "rms_p95": -40.36777085691643,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.05,
+  "frame_rate": 20.39029060067222,
+  "nominal_ratio": 0.004174912000487637,
+  "call_duration_median_ms": 1.8769999996948172,
+  "clock_uncertainty_ms": 0.5915538288508654,
+  "device_clock_relative_ppm": -8.525287951588467,
+  "band2433_2441_mean_db": -50.147164535407136,
+  "band2433_2441_p90_db": -55.7562943317486,
+  "period_mean_ms": 49.04548313860503,
+  "period_std_ms": 1.0222123722003262,
+  "utc": "2026-10-01T23:16:06.396255+00:00"
+}

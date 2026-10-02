@@ -1,0 +1,103 @@
+{
+  "seconds": 30.0,
+  "hz": 100,
+  "payload_bytes": 64,
+  "sent": 3000,
+  "received": 3000,
+  "loss_pct": 0.0,
+  "rtt_ms": {
+    "p50": 3.8861965,
+    "p95": 7.716807049999996,
+    "p99": 10.563494609999982
+  },
+  "max_rtt_ms": 17.612803,
+  "longest_echo_gap_ms": 22.739816,
+  "max_consecutive_missing": 0,
+  "missed_deadline_pct": {
+    "10": 1.4333333333333333,
+    "20": 0.0,
+    "50": 0.0,
+    "100": 0.0
+  },
+  "send_lateness_p99_ms": 1.06217759,
+  "send_lateness_max_ms": 1.826016,
+  "duplicates": 0,
+  "foreign": 0,
+  "errors": [],
+  "host_start_ns": -2699,
+  "semantics": "host application echo RTT; receive gaps refer to echo availability, not one-way robot updates",
+  "context": {
+    "phase": "same_ap",
+    "video_requested_mbps": 0,
+    "repeat": 3,
+    "esp_power_save": false,
+    "board1_before": {
+      "active": 1,
+      "ap": 0,
+      "connected": 1,
+      "primary": 6,
+      "secondary": 0,
+      "configured_bw": 1,
+      "ap_bw": 1,
+      "rssi": -38,
+      "tx_qdbm": 78,
+      "tx_bytes": 0,
+      "rx_bytes": 0,
+      "echoes": 21000
+    },
+    "board2_before": {
+      "active": 0,
+      "ap": 0,
+      "connected": 0,
+      "primary": 6,
+      "secondary": 0,
+      "configured_bw": 2,
+      "ap_bw": 0,
+      "rssi": 0,
+      "tx_qdbm": 0,
+      "tx_bytes": 0,
+      "rx_bytes": 2644288,
+      "echoes": 0
+    },
+    "board_sample_before_ns": 0,
+    "board1_after": {
+      "active": 1,
+      "ap": 0,
+      "connected": 1,
+      "primary": 6,
+      "secondary": 0,
+      "configured_bw": 1,
+      "ap_bw": 1,
+      "rssi": -43,
+      "tx_qdbm": 78,
+      "tx_bytes": 0,
+      "rx_bytes": 0,
+      "echoes": 24000
+    },
+    "board2_after": {
+      "active": 0,
+      "ap": 0,
+      "connected": 0,
+      "primary": 6,
+      "secondary": 0,
+      "configured_bw": 2,
+      "ap_bw": 0,
+      "rssi": 0,
+      "tx_qdbm": 0,
+      "tx_bytes": 0,
+      "rx_bytes": 2644288,
+      "echoes": 0
+    },
+    "board_sample_after_ns": 31124178450
+  },
+  "sdr_error": null,
+  "name": "sameap-load0-r3",
+  "interferer_application_mbps": 0,
+  "video_actual_mbps": 0,
+  "sdr": {
+    "frames": 613,
+    "rails_pct": 0.0,
+    "rms_p90_dbfs": -34.07368469238281,
+    "lo_mhz": 2437
+  }
+}

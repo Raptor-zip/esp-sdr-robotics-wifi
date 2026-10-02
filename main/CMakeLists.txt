@@ -4,6 +4,7 @@ if(NOT IDF_TARGET IN_LIST esp_sdr_supported_targets)
 endif()
 
 option(SAMPLE_RATE_PROBE "Build volatile hardware sample-rate diagnostics (never package)" OFF)
+option(SDR_TIMING_PROBE "Expose acquisition timing diagnostics (never package)" OFF)
 
 set(target_dir "targets/${IDF_TARGET}")
 set(receiver "${target_dir}/receiver.c")
@@ -13,7 +14,7 @@ option(RING_PROBE "Build bounded experimental ring diagnostics (never package)" 
 if(IDF_TARGET STREQUAL "esp32c61" OR IDF_TARGET STREQUAL "esp32c6" OR IDF_TARGET STREQUAL "esp32c3")
     list(APPEND sources "common/ring_capture.c")
 endif()
-set(probes RING_PROBE)
+set(probes RING_PROBE SDR_TIMING_PROBE)
 set(fragments)
 if(NOT IDF_TARGET STREQUAL "esp32s3")
     list(APPEND sources "common/spectrum.c")

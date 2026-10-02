@@ -1,0 +1,185 @@
+\documentclass[a4paper,twocolumn,10pt]{ltjsarticle}
+\usepackage[top=8mm,bottom=9mm,left=9mm,right=9mm,columnsep=6mm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{titlesec}
+\captionsetup{font=small,skip=2pt}
+\setlist{itemsep=0pt,topsep=1pt,parsep=0pt,leftmargin=1.1em}
+\titleformat{\section}{\large\bfseries\sffamily}{\thesection}{0.5em}{}
+\titlespacing*{\section}{0pt}{5pt plus 1pt}{2pt}
+\titleformat{\subsection}{\normalsize\bfseries\sffamily}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{3pt plus 1pt}{1pt}
+\sisetup{detect-all}
+\pagestyle{empty}
+\setlength{\parskip}{0pt}
+\setlength{\textfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\floatsep}{4pt plus 1pt minus 1pt}
+\setlength{\dbltextfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{4pt plus 1pt minus 1pt}
+\newcommand{\figref}[1]{図~\ref{#1}}
+\newcommand{\tabref}[1]{表~\ref{#1}}
+\newcommand{\lstref}[1]{リスト~\ref{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\definecolor{lstbg}{gray}{0.955}
+\lstset{
+  basicstyle=\ttfamily\fontsize{6.3}{7.3}\selectfont,
+  backgroundcolor=\color{lstbg}, frame=single, rulecolor=\color{gray!60},
+  breaklines=true, columns=fullflexible, keepspaces=true,
+  xleftmargin=1pt, xrightmargin=1pt, aboveskip=3pt, belowskip=3pt,
+  framesep=2pt
+}
+\renewcommand{\lstlistingname}{リスト}
+
+
+% Match Latin and Japanese heading glyphs to the same font file.
+\usepackage{luatexja-fontspec}
+\setsansfont{HaranoAjiGothic-Medium.otf}[BoldFont=HaranoAjiGothic-Medium.otf]
+\setsansjfont{HaranoAjiGothic-Medium.otf}[BoldFont=HaranoAjiGothic-Medium.otf]
+
+\begin{document}
+\twocolumn[{
+\begin{center}{\LARGE\bfseries\sffamily ロボコンの操縦通信とWi-Fi干渉を可視化する\par}
+\vspace{1mm}{\normalsize 同じチャネル・隣接チャネル・20/40 MHz幅を実測で比較\par}
+\vspace{.5mm}{\normalsize 貝淵蒼馬\par}\end{center}
+\noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
+\textbf{要旨}\quad 操縦用の短い通信は、全て届いていても遅れることがある。
+100 HzのUDP往復通信とESP32-C5の生I/Qを同時に記録し、映像相当負荷と別APの周波数・幅を変えた。
+同一APの高負荷では欠落0\%でもRTT p99が10.6から36.9 ms、20 ms期限超過が7.42\%へ増加した。
+青〜緑のSDR画像で帯域の重なりを見て、遅延・欠落を別に測る。
+会場の設定選びに使える比較手順と、今回の配置で言える範囲を示す。}}\vspace{2mm}}]
+
+\section{「つながる」と「間に合う」を分ける}
+映像のMbpsやWi-Fi接続表示だけでは、操縦指令が期限に間に合うか分からない。
+観測PCから64 byteのUDPを10 msごとに送り、ESP32-1が同じ内容を返す通信を用いた。
+測ったのはアプリケーションの\textbf{往復遅延（RTT）}で、モータ応答や片道の到着時刻ではない。
+p99は受信応答の99\%が収まる遅延、20 ms超過率は20 ms以内に応答が戻らなかった割合で、欠落も含む。
+平均値と欠落率だけでは短い詰まりを見落とすため、最長応答間隔も残した。
+
+\section{操縦側を固定し、別の通信を加える}
+観測PC（Intel BE200）をCh6・20 MHz APとし、ESP32-1を操縦相手に固定した。
+ラップトップ1（Intel AX210）から有線LANでインターネットを共有し、観測PCのWi-Fiを実験に使った。
+同一AP比較ではラップトップ2（MT7921E）へTCPを流す。
+別AP比較ではESP32-2をAP兼送信機にし、ラップトップ2を接続する。
+操縦側を変えず、別APの同一Ch6・隣接Ch7・分離Ch11、Ch1の20/40 MHzを比較した。
+
+追加ESP32間750 mm、C5から両ボードは約40 cm・90 cm、観測PCとラップトップ2は約30 cm。
+位置は固定で、\textbf{距離掃引ではない}。近づけると何倍悪化するかは未測定である。
+1試行30 s・3,000応答機会、主要条件3反復、反復ごとに条件順を入れ替えた。
+省電力の補助比較だけ2反復とした。
+
+\begin{center}\includegraphics[width=\linewidth]{../experiments/figures/robotics/robotics-setup.pdf}
+\captionof{figure}{独立AP比較の構成。別APの設定を変え、主リンクの操縦応答と周囲のRFを同時記録する。}\end{center}
+\newpage
+\section{映像相当通信を増やすと？}
+\begin{center}\captionof{table}{同一APの操縦応答。3反復の統合値。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 20 ms超過\% & 欠落\%\\\midrule 待機 & 10.6 & 0.00 & 0.00\\
+約20 Mbps & 21.0 & 1.32 & 0.00\\
+約38–41 Mbps & 36.9 & 7.42 & 0.00\\
+\bottomrule\end{tabular}\end{center}
+\begin{center}\includegraphics[width=.95\linewidth]{../experiments/figures/robotics/robotics-control.pdf}
+\captionof{figure}{点は各反復p99、赤線は統合p99。下段は20 ms期限超過率。}\end{center}
+主要3条件の欠落は0\%だったが、高負荷でp99は36.9 ms、最長応答間隔は102.9 msとなった。
+これは100 Hzで約10周期分の\textbf{応答が戻らない時間}である。
+片道指令も同じだけ途切れたという意味ではないが、「ロスがないので良好」は不十分である。
+60 Mbps指定でも実測は38.4–40.6 Mbpsで、転送速度が頭打ちになった一方、遅延の裾は伸びた。
+
+\subsection{設計へ持ち帰ること}
+映像と操縦を共有するなら、映像負荷を増やした時の期限超過を測る。
+再送、APの送信待ち、端末処理を分離した測定ではないが、平均転送速度だけより操縦上の問題が分かる。
+古い指令をためず最新値を優先する、期限切れを破棄する、通信途絶時の停止を決める設計は候補になる。
+それらの改善効果や安全な停止しきい値は今回検証していない。
+
+\clearpage
+\twocolumn[{
+\begin{center}\includegraphics[width=.98\textwidth]{../experiments/figures/robotics/robotics-blue-green.pdf}
+\captionof{figure}{操縦APはCh6に固定。画像は各条件の1反復目、RTT注記は3反復の統合値。
+色尺度・LO・ゲインは共通。白点線は操縦側の名目20 MHz範囲。1行は約205 $\mu$sの間欠取得。}\end{center}\vspace{1mm}}]
+
+\section{番号を1つずらせば避けられる？}
+Ch6中心は2437 MHz、Ch7は2442 MHzで5 MHzしか離れない。
+20 MHzの通信を番号1つだけずらしても帯域は大きく重なる。
+中央は主リンクと別APの成分が同じ領域へ重なる条件、右は別APの成分が高周波側へ分かれる条件である。
+2418 MHz付近の強い成分など室内の外来通信も含む。全ての緑を実験APだけに帰属していない。
+\begin{center}\captionof{table}{飽和TCP時の操縦応答。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 20 ms超過\% & 欠落\%\\\midrule 同一 Ch6 & 26.5 & 1.77 & 0.00\\
+隣接 Ch7 & 15.6 & 0.26 & 0.00\\
+分離 Ch11 & 13.1 & 0.16 & 0.00\\
+\bottomrule\end{tabular}\end{center}
+\subsection{同一・隣接のどちらが悪いかは配置次第}
+同一チャネルでは、互いを認識できるWi-Fi機器が送信機会を分け合う。
+部分重複は中心が違っても受信帯域へ入り、受信妨害や送信待ちを起こし得る\cite{rf}。
+本実験は再送数やキャリアセンスを同定しておらず、図だけで原因を決められない。
+TCP比較の統合p99はCh6 26.5、Ch7 15.6、Ch11 13.1 msだった。
+\textbf{この配置では同一Ch6が大きく、隣接が常に最悪という結果ではない。}
+TCP実効速度も3.6–6.3、3.0–8.1、8.6–9.8 Mbpsと違い、空中時間をそろえた周波数だけの比較ではない。
+番号ではなく帯域の重なりを確認し、負荷中の応答を測る判断につながる。
+
+\newpage
+\section{SDR画像と通信測定の役割}
+画像は「どこに、どの幅の成分があるか」を見る。
+緑が増えることは、そのまま指令の欠落率や占有率を意味しない。
+強い信号、バーストと取得窓が重なる回数、外来通信など、色が変わる理由は複数ある。
+離れた帯域に見えても、主リンクへの無影響は保証しない。
+同じ配置・同じ受信設定で画像を比較し、RTT・期限超過・欠落を併記して判断する。
+\subsection{別の負荷方式でも確認する}追加のUDP 20 Mbps要求では、主リンクの統合p99はCh6 19.4、Ch7 18.3、Ch11 58.4 ms。送信API受付量と受信到着数を別に残した。要求20 Mbpsは達成20 Mbpsや等しい空中時間を保証しない。TCPだけの順位を別の負荷へ一般化せず、リンクの実通信量と遅延を合わせて見る。
+
+\begin{center}\includegraphics[width=.95\linewidth]{../experiments/figures/robotics/robotics-channel-metrics.pdf}
+\captionof{figure}{TCP比較の各反復p99と20 ms期限超過。画像と同じ条件でも、繰返しの幅を見て判断する。}\end{center}
+\clearpage
+\twocolumn[{
+\begin{center}\includegraphics[width=.98\textwidth]{../experiments/figures/robotics/robotics-width-blue-green.pdf}
+\captionof{figure}{別APのCh1を20/40 MHzへ変更。操縦APはCh6・20 MHzのまま。
+40 MHzの接続幅をクライアントで確認。広い接続でも全送信が40 MHz波形になるとは限らない。}\end{center}\vspace{1mm}}]
+
+\section{広いチャネルは何を増やし、何を減らす？}
+Ch1の名目20 MHz範囲は約2402–2422 MHz、Ch6は約2427–2447 MHzで離れる。
+Ch1へ上側の副チャネルを足す40 MHz設定では中心2422 MHz、約2402–2442 MHzとなりCh6へ重なる。
+幅を広げると1回で運べる情報を増やせる一方、隣へ配置できる通信リンクの余裕を減らす\cite{rf}。
+幅は「自分の最高速度」と「会場の帯域の取り合い」の両方を変える。
+\begin{center}\captionof{table}{別APの幅と負荷方式を変えた時の操縦応答。}\small\begin{tabular}{@{}lrrr@{}}\toprule 条件 & p99 ms & 20 ms超過\% & 欠落\%\\\midrule TCP：20 MHz & 13.8 & 0.19 & 0.00\\
+TCP：40 MHz & 20.0 & 1.00 & 0.00\\
+UDP要求20：20 MHz & 16.1 & 0.24 & 0.00\\
+UDP要求20：40 MHz & 133.9 & 40.59 & 0.00\\
+\bottomrule\end{tabular}\end{center}
+TCP比較では統合p99が13.8から20.0 ms、20 ms超過率が0.19から1.00\%へ増えた。
+ただし反復のp99範囲には重なりがあり、負荷速度も違う。「40 MHzで必ずこの量だけ悪化する」とは言えない。
+狭い帯域は重複を避けやすいが、単位データの送信時間が増える可能性もある。
+\textbf{速い設定が複数ロボットの操縦に最適とは限らない}という問いを実機で比較できる。
+
+UDP要求20 Mbpsの40 MHz条件は3反復p99が23.6–157.3 msと大きくばらついた。
+実際の受付量も0.35–5.07 Mbpsで要求値を下回った。TCPの結果だけで幅の影響を代表せず、
+自分が使う通信方式・負荷で期限超過を測る必要がある。悪化の原因は今回の測定だけでは特定できない。
+
+\newpage
+\section{会場で試すなら、この順で測る}
+\begin{enumerate}
+\item 操縦だけのRTT p99・期限超過・最長応答間隔を残す。
+\item 自分の映像負荷を増やし、遅延の裾を見る。
+\item 別リンクを同一・隣接・分離へ動かし、SDRと操縦応答を同時に比較する。
+\item 幅を比較し、通信量・実接続幅も記録する。
+\end{enumerate}
+今回の測定手順に基づく評価案である。空いて見えるチャネルを選んで終えるより、他チームも通信中の配置で期限を確かめる。
+近接・遮蔽・隠れ端末・移動の効果は別途検証が必要で、今回の数値を会場へそのまま外挿しない。
+
+\section{5 GHzの先行観測と、画像の限界}
+先行実験では既存5 GHz APの80 MHz通信をC5で受信し、LOを分けて合成した。
+広い通信を俯瞰できるが同時取得ではなく、5 GHzへ移した操縦の遅延改善を比較した結果でもない。
+追加ESP32の2台は2.4 GHzのみである。
+
+今回のC5設定は80 MS/s、48 MHzアナログ帯域、ゲイン指数20、FFT長1024。
+CRCを照合したがdBFSは絶対電力へ未校正で、受信感度は表示端で落ちる。
+名目RF観測時間比は約0.42\%で、各行の間はほとんど見ていない。
+画像から連続占有率やパケットごとの原因を求めない。先行受信系評価はこの解釈を支える補足として統合版へ残した。
+今回の追加主比較は56試行・168,000応答機会・34,320 I/Q取得。各反復と原データを保持した。
+\begin{thebibliography}{9}\footnotesize\setlength{\itemsep}{0pt}
+\bibitem{rf} Cisco, Wireless RF Reference Guide, \url{https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/technical-reference/wireless-rf-reference-guide.html}.
+\bibitem{sdr} ESP-WebSDR, \url{https://espargos.net/espsdr/app/}.
+\end{thebibliography}\end{document}

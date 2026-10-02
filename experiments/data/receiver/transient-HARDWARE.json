@@ -1,0 +1,23 @@
+{
+  "run": "transient-HARDWARE",
+  "frames": 1100,
+  "frequency_mhz": 2437,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "HARDWARE",
+  "schedule": "immediate",
+  "rms_median": -18.450879433364825,
+  "rms_p95": -6.786211068879514,
+  "clip_fraction": 0.00021958596958596957,
+  "above_minus40": 1.0,
+  "frame_rate": 20.40519561203792,
+  "nominal_ratio": 0.004177963801564764,
+  "call_duration_median_ms": 1.8770000001495646,
+  "clock_uncertainty_ms": 0.5906239485743642,
+  "device_clock_relative_ppm": -3.860358499641059,
+  "band2433_2441_mean_db": -20.94322906198146,
+  "band2433_2441_p90_db": -14.386037689958869,
+  "period_mean_ms": 49.008366625562815,
+  "period_std_ms": 0.09062934767615564,
+  "utc": "2026-10-01T23:13:59.233981+00:00"
+}

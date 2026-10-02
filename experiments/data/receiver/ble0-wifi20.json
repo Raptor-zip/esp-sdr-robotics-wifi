@@ -1,0 +1,30 @@
+{
+  "run": "ble0-wifi20",
+  "frames": 300,
+  "frequency_mhz": 2440,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "immediate",
+  "rms_median": -46.47076533058873,
+  "rms_p95": -33.14248596906831,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.30333333333333334,
+  "frame_rate": 20.409401902271696,
+  "nominal_ratio": 0.0041788250394901305,
+  "call_duration_median_ms": 1.8769999996948172,
+  "clock_uncertainty_ms": 0.6393769392520189,
+  "device_clock_relative_ppm": -12.842320443184896,
+  "band2433_2441_mean_db": -42.17766439364138,
+  "band2433_2441_p90_db": -39.36766950675516,
+  "period_mean_ms": 49.000602103396005,
+  "period_std_ms": 0.001278277048844725,
+  "utc": "2026-10-01T23:15:26.329800+00:00",
+  "traffic": {
+    "bytes_received": 45006848,
+    "elapsed_s": 18.114316822000546,
+    "actual_mbps": 19.876807253514492,
+    "requested_mbps": 20.0,
+    "requested_seconds": 18.0
+  }
+}

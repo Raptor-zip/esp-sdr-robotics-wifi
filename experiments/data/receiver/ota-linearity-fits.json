@@ -1,0 +1,26 @@
+[
+  {
+    "gain": 20,
+    "repeat": 1,
+    "slope_db_per_db": 0.154918831054524,
+    "note": "OTA effective response, not calibrated input linearity"
+  },
+  {
+    "gain": 20,
+    "repeat": 2,
+    "slope_db_per_db": 0.14827578211335873,
+    "note": "OTA effective response, not calibrated input linearity"
+  },
+  {
+    "gain": 40,
+    "repeat": 1,
+    "slope_db_per_db": 0.26197666609842873,
+    "note": "OTA effective response, not calibrated input linearity"
+  },
+  {
+    "gain": 40,
+    "repeat": 2,
+    "slope_db_per_db": 0.14349358613969362,
+    "note": "OTA effective response, not calibrated input linearity"
+  }
+]

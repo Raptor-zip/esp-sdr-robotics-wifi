@@ -1,0 +1,164 @@
+[
+  {
+    "run": "pcap-idle",
+    "pcap_packets": 141,
+    "tx_packets": 84,
+    "hardware_tsft_packets": 57,
+    "association_tables": [
+      {
+        "direction": "all",
+        "extra_window_ms": 0,
+        "uncertainty_ms": 0.617016466322422,
+        "assoc_and_detect": 0,
+        "assoc_no_detect": 7,
+        "no_assoc_detect": 54,
+        "no_assoc_no_detect": 939
+      },
+      {
+        "direction": "all",
+        "extra_window_ms": 1,
+        "uncertainty_ms": 1.617016466322422,
+        "assoc_and_detect": 2,
+        "assoc_no_detect": 7,
+        "no_assoc_detect": 52,
+        "no_assoc_no_detect": 939
+      },
+      {
+        "direction": "all",
+        "extra_window_ms": 5,
+        "uncertainty_ms": 5.617016466322422,
+        "assoc_and_detect": 2,
+        "assoc_no_detect": 16,
+        "no_assoc_detect": 52,
+        "no_assoc_no_detect": 930
+      },
+      {
+        "direction": "all",
+        "extra_window_ms": 20,
+        "uncertainty_ms": 20.617016466322422,
+        "assoc_and_detect": 5,
+        "assoc_no_detect": 54,
+        "no_assoc_detect": 49,
+        "no_assoc_no_detect": 892
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 0,
+        "uncertainty_ms": 0.617016466322422,
+        "assoc_and_detect": 0,
+        "assoc_no_detect": 4,
+        "no_assoc_detect": 54,
+        "no_assoc_no_detect": 942
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 1,
+        "uncertainty_ms": 1.617016466322422,
+        "assoc_and_detect": 1,
+        "assoc_no_detect": 5,
+        "no_assoc_detect": 53,
+        "no_assoc_no_detect": 941
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 5,
+        "uncertainty_ms": 5.617016466322422,
+        "assoc_and_detect": 2,
+        "assoc_no_detect": 13,
+        "no_assoc_detect": 52,
+        "no_assoc_no_detect": 933
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 20,
+        "uncertainty_ms": 20.617016466322422,
+        "assoc_and_detect": 3,
+        "assoc_no_detect": 42,
+        "no_assoc_detect": 51,
+        "no_assoc_no_detect": 904
+      }
+    ],
+    "own_beacons": 0
+  },
+  {
+    "run": "pcap-load20",
+    "pcap_packets": 136554,
+    "tx_packets": 95856,
+    "hardware_tsft_packets": 40698,
+    "association_tables": [
+      {
+        "direction": "all",
+        "extra_window_ms": 0,
+        "uncertainty_ms": 0.5598065045831203,
+        "assoc_and_detect": 185,
+        "assoc_no_detect": 367,
+        "no_assoc_detect": 207,
+        "no_assoc_no_detect": 241
+      },
+      {
+        "direction": "all",
+        "extra_window_ms": 1,
+        "uncertainty_ms": 1.5598065045831204,
+        "assoc_and_detect": 345,
+        "assoc_no_detect": 490,
+        "no_assoc_detect": 47,
+        "no_assoc_no_detect": 118
+      },
+      {
+        "direction": "all",
+        "extra_window_ms": 5,
+        "uncertainty_ms": 5.55980650458312,
+        "assoc_and_detect": 392,
+        "assoc_no_detect": 608,
+        "no_assoc_detect": 0,
+        "no_assoc_no_detect": 0
+      },
+      {
+        "direction": "all",
+        "extra_window_ms": 20,
+        "uncertainty_ms": 20.559806504583122,
+        "assoc_and_detect": 392,
+        "assoc_no_detect": 608,
+        "no_assoc_detect": 0,
+        "no_assoc_no_detect": 0
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 0,
+        "uncertainty_ms": 0.5598065045831203,
+        "assoc_and_detect": 136,
+        "assoc_no_detect": 340,
+        "no_assoc_detect": 256,
+        "no_assoc_no_detect": 268
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 1,
+        "uncertainty_ms": 1.5598065045831204,
+        "assoc_and_detect": 289,
+        "assoc_no_detect": 483,
+        "no_assoc_detect": 103,
+        "no_assoc_no_detect": 125
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 5,
+        "uncertainty_ms": 5.55980650458312,
+        "assoc_and_detect": 392,
+        "assoc_no_detect": 606,
+        "no_assoc_detect": 0,
+        "no_assoc_no_detect": 2
+      },
+      {
+        "direction": "rx_only",
+        "extra_window_ms": 20,
+        "uncertainty_ms": 20.559806504583122,
+        "assoc_and_detect": 392,
+        "assoc_no_detect": 608,
+        "no_assoc_detect": 0,
+        "no_assoc_no_detect": 0
+      }
+    ],
+    "own_beacons": 0
+  }
+]

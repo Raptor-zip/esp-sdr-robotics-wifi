@@ -1,0 +1,527 @@
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=22mm]{geometry}
+\usepackage{amsmath,graphicx,booktabs,siunitx,hyperref,float,tikz}
+\usepackage[section]{placeins}
+\usetikzlibrary{arrows.meta,positioning}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue}
+\graphicspath{{../experiments/figures/overview/}}
+\newcommand{\plot}[3]{\begin{figure}[htbp]\centering\includegraphics[width=#2\linewidth]{#1.pdf}\caption{#3}\end{figure}}
+\title{\sffamily ロボコンの操縦通信とWi-Fi干渉の可視化\\室内通信実験と先行SDR観測の統合}
+\author{貝淵蒼馬}
+\date{}
+\newcommand{\maybeplot}[3]{\IfFileExists{../experiments/figures/receiver/#1.pdf}{\plot{#1}{#2}{#3}}{}}
+
+\usepackage{luatexja-fontspec,titlesec}
+\setsansfont{HaranoAjiGothic-Medium.otf}[BoldFont=HaranoAjiGothic-Medium.otf]
+\setsansjfont{HaranoAjiGothic-Medium.otf}[BoldFont=HaranoAjiGothic-Medium.otf]
+\titleformat{\section}{\Large\bfseries\sffamily}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\sffamily}{\thesubsection}{1em}{}
+\begin{document}
+\maketitle
+\begin{abstract}
+操縦を模した100 Hz UDPの往復遅延・期限超過・欠落を、同一APの動画相当負荷と、独立APの同一・隣接・分離チャネルおよび20/40 MHz幅で比較した。実測I/Qを青〜緑の共通色尺度で可視化し、周波数の重なりと通信性能を対応づける。先行115保存系列・27,540取得は、画像の解釈を支える帯域・ゲイン・間欠取得・5 GHz観測の補足として統合した。目的はロボコンで通信設定を選ぶ際に役立つ比較データを得ることであり、単一チップの仕様測定ではない。
+\end{abstract}
+\newcommand{\SameIdlePninetyNine}{10.6}
+\newcommand{\SameTwentyPninetyNine}{21.0}
+\newcommand{\SameHighPninetyNine}{36.9}
+\newcommand{\SameHighDeadline}{7.4}
+\newcommand{\SameHighGap}{102.9}
+\newcommand{\VideoHighRange}{38.4--40.6}
+\newcommand{\Conditions}{56}
+\newcommand{\ControlPackets}{168000}
+\newcommand{\Snapshots}{34320}
+\newcommand{\RailMax}{0.0000}
+\newcommand{\DutyRatio}{0.418}
+\newcommand{\SendJitterRange}{1.06--1.98}
+\newcommand{\SixPninetyNine}{26.5}
+\newcommand{\SixDeadline}{1.8}
+\newcommand{\SixLoss}{0.00}
+\newcommand{\SixGap}{68.3}
+\newcommand{\SevenPninetyNine}{15.6}
+\newcommand{\SevenDeadline}{0.3}
+\newcommand{\SevenLoss}{0.00}
+\newcommand{\SevenGap}{40.4}
+\newcommand{\ElevenPninetyNine}{13.1}
+\newcommand{\ElevenDeadline}{0.2}
+\newcommand{\ElevenLoss}{0.00}
+\newcommand{\ElevenGap}{42.6}
+\newcommand{\IdlePninetyNine}{10.8}
+\newcommand{\IdleDeadline}{0.0}
+\newcommand{\IdleLoss}{0.00}
+\newcommand{\IdleGap}{33.0}
+\newcommand{\WidthTwentyPninetyNine}{13.8}
+\newcommand{\WidthTwentyDeadline}{0.2}
+\newcommand{\WidthTwentyLoss}{0.00}
+\newcommand{\WidthTwentyGap}{44.3}
+\newcommand{\WidthFortyPninetyNine}{20.0}
+\newcommand{\WidthFortyDeadline}{1.0}
+\newcommand{\WidthFortyLoss}{0.00}
+\newcommand{\WidthFortyGap}{62.6}
+\newcommand{\LowPowerPninetyNine}{15.1}
+\newcommand{\LowPowerDeadline}{0.2}
+\newcommand{\LowPowerLoss}{0.00}
+\newcommand{\LowPowerGap}{39.3}
+\section{目的：操縦通信にとっての無線品質}
+ロボットの操縦では、平均転送速度だけでなく、古い指令が届くまでの待ち時間と、応答が途切れる時間が問題になる。本実験は64 byteのUDPを100 Hzで送り返す通信を用い、映像相当のTCP負荷、別APのチャネル、チャネル幅、送信電力設定を変えた。主題は\textbf{ロボコンで通信設定を選ぶために、周波数の重なりと操縦通信の遅延を対応づけること}である。実際のロボット・映像コーデック・モータ制御は使っていない。
+
+平均速度を増やした時に遅延の裾が伸びるか、スペクトルの重複と操縦応答の劣化が対応するか、幅を広げることで隣の通信への影響が変わるかを、別々の比較で調べる。干渉を断定する前に待機状態の基準値を取り、端末側の遅延をRFの効果と取り違えないようにした。
+
+\section{実験系と評価方法}
+観測PC（Intel BE200）をCh6・HT20のWPA2 APとし、ラップトップ1（Intel AX210）から有線LANでインターネット共有を受けた。ESP32-1（ESP32-D0WD）は全主比較でこのAPのSTAとなり、操縦UDPを反射する。ESP32-2（ESP32-PICO-D4）は独立したAPとTCP送信機となる。ラップトップ2（MT7921E）は、同一AP比較では観測PCからTCPを受信し、独立AP比較ではESP32-2へ接続してTCPを受信する。後者の期間はラップトップ2のインターネットを使わず、自律スクリプトで復帰させた。観測PCの有線インターネットは維持した。
+
+同一AP負荷比較ではhostapd、独立AP比較の主APではNetworkManagerを使った。実接続はどちらもCh6・20 MHzだがAP起動設定は完全に同一ではないため、\textbf{各比較群の待機条件を基準とする}。同一AP負荷と独立AP負荷の数値差を、負荷の置き場所だけの効果として解釈しない。
+
+配置は利用者申告による概数で、追加ESP32間750 mm、C5と各追加ESP32の間40 cm・90 cm、観測PCとラップトップ2の間30 cmである。C5からの2距離とボード番号の対応、アンテナの向きは未確認である。配置は測定中に変えない。\textbf{物理距離を変えた近接・遠方の比較ではない}。送信電力設定の比較を距離掃引や校正済み入力レベル掃引とは呼ばない。
+
+1試行30 s、3,000 UDP指令、基本3反復とした。省電力の補助比較は2反復である。反復ごとに条件順序を乱数種固定で変更し、同一AP比較と独立AP比較の順序自体は固定した。評価はアプリケーションの送信から同じ内容の応答を受けるまでの\textbf{往復遅延（RTT）}、欠落率、20/50 ms以内に応答しなかった割合、最長応答間隔である。欠落も期限超過へ含める。最長応答間隔は30 sの測定開始・終了を含み、終了後1 sの待機で届いた応答も欠落判定には使う。p99は受信できた応答について計算し、欠落率を併記する。
+
+RTTは片道の指令到着遅延でも、実ロボットの制御応答でもない。RTTを2で割って片道値にしない。送信予定時刻と実送信時刻を保存して、ホストの送信遅れも確認した。各試行のp99と全反復をまとめたp99を残し、パケットを独立な反復数とみなした信頼区間は作っていない。
+
+C5は80 MS/s、16,380組の8+8 bit I/Q、48 MHzアナログ帯域、手動ゲイン指数20で、UDPと並行して約30 s取得した。全取得のCRCを照合した。FFTはDC除去、Hann窓、窓和二乗による規格化、線形電力平均を用いる。dBFSは絶対電力に校正していない。Ch1の幅比較はLO=2427 MHz、他の独立AP比較はLO=2442 MHzとした。表示スパン80 MHzでも感度は均一ではなく、異なるRF位置の高さから送信電力を直接比較できない。
+
+\section{同じAP内での操縦と動画相当通信}
+\begin{table}[htbp]\centering\small\caption{同一AP比較。省電力条件以外は3反復・各9,000応答機会。PSは2反復・6,000機会。期限超過には欠落も含む。}\begin{tabular}{lrrrrr}\toprule
+条件 & p50 ms & p99 ms & $>20$ ms \% & 欠落\% & 最長間隔ms\\\midrule
+待機 & 3.9 & 10.6 & 0.00 & 0.00 & 24.5\\
+20 Mbps指定 & 4.4 & 21.0 & 1.32 & 0.00 & 48.8\\
+60 Mbps指定 & 7.3 & 36.9 & 7.42 & 0.00 & 102.9\\
+20 Mbps＋PS & 4.5 & 21.4 & 1.38 & 0.05 & 97.6\\
+\bottomrule\end{tabular}\end{table}
+
+\begin{figure}[htbp]\centering\includegraphics[width=.88\linewidth]{../experiments/figures/robotics/same-ap.pdf}\caption{各反復のp99と統合p99、20 ms期限超過率。負荷はTCPの指定値であり、60 Mbps指定の実測は\VideoHighRange{} Mbpsであった。PSはESP32のModem-sleepを有効にした補助比較。}\end{figure}
+
+待機状態の統合p99は\SameIdlePninetyNine{} ms、20 Mbps指定では\SameTwentyPninetyNine{} ms、高負荷では\SameHighPninetyNine{} msとなった。高負荷の20 ms期限超過率は\SameHighDeadline{}\%、最長応答間隔は\SameHighGap{} msである。主要3条件の欠落率は0\%であった。\textbf{全パケットが届くことと、操縦周期に間に合うことは別の性質である。}100 Hzの送信間隔は10 msなので、高負荷時の最長応答間隔は約10周期に相当する。ただしこれは応答の途絶であり、ロボットへの片道指令が同じ時間途絶したという意味ではない。
+
+中央値の増加よりp99の増加が大きく、平均的な応答だけでは遅いバーストを見落とす。TCP指定速度を上げても実効速度は頭打ちになった一方、遅延の裾は伸びた。この結果は、操縦と映像が同じ媒体・APの処理・送信待ちを共有することと整合する。RF再送、AP内の待ち行列、TCPのバースト性、端末処理を本計測だけで分離したわけではない。
+
+実用上は映像の平均Mbpsだけでなくピークの送信量を抑え、操縦の期限超過率を同時に見る意味がある。送信が詰まった際に古い操縦値を蓄積しない設計、最新値の優先、期限切れの破棄、通信途絶時の停止判断は候補となる。本実験ではそれらの制御方式や優先度設定の改善効果を比較しておらず、観測した約103 msを安全な停止しきい値として提案しない。
+
+省電力比較はp99だけでは明確な改善・悪化の一方向を示さなかった。2試行のうち1試行で3応答が欠落し、統合欠落率は0.05\%だった。送信の頻度、受信機の省電力状態、AP側バッファリングが影響し得るが、2反復で省電力一般の因果効果を確定しない。
+
+\section{独立した別AP：同一・部分重複・分離チャネル}
+\begin{table}[htbp]\centering\small\caption{独立AP比較。各3反復・9,000応答機会。RTT分位点は受信できた応答の統合値。}\begin{tabular}{lrrrrr}\toprule
+条件 & p50 ms & p99 ms & $>20$ ms \% & 欠落\% & 最長間隔ms\\\midrule
+Ch11待機 & 3.7 & 10.8 & 0.02 & 0.00 & 33.0\\
+Ch6待機 & 3.7 & 10.2 & 0.06 & 0.00 & 43.1\\
+Ch7待機 & 3.7 & 10.4 & 0.03 & 0.00 & 27.1\\
+Ch6負荷 & 4.2 & 26.5 & 1.77 & 0.00 & 68.3\\
+Ch7負荷 & 4.0 & 15.6 & 0.26 & 0.00 & 40.4\\
+Ch11負荷 & 3.8 & 13.1 & 0.16 & 0.00 & 42.6\\
+Ch1 HT20負荷 & 3.8 & 13.8 & 0.19 & 0.00 & 44.3\\
+Ch1 HT40負荷 & 4.0 & 20.0 & 1.00 & 0.00 & 62.6\\
+Ch7低電力負荷 & 3.9 & 15.1 & 0.24 & 0.00 & 39.3\\
+\bottomrule\end{tabular}\end{table}
+
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{../experiments/figures/robotics/interference.pdf}\caption{操縦側をCh6とESP32-1へ固定し、ESP32-2 APの条件を変更した比較。idleはAP・ビーコンとTCP接続を保ち、アプリの送信を止めた条件。loadはTCP飽和負荷で、等しい実効Mbpsを保証しない。}\end{figure}
+
+Ch11待機の統合p99は\IdlePninetyNine{} ms、Ch6負荷では\SixPninetyNine{} ms、Ch7負荷では\SevenPninetyNine{} ms、Ch11負荷では\ElevenPninetyNine{} msであった。20 ms期限超過率はそれぞれ\IdleDeadline{}\%、\SixDeadline{}\%、\SevenDeadline{}\%、\ElevenDeadline{}\%である。Ch6とCh7の大小関係は各反復のばらつきも確認する必要がある。同一・部分重複のどちらが常に悪いかを、この少数反復だけで一般化しない。各負荷は飽和TCPである。送信アプリの実効速度はCh6 3.62--6.26、Ch7 3.04--8.07、Ch11 8.64--9.83 Mbpsで、無線レートや送信時間が同じではない。遅延差を周波数位置だけの因果効果とはせず、今回の2リンクの運用条件を含む比較として扱う。
+
+
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{../experiments/figures/robotics/spectra.pdf}\caption{独立AP比較の実測平均スペクトル。主APはCh6で固定。灰色は主APの名目20 MHz範囲。外来信号と受信機の周波数応答も含む。}\end{figure}
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{../experiments/figures/robotics/robotics-blue-green.pdf}\caption{青〜緑の実測ウォーターフォール。画像は各条件の1反復目、RTT注記は3反復の統合値。全パネルで同じ色尺度を使用し、白点線は操縦Ch6の名目範囲。2418 MHz付近の強い成分など外来信号も含み、色を試験APだけに帰属しない。各行は約205 $\mu$sの間欠取得であり、連続占有時間ではない。}\end{figure}
+
+同一チャネルでは、互いを認識できるWi-Fi機器が送信機会を分け合う。部分重複チャネルは名目上の中心周波数が違っても周波数範囲が重なり、受信を妨げたり送信待ちを増やしたりし得る\cite{ciscoRF}。本実験の遅延とスペクトルだけでは、キャリアセンス、隠れ端末、再送、受信機のブロッキングを特定できない。チャネル番号が違うことを独立した帯域と同一視しない、という設計上の判断につながる。
+
+\section{20/40 MHz幅と送信電力設定}
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{../experiments/figures/robotics/robotics-width-blue-green.pdf}\caption{Ch1の20/40 MHz設定比較。同じ色尺度・LO=2427 MHz・ゲイン20で観察した。40 MHzの接続幅は3反復ともクライアントのiwログで確認した。広い接続設定でも、全送信が40 MHz波形になるわけではなく、平均スペクトルを理想的な矩形に読み替えない。}\end{figure}
+Ch1 HT20時の主リンクp99は\WidthTwentyPninetyNine{} ms、HT40時は\WidthFortyPninetyNine{} ms、20 ms期限超過率は\WidthTwentyDeadline{}\%と\WidthFortyDeadline{}\%だった。副チャネル追加とクライアントの実接続幅は保存したAP状態とクライアントログで確認する。p99の反復範囲には重なりがあり、幅の変更による遅延増加を一律には主張しない。送信アプリ実効速度はHT20 2.68--9.75、HT40 5.27--6.28 Mbpsである。広い帯域の通信が高速化すれば単位データの送信時間が短くなる可能性もあり、重複範囲の拡大だけで結果は決まらない。
+
+
+名目範囲で考えると、Ch1のHT20は2412 MHz中心、約2402--2422 MHzとなり、Ch6の約2427--2447 MHzと分離する。Ch1+Ch5のHT40は中心が2422 MHzへ移り、約2402--2442 MHzとなるためCh6へ重なる。実際のスペクトルは矩形ではなく、名目範囲の外にも成分がある。帯域幅を広げれば1回の送信で運べる情報を増やせる一方、独立に配置できる通信リンクの数と周波数余裕を減らす\cite{ciscoRF}。今回の幅比較は\textbf{別APの幅を変えた時の操縦通信への影響}であり、操縦AP自身の20/40 MHzの速度比較ではない。先行5 GHzの80 MHz観測も、幅を切り替えた操縦性能比較ではない。
+
+送信電力設定を変えたCh7比較は同じ位置で行った。APの最大電力設定読み返しは通常13.5 dBm、低電力1 dBmであった。主リンクのp99は通常\SevenPninetyNine{} msから低電力\LowPowerPninetyNine{} ms、20 ms期限超過率は\SevenDeadline{}\%から\LowPowerDeadline{}\%となった。低電力時の送信アプリ実効速度は2.23--5.72 Mbpsだった。
+ 設定値と実際のEIRPやC5入力電力は同一ではない。飽和TCPの実効速度や無線レートも変わり得るので、電力だけを独立変数とする校正済み試験ではない。主リンクを強くすれば全て改善するという結論も、この試験からは導けない。
+
+\section{追加UDP負荷：要求量、受付量、到着量を分ける}
+TCPは混雑時に転送量自体が変わるため、同じアプリ要求20 MbpsのUDPでも6条件を各3反復比較した。ESP32-2へ1,400 byteのUDP送信を要求し、同じ操縦主リンクを保持した。送信APIの受付パケット数と、ラップトップ2へ到着した識別子・連番を保存した。負荷条件の変更前にAP接続と受信器のready応答を確認した。20 Mbps指定は20 Mbps達成や等しい空中時間を保証しない。
+\par
+\begin{table}[htbp]\centering\small\caption{UDP負荷比較。主リンクの応答と、別リンクの送信API受付・受信アプリ到着を別々に集計。各3反復。受付/到着Mbpsは負荷全区間の範囲で、PHY速度ではない。}\begin{tabular}{lrrrrrr}\toprule 条件 & p99 ms & 20 ms超過\% & 欠落\% & 受付Mbps & 到着Mbps & 別リンク未到着\%\\\midrule
+Ch11idle & 13.7 & 0.08 & 0.00 & 0.00--0.00 & 0.00--0.00 & --\\
+Ch6 & 19.4 & 0.82 & 0.00 & 5.23--8.12 & 5.19--8.10 & 0.2--0.7\\
+Ch7 & 18.3 & 0.56 & 0.00 & 2.90--7.61 & 2.86--7.55 & 0.7--1.4\\
+Ch11 & 58.4 & 5.64 & 0.01 & 1.19--6.52 & 1.13--6.50 & 0.3--4.3\\
+Ch1w20 & 16.1 & 0.24 & 0.00 & 3.56--7.65 & 3.56--7.62 & 0.1--0.3\\
+Ch1w40 & 133.9 & 40.59 & 0.00 & 0.35--5.07 & 0.31--5.06 & 0.2--10.3\\
+\bottomrule\end{tabular}\end{table}
+\par
+
+この未到着率は送信APIで受付済みの連番が受信アプリへ届かなかった割合であり、Wi-FiのPHYパケット損失率ではない。端末・OS・収集器の影響も含む。送信APIで受け付けられる量自体が小さい場合、要求値で通信量を統制できたとは扱わない。
+主リンクp99の各反復範囲はCh6 16.7--21.2、Ch7 17.0--19.0、Ch11 24.3--79.4 msだった。TCP比較だけの順位や代表値をUDPへ外挿しない。分離チャネルでも遅い応答が観測された場合には、周波数分離だけで主リンクが無影響と決めず、実通信量・負荷波形・端末処理を合わせて確認する。現在の測定だけで再送、受信ブロッキング、外来通信、バッファリングのどれかへ帰属することはできない。
+\par
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{../experiments/figures/robotics/robotics-udp-blue-green.pdf}\caption{追加UDP要求20 Mbps条件の1反復目。色尺度はTCP画像と同じ。要求値と実通信量が一致しないため、画面注記は実測受付量を使う。}\end{figure}
+
+\section{受信端末の基準遅延をRF干渉と混同しない}
+初期構成ではラップトップ2をUDP反射端末にしたが、別AP負荷なしでもp99約116 msが出た。2/20 Mbpsの下りTCP、省電力onからoffへの再適用、mt76のruntime-pmとdeep-sleepの一時無効化でも約109--116 msの裾が残った。設定は元に戻した。mt76の2つの設定はドライバが別々に公開する制御である\cite{mt76debug}が、本結果はそれらを遅延原因と特定するものではない。
+
+この遅延を干渉の効果に加算することを避け、全主比較の操縦相手をESP32-1へ統一した。端末・APのバッファリングや無線送受信のどの区間が原因かは未確定である。初期構成2試行と端末診断の短時間試行は予備データとして保持し、主比較には含めない。負荷停止の実装競合と自律クライアントの切断判定も修正し、原ログを残した。
+
+\section{C5で見えることと、本実験で確定しないこと}
+本追加実験は\Conditions{}試行、\ControlPackets{}操縦UDP、\Snapshots{} I/Qスナップショットを主比較へ保存した。主比較の最大I/Qレール到達率は\RailMax{}\%である。名目RF観測時間比は約\DutyRatio{}\%であり、ほとんどの時間を直接観測していない。先行115条件・27,540取得の受信系評価で確認したLO端部の減衰、ゲインによる飽和、固定周期による位相偏りは今回も解釈上の制約となる。
+
+SDRは周波数位置と広がり、強いバーストが増えることを可視化する。一方、指令が期限に間に合うかはUDP時刻列で測る必要がある。今回も色の変化をパケット欠落数や帯域占有率へ直接換算しない。RTT、TCP実効速度、I/Qを条件単位で併記することで、電波の見た目だけから通信性能を推測する誤りを減らせる。
+
+室内の外来通信、位置・向き、送信機のアンテナと無線レート、少数反復、試験順序に制約がある。同じ実効負荷・既知入力電力・同じPHYレートにそろえた比較ではない。距離掃引、隠れ端末配置、操縦AP自身の幅変更、優先度制御、実機の制御誤差と停止判断は今後の候補となる。ロボコン会場へ数値をそのまま外挿せず、同じ評価指標で会場配置を試す価値を示す実験である。
+
+
+\clearpage\section*{先行観測：SDR画像を読むための補足}
+\graphicspath{{../experiments/figures/baseline/}}
+\section{目的と実験環境}
+基礎実験と追加評価を通じた目的は、Wi-Fiのチャネル変更や通信負荷がスペクトル上でどう現れるかを観察し、SDRの表示と実際の観測能力を区別することである。通常の室内で実施し、電波暗室、校正信号源、距離の実測は用いていない。他のAPや端末も存在するため、観測信号をすべて実験APに帰属させることはできない。
+
+観測PCはUbuntu 22.04.5、カーネル6.18.6-1-liquorix-amd64、NetworkManager 1.36.6、Intel BE200（iwlwifi）を使用した。C5はUSB Serial/JTAG経由で接続した。ESP-SDR\cite{sdr}は固定したESP-IDFコミット\texttt{25fe69f946311abdaf9ad56591f25fedbc20ac98}でビルドし、起動時の2.4 GHz帯選択を明示する局所修正を加えた。
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[box/.style={draw,rounded corners,align=center,font=\small,minimum width=34mm,minimum height=12mm},>=Latex]
+\node[box] (router) {既存ルーター\\インターネット};
+\node[box,right=13mm of router] (laptopOne) {ラップトップ1（Intel AX210）\\Wi-Fi上流・NAT};
+\node[box,right=13mm of laptopOne] (local) {観測PC\\BE200 Soft AP};
+\node[box,below=17mm of local] (client) {ラップトップ2（MT7921E）\\TCP受信クライアント};
+\node[box,below=17mm of laptopOne] (c5) {ESP32-C5\\I/Q受信};
+\draw[->] (router)--node[above,font=\scriptsize]{Wi-Fi} (laptopOne);
+\draw[->] (laptopOne)--node[above,font=\scriptsize]{Ethernet} (local);
+\draw[<->] (local)--node[right,font=\scriptsize]{2.4 GHz} (client);
+\draw[<->] (c5)--node[above,sloped,font=\scriptsize]{USB} (local);
+\end{tikzpicture}
+\caption{実験構成。制御はTailscale SSH、負荷のTCPデータは実験APのローカルIP宛てに送る。C5は周囲の信号も受信する。}\end{figure}
+
+ラップトップ1のEthernetをIPv4 shared（192.168.58.10/24）とし、観測PCを192.168.58.11、デフォルトゲートウェイとDNSをラップトップ1に設定した。観測PCの無線を停止してもEthernetに固定したHTTPSアクセスが成功することを確認した。実験APのサブネットは10.78.0.0/24、WPA2、DHCPである。実験用NAT/FORWARDチェーンは固有名で作成し、終了時に削除した。元の接続プロファイルは保存した。IntelのAP/masterモードには公式なサポート制限がある\cite{intel,iwl}ため、能力広告だけで動作可と判断せず、hostapdと\texttt{iw}の結果を記録した。
+
+\section{測定・解析方法}
+\subsection{I/Q取得とデータ保全}
+\texttt{CAP16}で1回16,380組の符号付き8 bit I/Qを取得する。コマンド名の16は保存データが16 bit/成分であることを意味しない。サンプル数とCRC32を検証してからNPZへ保存し、設定、UTC時刻、ホスト単調時計、取得時間、通信実績、AP状態をJSONに記録した。USBは2 Mbaudで使用した。終了時にシリアル端末設定のVMIN=1、VTIME=0を復元した。VMIN=0が残るとChromeが読み取り0 byteを切断と解釈する問題を実機で確認した。
+
+\subsection{スペクトル推定と単位}
+$x[n]=(I[n]+jQ[n])/128$とし、各FFT区間の複素平均を除去した後Hann窓$w[n]$を適用する。
+\begin{equation}
+P[k]=\frac{\left|\sum_{n=0}^{N-1}(x[n]-\bar x)w[n]e^{-j2\pi kn/N}\right|^2}{(\sum_{n=0}^{N-1}w[n])^2}.
+\end{equation}
+スナップショット内の区間電力を線形平均し、平均スペクトルも線形平均後に$10\log_{10}$を取る。最大値曲線はスナップショット電力のビン別最大値である。C5の符号規約に従い$f_{\mathrm{RF}}=f_{\mathrm{LO}}-f_{\mathrm{baseband}}$とした。通常のFFT長は2,048、80 MS/sでのビン間隔は39.0625 kHz、Hann窓の等価雑音帯域は約58.6 kHzである。解析コードの周波数軸と規格化は人工的な複素トーンでも確認したが、実験図には人工トーンを含めていない。
+
+図のdBFSはこの規格化による相対ビン電力であり、dBmや電界強度への校正値ではない。複素フルスケールの定義にも依存する。ゲイン、アナログフィルター、FFT長を変えた結果を、送信電力の変化とそのまま同一視しない。
+
+\subsection{間欠取得と比較指標}
+80 MS/sで16,380サンプルの名目時間は204.75 $\mu$sである。USB転送・処理中は連続RF観測ではなく、ウォーターフォールの縦軸を取得番号で表示する。名目取得時間の合計とホスト経過時間の比
+\begin{equation}R=\frac{M\,16380/f_s}{t_{\mathrm{end}}-t_{\mathrm{start}}}\end{equation}
+はイベント捕捉率ではない。ファームウェア報告時間にも内部処理を含むため、$16380/f_s$とは区別する。
+
+固定ゲイン20の比較に限り、DC除去後のスナップショットRMSが$-40$ dBFSを超える割合を補助指標とした。これは便宜的なしきい値であり、チャネル占有率やWi-Fiフレーム復号結果ではない。飽和指標はI/Q成分が$-128$または127に一致した割合である。
+
+\section{2.4 GHzのチャネルと通信負荷}
+APを20 MHzに設定し、1・6・11チャネル（2412・2437・2462 MHz）で待機時と要求20 MbpsのTCPダウンリンクを各2回測定した。各中心周波数で180回、共通LO=2440 MHzで負荷時120回取得した。要求通信は18秒、取得開始は通信開始から約2秒後である。各測定で実際の受信速度を保存した。主比較のゲインは20、アナログ帯域は自動である。
+保存データは51条件、合計9,140スナップショットである（探索測定を含む）。
+探索測定の負荷生成失敗3条件は主要比較から除外した。保存した全I/QのCRCを再検証して一致を確認した。
+
+\begin{table}[htbp]\centering
+\caption{固定ゲイン20、RMSしきい値$-40$ dBFSを超える取得割合。占有率ではない。}
+\begin{tabular}{rrrrrr}
+\toprule
+Ch & 反復 & 待機(\%) & 負荷(\%) & 実効Mbps & 飽和(\%)\\\midrule
+1 & 1 & 4.4 & 21.7 & 19.99 & 0.0000\\
+1 & 2 & 6.1 & 37.8 & 19.17 & 0.0000\\
+6 & 1 & 4.4 & 34.4 & 19.88 & 0.0000\\
+6 & 2 & 4.4 & 41.7 & 19.81 & 0.0000\\
+11 & 1 & 3.9 & 23.9 & 19.99 & 0.0000\\
+11 & 2 & 1.1 & 23.9 & 19.99 & 0.0000\\
+\bottomrule\end{tabular}\end{table}
+
+待機時のしきい値超過割合1.1--6.1\%に対し、負荷時は21.7--41.7\%であった。主要比較のレール到達割合は0\%である。
+\plot{channels}{.95}{共通LO=2440 MHzでの最大スナップショット電力。設定チャネルに対応する信号位置が変化する。AP停止時にも外来信号がある。受信アナログ帯域の上限48 MHzにより80 MHz表示の端は同じ感度とは限らない。}
+\plot{channel-waterfalls}{1}{チャネルごとの実測ウォーターフォール。破線は設定中心周波数。縦方向の隙間は未観測RF時間を表さず、取得番号を表す。}
+\plot{idle-loaded}{.95}{6チャネルの待機・負荷条件、各2回。少数の強い信号が線形平均へ寄与する。}
+\section{受信設定と表示の違い}
+\subsection{サンプルレートとFFT長}
+80・40・20 MS/sを比較した。サンプルレートは表示できる周波数範囲と1取得の名目RF時間を変える。20 MS/sでは20 MHzチャネルの端に余裕がなく、フィルターやエイリアシングの影響を含めて評価する必要がある。同一データを256・512・1024・2048点で再解析するとビン間隔は312.5・156.25・78.125・39.0625 kHzとなる。FFT長によるビン電力のノイズ床低下は、受信機の物理的な雑音が減った証拠ではない。
+\plot{sample-rates}{.9}{サンプルレート比較。同じ通信要求でも観測範囲とビン幅が変わる。}
+\begin{table}[htbp]\centering
+\caption{サンプルレートごとの取得速度と時間比。報告取得時間は処理時間を含む。}
+\begin{tabular}{rrrr}
+\toprule
+MS/s & 取得/s & 名目時間比(\%) & 報告時間($\mu$s)\\\midrule
+80 & 19.78 & 0.405 & 1881\\
+40 & 19.71 & 0.807 & 2087\\
+20 & 19.82 & 1.623 & 2494\\
+\bottomrule\end{tabular}\end{table}
+
+\plot{capture-gaps}{.9}{取得速度と名目サンプル時間比。全イベントを連続受信していると解釈しない。}
+\plot{fft-comparison}{.95}{同一生データのFFT長比較。ビン電力の規格化は同じだが、各ビンの帯域が異なる。}
+\subsection{アナログフィルターとゲイン}
+帯域要求11・20・40・48 MHzを比較した。狭い帯域は帯域外の成分を抑える一方、Wi-Fiチャネル内の端も減衰し得る。ゲイン20・40・60とHardware AGCを比較した。高ゲインではレール到達とスペクトルの歪みを確認する。最初のゲイン40の探索測定は保存したが、クリッピングを認めたため主要なチャネル比較をゲイン20で取り直した。
+\plot{filters}{.9}{受信アナログ帯域の比較。表示スパンとアナログ通過帯域を区別する。}
+\begin{table}[htbp]\centering
+\caption{ゲイン設定と取得電力、飽和。RMSはDC除去後。}
+\begin{tabular}{lrrr}
+\toprule
+ゲイン & RMS中央値 & RMS95百分位 & 飽和(\%)\\\midrule
+MANUAL20 & -50.54 & -24.74 & 0.0000\\
+MANUAL40 & -41.94 & -4.40 & 0.3397\\
+MANUAL60 & -35.35 & 1.93 & 12.7318\\
+HARDWARE & -17.79 & -8.84 & 0.0340\\
+\bottomrule\end{tabular}\end{table}
+
+\plot{gain}{.9}{受信ゲインの比較。高い表示電力は受信感度や測定精度の改善を必ずしも意味しない。}
+\begin{table}[htbp]\centering
+\caption{6チャネルでの要求速度と実効速度、しきい値超過割合。}
+\begin{tabular}{rrr}
+\toprule
+要求Mbps & 実効Mbps & 超過割合(\%)\\\midrule
+2 & 2.00 & 5.6\\
+20 & 19.84 & 39.4\\
+60 & 46.53 & 52.8\\
+\bottomrule\end{tabular}\end{table}
+
+\plot{traffic}{.9}{要求TCP速度2・20・60 Mbpsと待機条件。実効速度は結果表を参照。}
+\section{ビーコンとAPチャネル幅}
+ビーコン間隔50・100・500 TUを比較した。1 TUは1.024 ms\cite{hostap}であり、設定値は51.2・102.4・512 msに相当する。待機時でもビーコン、管理フレーム、クライアントのバックグラウンド通信、外来信号がある。スナップショットが短く間欠的であるため、図から全ビーコン数や正確な周期を推定することはできない。
+
+\plot{beacons}{1}{成功したビーコン設定の比較。短い取得と異なる取得回数のため、図の横縞の数だけで周期を比較しない。}
+
+40 MHz要求ではhostapdのHT40+設定を用い、\texttt{iw}が報告する実際の帯域と共存処理のログを確認した。今回の実際の帯域は20 MHzであり、40 MHz送信の成功例とは扱わない。ログには重複する20 MHz HT BSSの検出があり、共存処理との関連が示唆される。要求帯域だけを成功判定には用いない。
+\plot{ap-width}{.9}{20 MHz設定と40 MHz要求の比較。LOが異なるため、受信周波数応答の影響も含む。実際の帯域は結果表で確認する。}
+\section{既存5 GHz APの受信観測}
+別実験ではラップトップ2を既存ルーターに戻し、primary48チャネル、80 MHz幅、center5210 MHzを\texttt{iw}で確認してC5を5210 MHzへ設定した。待機・要求20 Mbpsを各2回測定した。通信はTailscale経由であり、ラップトップ1とラップトップ2の両方が同じ既存ルーターを通るため、信号増加を単一送信機に帰属させない。受信アナログ帯域上限48 MHzでは80 MHzチャネル全体を一度に均一感度で測定できない。
+負荷時のレール到達割合は約0.51--0.55\%であり、強い信号の電力比較には飽和の影響がある。この飽和に対し、後述する分割取得ではゲイン20へ下げて再評価した。
+\begin{table}[htbp]\centering
+\caption{既存5 GHzルーター観測。ゲイン40、中心5210 MHz。}
+\begin{tabular}{lrrrrr}
+\toprule
+条件 & 反復 & 実効Mbps & RMS中央値 & RMS95百分位 & 飽和(\%)\\\midrule
+idle & 1 & - & -45.46 & -12.01 & 0.0472\\
+load20 & 1 & 19.88 & -45.07 & -3.08 & 0.5474\\
+idle & 2 & - & -45.33 & -10.67 & 0.0756\\
+load20 & 2 & 19.88 & -45.07 & -3.34 & 0.5124\\
+\bottomrule\end{tabular}\end{table}
+
+\IfFileExists{../experiments/figures/baseline/router5g.pdf}{\plot{router5g}{.95}{既存5 GHzルーターを用いた受信観測。BE200が5 GHz APとして動作した結果ではない。}}{}
+
+
+\section{追加評価への展開と保存条件}
+基礎観察で残った帯域・飽和・間欠取得の問題を、時刻計測、LO掃引、設定電力比較、無作為取得、BLE共存および5 GHz分割取得で掘り下げた。Intelの実際の動作モジュールはiwlmldであり、ラップトップ2はMT7921E（mt7921e）を使用した。主要な追加比較は手動ゲイン指数20・80 MS/sで実施した。基礎実験の負荷生成失敗3条件と追加実験のスリープ影響が疑われる初回50 TUの2条件は、原データを保持して主要比較から除外した。条件数は校正された独立反復数ではない。
+
+追加データもローカルの生I/Q・JSON・主要PCAPと、ラップトップ2の全PCAP原本へ保存した。取得区間に装置時刻を加え、固定・乱数標本化とLO条件の順序変更を実施した。十分な無作為化反復や外来信号の除去を保証するものではない。
+\graphicspath{{../experiments/figures/receiver/}}
+\section{時刻計測とPCAPの解釈}
+\subsection{取得時刻を追加したファームウェア}
+診断ビルドに\texttt{CLOCK?}と\texttt{CAPTIME?}を追加した。前者は\texttt{esp\_timer\_get\_time()}、後者はベンダー取得関数の呼出し直前・直後の装置時刻を返す。従来の\texttt{CAP16}応答形式は維持した。時計問い合わせを各条件の前後32回実行し、往復が短い各8回から装置時刻とホスト単調時計の一次換算を求める。半往復時間と換算残差を誤差幅として保存する。
+
+この時刻は正確なADC開始トリガではない。RF取得は不透明なベンダー関数の実行区間のどこかで行われる。CRCや取得成功の確認も、連続RF観測を保証しない。80 MS/sのサンプル時間は
+\begin{equation}T_s=16380/(80\times10^6)=204.75\ \mu\mathrm{s}\end{equation}
+であるが、実行区間は約1.88 ms、時計換算の幅は約$\pm0.6$ ms、取得間隔は約49 msである。
+\plot{timing-audit}{.95}{別々の意味を持つ4種類の時間。対数軸。処理区間と名目RF時間を同一視しない。}
+
+\subsection{PCAPの観測範囲と関連表}
+BE200にAPとモニターを併用し、ラップトップ2にも管理接続とモニターを併用した。Linux Wirelessの資料はモニター併用をbest effortとする\cite{modes}。BE200側には自局ビーコンが現れず、送信通知と受信フレームが混在した。PCAPはスナップ長128 byteとし、復号したアプリケーション内容は解析しない。RadiotapのTSFTは受信MAC時刻であり\cite{tsft}、PCAPレコードのホスト受渡し時刻とは異なる。受信時刻フィールドの存在も記録した\cite{timestamp}。ラップトップ2側の別PCAPから実験APのビーコン5,721件を抽出し、ビーコン本文の50・100・500 TUをそれぞれ1,251・4,399・71件確認した。欠落とスリープ期間があるため、これらの件数をAPの全送信数とはしない。
+
+ホストPCAP時刻がC5取得関数の区間と換算誤差幅に入るかを集計した。さらに追加幅$\pm0,1,5,20$ msと、送信通知を含む場合・受信のみの場合を保存した。しきい値はDC除去後の全帯域スナップショットRMS $>-40$ dBFSである。表の「関連・検出」は真陽性とは限らない。パケットのRF送信時間、観測漏れ、他送信機、USB時刻誤差を含むためである。
+\begin{table}[htbp]\centering\small
+\caption{同時刻窓との関連集計。真陽性・真陰性を保証する表ではない。}
+\begin{tabular}{lrrrrr}
+\toprule
+条件 & 追加$\pm$ms & 関連・検出 & 関連・無検出 & 無関連・検出 & 無関連・無検出\\\midrule
+idle & 0 & 0 & 7 & 54 & 939\\
+idle & 5 & 2 & 16 & 52 & 930\\
+idle & 20 & 5 & 54 & 49 & 892\\
+load20 & 0 & 185 & 367 & 207 & 241\\
+load20 & 5 & 392 & 608 & 0 & 0\\
+load20 & 20 & 392 & 608 & 0 & 0\\
+\bottomrule\end{tabular}\end{table}
+
+\plot{pcap-association}{.95}{時間窓を広げるだけでも関連表が変化する。送信通知を含む集計。ラベルを確定した検出器の混同行列ではない。}
+
+\subsection{PC間時計差の変化}
+ラップトップ2に一時的なTCP時計応答を用意し、時刻問い合わせ80回中の最短往復を採用した。最初の時計差は数msであったが、復帰後は約0.56秒の差を観測した。時刻差の変化を記録しており、変化の内部原因までは確定していない。前後で一定の時計差を仮定して、ラップトップ2の全PCAPへ一律のオフセットを加える方法は採用しない。既存のPC間絶対時刻だけではパケット単位の真値を構成できない。
+\plot{../experiments/figures/overview/peer-clock-offset}{.9}{測定したPC間時計差。誤差棒は半往復時間であり、スリープをまたぐ時計変化の上限ではない。}
+
+\section{固定周期とランダム標本化}
+ビーコン50・100・500 TU（51.2・102.4・512 ms）に対し、平均取得間隔を102.4 msに設定した。固定取得は絶対予定時刻へ待ち、ランダム取得は各間隔を65--139.8 msの一様乱数とした。種を記録し、各500回取得した。固定・ランダムの実行順を100 TU条件で逆転した。これは十分な無作為化反復の代替ではない。
+
+位相を$\phi_i=(t_i-t_0)\bmod T$とし、集中度を
+\begin{equation}R_h=\left|\frac1M\sum_i e^{j2\pi h\phi_i/T}\right|\end{equation}
+で評価した。ここで$t_i$は装置側取得開始、$t_0$は任意の原点であり、ビーコンのRF先頭ではない。100 TU固定では同じ位相、500 TU固定では5つの位相へ集中する。5位相の分布は$R_1$だけでは一様分布と区別しにくいため、$R_5$も併記する。
+\begin{table}[htbp]\centering\small
+\caption{取得位相の集中度と信号しきい値。位相原点は最初の取得開始。}
+\begin{tabular}{rlrrrrrr}
+\toprule
+TU & 周期 & 間隔ms & 標準偏差ms & $R_1$ & $R_5$ & RMS超過\% & 帯域超過\%\\\midrule
+50 & fixed & 102.401 & 0.494 & 0.999 & 0.980 & 7.4 & 3.2\\
+50 & random & 102.116 & 21.732 & 0.039 & 0.007 & 11.4 & 3.4\\
+100 & fixed & 102.401 & 0.490 & 1.000 & 0.995 & 6.6 & 2.2\\
+100 & random & 103.303 & 21.344 & 0.059 & 0.013 & 8.8 & 2.6\\
+500 & fixed & 102.401 & 0.490 & 0.000 & 1.000 & 2.6 & 1.8\\
+500 & random & 102.862 & 21.023 & 0.003 & 0.038 & 5.2 & 0.6\\
+\bottomrule\end{tabular}\end{table}
+
+\plot{sampling-phase}{1}{名目ビーコン周期に対する取得位相。原点は各条件の最初の取得。絶対的なビーコン到着位相やパケット捕捉率の図ではない。}
+
+独立・一様位相で周期$T$のイベントを観測し、イベント継続時間を$T_e$とすると、理想的な時間重なり確率は
+\begin{equation}p_{\mathrm{overlap}}=\min(1,(T_s+T_e)/T)\end{equation}
+であり、$T_s/T$だけではイベント自身の長さを無視する。実際にはしきい値、周波数帯域、外来信号と時間分解能がある。全帯域RMSに加え2433--2441 MHzのビン電力和 $>-45$ dBFSも集計したが、いずれもビーコンを復号・同定した結果ではない。周期設定にロックすると偏った位相を繰り返し見ることを実測できた一方、真のビーコン検出率の定量確定には、ADCトリガ時刻か十分な時刻同期が必要である。
+
+\section{LO掃引による有効周波数応答}
+APは6チャネルに固定し、LOを2407--2467 MHzで10 MHz刻みに変更した。帯域要求48 MHz、ゲイン指数20、要求TCP 20 Mbps、各150回、2反復、反復ごとに順序を変更した。同じRF帯域2433--2441 MHzの電力和を用い、2437 MHzのDC近傍$\pm0.15$ MHzをすべての条件で除外する。平均と90百分位を分け、通信の間欠性による交絡を示す。FFTはHann窓2048点、窓和の二乗で規格化し、線形平均してから対数にする。
+
+LO中央の90百分位を0 dBとした有効応答を表に示す。単一既知キャリアの伝達関数ではなく、8 MHz帯域にわたるWi-Fiの平均的な応答である。RF源の時間変化、フィルター、LO位置、受信機の校正状態を含む。中心から$\pm30$ MHzでは約9--10 dB低下し、80 MHz表示の両端を均一感度として扱えないことを確認した。
+\begin{table}[htbp]\centering\small
+\caption{2433--2441 MHzの固定RF帯域を用いた有効応答。90百分位、中央条件基準。}
+\begin{tabular}{rrrr}
+\toprule
+LO MHz & RF中心$-$LO MHz & 反復1 dB & 反復2 dB\\\midrule
+2407 & 30 & -9.96 & -9.90\\
+2417 & 20 & -1.57 & -1.74\\
+2427 & 10 & -0.61 & -0.33\\
+2437 & 0 & 0.00 & 0.00\\
+2447 & -10 & -0.27 & -0.33\\
+2457 & -20 & 1.14 & -1.21\\
+2467 & -30 & -9.05 & -9.85\\
+\bottomrule\end{tabular}\end{table}
+
+\plot{lo-response}{1}{固定RF帯域の有効応答。各反復の中央LO条件を基準とする。縦軸は校正されたフロントエンド利得ではない。}
+\plot{lo-spectra}{.95}{同一RFチャネルのスペクトルをLO位置を変えて観測。灰色部分が比較用の固定RF帯域。}
+
+さらに帯域要求11・20 MHzについてLO=2417・2437・2457 MHzを取得した。狭いアナログ通過帯域と広い表示スパンを区別し、フィルター内外での信号減衰を比較できる。LO変更ごとの生データと条件は保存した。\maybeplot{filter-response}{.95}{11・20・48 MHz帯域要求での固定RF帯域応答。48 MHzのみ2反復で、反復1を表示。各帯域の中央LO条件で規格化した。}
+
+\section{送信電力設定によるレベル応答}
+ステップアッテネータがないため、AP送信電力を5・10・15・20 dBmへ要求し、\texttt{iw}の報告値を記録した。ゲイン指数20・40、各150回、2反復、要求TCP 20 Mbpsとし、電力条件の順序を変更した。受信対象の位置は意図的には変更していないが、伝搬経路や距離は校正していない。PHYレート変更、通信の時間占有、他信号の影響も含む。
+\IfFileExists{full.tex}{\begin{table}[htbp]\centering\small
+\caption{送信電力設定の比較、2反復平均。入力校正や感度の測定ではない。}
+\begin{tabular}{rrrrrr}
+\toprule
+ゲイン & 要求dBm & 報告dBm & 帯域P90 dBFS & レール\% & 実効Mbps\\\midrule
+20 & 5 & 5.0 & -41.68 & 0.0000 & 19.94\\
+20 & 10 & 10.0 & -39.29 & 0.0000 & 19.86\\
+20 & 15 & 15.0 & -39.17 & 0.0000 & 19.85\\
+20 & 20 & 20.0 & -39.19 & 0.0000 & 19.86\\
+40 & 5 & 5.0 & -23.52 & 0.0763 & 19.93\\
+40 & 10 & 10.0 & -20.85 & 0.0732 & 19.85\\
+40 & 15 & 15.0 & -20.85 & 0.0927 & 19.86\\
+40 & 20 & 20.0 & -20.14 & 0.1101 & 19.92\\
+\bottomrule\end{tabular}\end{table}
+}{}
+\maybeplot{txpower-response}{1}{送信電力設定と受信帯域の90百分位・レール到達率。設定dBmをC5入力dBmと置き換えない。}
+
+指数20での帯域90百分位（2反復のdB値平均）は5・10・15・20 dBm設定に対して$-41.68$, $-39.29$, $-39.17$, $-39.19$ dBFSとなり、10 dBm以降はほぼ横ばいだった。単純回帰の傾きは0.148--0.155 dB/dBにとどまり、想定した1 dB/dB応答にはならなかった。指数20のレール到達率はすべて0、指数40では平均0.073--0.110\%となった。実効TCP速度は約19.9 Mbpsを維持した。\texttt{iw}報告値は要求値を追随したが、実放射電力やC5端子の入力を測ったものではない。この非比例性が送信側制御・受信側応答・伝搬・背景信号のどれによるかは分離できない。
+
+この結果から相対応答や飽和を評価できるが、受信機の最小検出電力、絶対ダイナミックレンジ、校正入力に対する1 dB/dBの直線性は決定できない。指数20の測定を主要な応答比較に用い、高ゲインのレール到達は歪みの指標として扱う。簡単な直線近似の係数は\texttt{ota-linearity-fits.json}に保存したが、受信機固有の線形性の保証値ではない。
+
+\section{AGC負荷過渡と訓練系列候補}
+\subsection{秒単位の負荷切替}
+6秒待機・6秒TCP 20 Mbpsを4回繰り返し、ゲイン指数20とHardware AGCで各1100回取得した。通信の要求開始・終了と実際の受信速度を記録した。強いRF信号の正確な立上りではなく、通信負荷要求の立上りである。約49 ms間隔のスナップショットから、数$\mu$sのAGC追従時間を決めることはできない。
+\maybeplot{agc-transient}{1}{全帯域RMSの負荷過渡。橙色はTCPを要求した時間で、各パケットの実際の送信時刻ではない。}
+
+\subsection{OFDM短訓練系列の周期性を利用する}
+80 MS/sの複素I/Qをフィルター付きで20 MS/sへ変換し、16サンプル（0.8 $\mu$s）遅延との64点相関を求めた。正規化相関$>0.92$、電力$>10^{-4}$、相関の連続48点以上、および多周波成分の条件を満たす部分をSTF候補とした。狭帯域の単一キャリアは除外する。候補の相関位相から
+\begin{equation}\widehat{\Delta f}_{\mathrm{RF}}=-\frac{\arg\sum z^*[n]z[n+16]}{2\pi(16/(20\times10^6))}\end{equation}
+を計算した。実装の符号・尺度は既知35 kHzの人工的な周期多音信号で検証した。図は実際のI/Qの候補だけであり、検証信号を混ぜていない。
+\maybeplot{cfo-candidates}{.95}{STF周期性の条件を満たした周波数差候補。送信機のMAC識別、RF基準源、温度計測がないため、C5の絶対周波数精度や温度ドリフトの校正値ではない。}
+
+20 Mbps条件では1,000取得中166個の候補を得た。周波数差の5・50・95百分位は$-30.04,-10.50,-8.95$ kHzであり、約$-30$ kHzと$-10$ kHzの複数群を認めた。送信機を同定しておらず、これをC5単独の発振器差やドリフトと帰属しない。
+
+候補に含まれる5回の16点繰返しについてエネルギーを計算した。同じ周期訓練波形という仮定では、繰返し間の振幅変化を比較できる。ただし位置は最初に相関条件を満たした点であり、真のパケット先頭やAGC開始点ではない。初期の追従区間を見逃す可能性がある。Manual 20では47候補の中央値が最初の窓から次の窓へ約2.8 dB上昇し、その後ほぼ一定となった。Hardware AGCの27候補では3・4番目の窓が約3.4・4.7 dB高くなった。しかし固定ゲインでも上昇するため、受理窓が信号の立上りや雑音を含む選択上の偏りを切り分けられない。相関判定は64点にわたる電力を使うため、最初の16点窓には信号前の部分が含まれ得る。これらの差をAGCのみに帰属せず、この観測から正確なAGC整定時間を逆算しない。
+\maybeplot{stf-repeat-energy}{1}{各STF候補の繰返しエネルギーを最初の受理周期で規格化。灰色は個別候補、太線は中央値。送信機混在、雑音、候補選択の影響を含む。}
+
+温度と周波数精度の評価には、温度ログ、固定送信機の同定、周波数基準、一定の受信条件が必要である。今回の候補分布だけで30分間の温度ドリフトやppm精度を主張しない。
+
+\section{Wi-FiとBLEの共存観測}
+ラップトップ2のBluetoothコントローラに一時的なlegacy advertising instance 7を追加し、名前C5LABを広告した。既存のBlueZ設定やペアリングは変更せず、終了時にこのインスタンスのみを削除した。Wi-Fi APは6チャネルを継続した。BLE OFF/ONでLO=2414・2475 MHzを各600回取得し、legacy広告の中心周波数2402・2426・2480 MHz\cite{ble}付近を比較した。さらにWi-Fi要求20 Mbpsとの同時条件をLO=2440 MHzで各300回取得した。
+\maybeplot{ble-spectrum}{1}{BLE ON/OFFの最大スナップショット電力。灰色はlegacy広告周波数付近。Wi-Fi管理通信や他のBluetooth送信機も存在する。}
+\maybeplot{ble-waterfall-2414}{1}{2402・2426 MHz付近の共存観測。図の縦軸は間引いた取得列であり、連続時系列ではない。}
+\maybeplot{ble-waterfall-2475}{1}{2480 MHz付近の共存観測。広告パケットをBLEとして復号した結果ではない。}
+
+2480 MHz付近ではONで狭帯域成分が増えた。一方2402 MHzにはOFFでも強い成分が存在し、2426 MHzも単純なON/OFF差だけでは同定できなかった。\texttt{ble-band-metrics.json}と表に、同一スナップショット内で合算した広告中心$\pm0.75$ MHzの統計を保存した。最大値の比較は短いバーストに敏感だが、偶然の外来送信を含み得る。
+\IfFileExists{full.tex}{\begin{table}[htbp]\centering\small
+\caption{広告中心$\pm0.75$ MHzの同一取得内ビン和。BLEの復号による測定ではない。}
+\begin{tabular}{rrrrr}\toprule
+中心MHz & BLE要求 & 平均dBFS & P99 dBFS & 最大dBFS\\\midrule
+2402 & OFF & -58.14 & -60.52 & -35.66\\
+2402 & ON & -59.63 & -61.18 & -35.00\\
+2426 & OFF & -60.02 & -60.36 & -38.64\\
+2426 & ON & -59.91 & -60.01 & -37.83\\
+2480 & OFF & -60.21 & -59.04 & -58.74\\
+2480 & ON & -58.94 & -58.82 & -38.16\\
+\bottomrule\end{tabular}\end{table}
+}{}
+\maybeplot{ble-wifi-coexist}{1}{20 Mbps Wi-Fi負荷とBLEの同時条件。両方とも実測であり、狭帯域成分の復号・送信機同定は行っていない。}
+
+制御ON/OFFと周波数位置・狭帯域性の対応を観察する。すべての狭い成分をBLEと同定すること、同時取得されていない3チャネルからホッピング順を再構成することはできない。ラップトップ2のWi-Fi/Bluetooth共存制御による送信スケジューリングも結果に含まれる。
+
+\section{5 GHzの分割取得と重複合成}
+ラップトップ2を既存ルーターへ戻し、primary48（5240 MHz）、80 MHz幅、center5210 MHzを確認した。LO=5180・5195・5210・5225・5240 MHzを2反復、順序変更、各180回、ゲイン指数20、帯域要求48 MHzで取得した。TCP要求20 MbpsはTailscale経由であり、ルーターを通る複数機器の信号が混在する。
+
+各スライスの中央$\pm12$ MHzだけを使用し、中心で最大となる三角重みを線形電力へ掛けて5170--5250 MHzへ合成した。
+\begin{equation}\widehat P(f)=\frac{\sum_j w_j(f)P_j(f)}{\sum_j w_j(f)},\quad w_j(f)=\max(0,1-|f-f_{\mathrm{LO},j}|/(12\ \mathrm{MHz})).\end{equation}
+LOごとの見た目を揃えるための振幅オフセット補正は行っていない。重複帯域の差を保存し、時間変化と受信応答の不一致を見える状態にした。
+\maybeplot{5g-stitch}{1}{順次取得した中央スライスと80 MHz相当の重複合成。80 MHzを同時に連続受信した図ではなく、校正PSDでもない。}
+\IfFileExists{full.tex}{\begin{table}[htbp]\centering\small
+\caption{重複帯域でのスライス間差。時間変化と受信応答の両方を含む。}
+\begin{tabular}{rrrr}
+\toprule
+反復 & LO1 MHz & LO2 MHz & 中央差dB\\\midrule
+1 & 5180 & 5195 & 0.36\\
+1 & 5195 & 5210 & -1.24\\
+1 & 5210 & 5225 & 0.79\\
+1 & 5225 & 5240 & 0.18\\
+2 & 5180 & 5195 & 0.14\\
+2 & 5195 & 5210 & 0.77\\
+2 & 5210 & 5225 & -0.66\\
+2 & 5225 & 5240 & 0.87\\
+\bottomrule\end{tabular}\end{table}
+}{}
+
+10条件のレール到達率はすべて0\%、実効TCP速度は19.988--19.992 Mbpsであった。重複帯域の中央値差は絶対値で0.14--1.24 dBとなった。ただし帯域全体の同時観測や、80 MHzの単一送信波形の復号を意味しない。
+
+重複部分の差は周波数応答だけでなく、Wi-Fiのバースト、レート制御、外来信号を含む。接ぎ目が滑らかであることは、校正や同時観測の正しさを保証しない。共通LOを繰り返すことや既知の安定信号源による帯域ごとの校正が次の改善となる。
+
+
+\section{結果を結び付けた考察}
+\subsection{本装置が測っているもの：信号の強さと発生時間の混合}
+基礎実験では通信負荷によりRMSしきい値超過割合が増加したが、これは送信電力の増加を直接示さない。同じ送信振幅でも、強いバーストと取得窓が重なる回数が増えれば線形平均電力は上がる。取得ごとの平均電力を$P_i$、信号を含む割合を$q$とすると、単純な混合モデルでは$E[P_i]\simeq qP_{\mathrm{on}}+(1-q)P_{\mathrm{bg}}$である。この式は説明用であり、今回の全スナップショットを二状態へ同定できたことを意味しない。
+
+したがって平均スペクトル、上位百分位、最大スペクトルには異なる役割がある。平均は信号強度と取得時点の発生割合の両方を反映し、最大は希少な強い成分の存在を示すが代表値ではない。BLEの2480 MHz帯域で最大が約20.6 dB増える一方、平均は約1.27 dBの差にとどまったことは、この違いを実測で示す。制御ONで希少な強い取得が増えたという解釈には整合するが、すべての取得に持続的な干渉が増えたとはいえない。測定用途に応じて複数統計を併記する必要がある。
+
+\subsection{感度比較に使える範囲：LO掃引とフィルター比較の整合}
+48 MHz帯域要求のLO掃引では、同一RF帯域を中央から$\pm30$ MHzへ移した際の約9--10 dB低下が両反復で共通した。さらに11・20 MHz要求では$\pm20$ MHz位置で約19--21 dB低下し、48 MHz要求より大きく減衰した。通信の時間変化だけでなく、受信系の周波数選択性が観測値に寄与するという解釈を、この二つの操作が支持する。ただし単一既知キャリアでないため、フィルター単体やアンテナを含む各段の伝達関数へ分離はできない。
+
+実用上は、異なるRFチャネルを一つのLOで比較するより、対象を同じベースバンド位置へ置き、ゲイン・帯域・FFT条件も固定して比較する方が受信系による偏りを小さくできる。今回の5 GHz合成で中央$\pm12$ MHzを使ったのも、減衰の大きい表示端を避けるためである。重複中央値差が0.14--1.24 dBに収まったことは、この処理が今回の比較では整合的だったことを示す。これを最適な採用幅、全ビンの最大誤差、校正精度の保証とは扱わない。
+
+\subsection{電力設定が比例しない理由をどこまで絞れるか}
+指数20ではAP設定10--20 dBmで受信帯域P90がほぼ変わらず、レール到達は0であった。このため、観測された横ばいを8 bit I/Qのレール飽和だけで説明することはできない。指数40でも設定に対する大きな傾きは得られず、単に表示ゲインを変えることが入力レベル校正を代替しないことが分かる。ただしレールに達しないアナログ段の圧縮は排除できない。
+
+候補には、APの報告値が実際のパケットごとの放射電力でないこと、PHYレートや送信時間の変化、対象以外の送信機がP90を支配すること、受信系の圧縮がある。TCP速度を約19.9 Mbpsへ揃えたことは転送量の統制にはなるが、RF波形や空中時間の統制にはならない。次は既知の固定RF源と減衰器で入力を変え、同一波形の応答を比較するべきである。今回の設定電力掃引は、ダイナミックレンジ測定の代替としては不十分だという負の知見を与える。
+
+\subsection{時間的な盲点と周期標本化：観測を速くするだけでは足りない}
+80 MS/sの名目RF時間204.75 $\mu$sに対し取得間隔は約49 msであり、名目RF時間比は約0.4\%である。取得関数区間はRF時間の約9.2倍、時計換算の半幅だけでも約2.7倍ある。この順序関係から、現在のホスト時刻だけで短いパケット単位の一致を判定するのは難しい。PCAP側の窓を$\pm20$ msへ広げると負荷時の全取得が関連ありとなったが、これは時間分解能の喪失であり、検出性能の向上ではない。
+
+固定102.4 ms取得は100 TUでは同一位相、500 TUでは5位相へ集中した。周期信号の到着位相がその集合を外れると、取得回数を増やしても同じ取り逃しを反復し得る。単純な割合推定が無偏であるには、位相を十分に走査するか、無作為化が必要である。500 TUで$R_1\simeq0$なのに$R_5\simeq1$となったことは、平均的な位相指標一つでは等間隔の複数集中点を見落とすことも示す。ランダム取得はこの偏りを緩和したが、未観測時間そのものを消してはいない。
+
+実用上の優先順位は、ADC開始トリガを記録すること、USBと取得待ちを短縮すること、同じRFイベントを同定できる観測器と同期することである。最初に間欠取得を占有率センサーとして使うより、一定条件での比較観察器として使う方が、今回確認した能力と整合する。
+
+\subsection{AGC・周波数差の解析が示す同定の必要性}
+STF候補の繰返し電力はHardware AGCで変化したが、固定ゲインでも最初の窓から約2.8 dB上昇した。固定ゲインの対照があるため、振幅の立上りをすべてAGC応答に帰属する説明は支持されない。候補位置の選択、受信フィルターの立上り、雑音を含む最初の窓などの寄与を除く必要がある。正確なパケット先頭を決め、同一送信機・同一波形で比較することが次の条件となる。
+
+周波数差候補も約$-30$ kHzと$-10$ kHzの複数群に分かれた。受信機の発振器が一つでも、送信機が複数なら相対差は複数となる。復号MACや固定基準がない現状では、群の変化を温度ドリフトに読み替えられない。こうした解析は特徴の存在を示す探索として有用だが、受信機単独の仕様測定には送信機の同定が要る。
+
+\subsection{5 GHz合成とBLE共存の用途をどう位置付けるか}
+5 GHzの分割合成は、単一取得の有効通過帯域を超えるRF範囲を俯瞰する用途に適する。一方、スライス間の取得時刻が違うため、瞬間的な80 MHz信号の帯域幅や隣接チャネルの同時干渉を決める用途には適さない。同じスライスを順序変更して2反復したことは時間変化の一部を可視化するが、非定常なバーストを同時に受信したことにはならない。
+
+BLEのON/OFFは信号源へ操作を加えた比較であり、周波数だけを見る観察より帰属の手掛かりが強い。ただし2402 MHzのOFF成分、2426 MHzの弱い差、Wi-Fi/Bluetooth共存制御は単一方式の純粋な測定ではないことを示す。今回の成果は室内に異なる幅と発生頻度の信号が共存する様子の観察であり、BLEによるWi-Fi性能劣化量の因果評価ではない。通信性能とRF事象を同時・同定可能な条件で測ることで、その問いへ進める。
+
+\section{統合した結論と再現性}
+基礎実験ではチャネル切替による信号位置、通信負荷による強い取得の増加、FFT長・サンプルレート・ゲインによる表示変化を確認した。追加評価は、その表示の背後にある周波数応答と時間的な観測漏れを切り分けた。高ゲインは飽和を増やし、広い表示スパンは均一感度を保証せず、固定周期のスナップショットは周期信号の特定位相を繰り返し見る。5 GHz分割合成は広い周波数範囲の俯瞰に使えるが、操縦通信の改善量を保証しない。
+
+基礎条件は順序固定、主比較は少数反復であり、追加条件も環境・位置・送信機混在・レート制御による交絡を含む。dBFSは未校正、RMSしきい値超過は占有率でなく、PCAP窓内一致は検出真値でない。STF候補の周波数差をC5単独の周波数誤差に帰属できない。外部減衰器、基準RF源、50 $\Omega$終端、温度ログがないため、絶対ダイナミックレンジ・受信機固有雑音・温度ドリフトを測定したとはしない。電子レンジは指定により見送った。独立した2 APの比較は本稿前半へ追加した。
+
+公開資料は、実験日ではなくデータ・解析コード・図・レポートの役割で整理した。匿名化した解析統計、操縦UDPの相対時刻列、FFT電力列と取得コードを公開する。生I/Q、PCAP、元の実行ログは非公開で保管するため、公開データからPCAP照合やSTF探索そのものを再実行することはできない。操縦遅延の集計は\texttt{make check}、青・緑の図は\texttt{make figures}、詳細版と投稿版は\texttt{make reports}で再生成できる。詳細なデータ形式と再現範囲はリポジトリの説明文書を参照する。実験終了時に両PCのWi-Fiと有線共有を復元し、実験AP、モニター、BLE広告、スリープ抑止を停止した。C5は2412 MHz・自動帯域・Hardware AGCとVMIN=1へ戻した。
+\begin{thebibliography}{99}
+\bibitem{sdr} ESPARGOS, ESP-SDR, \url{https://github.com/ESPARGOS/esp-sdr}.
+\bibitem{intel} Intel, Do Intel Wireless Adapters Support Master or AP Mode?, \url{https://www.intel.com/content/www/us/en/support/articles/000030429/wireless.html}.
+\bibitem{iwl} Linux Wireless, iwlwifi, \url{https://wireless.docs.kernel.org/en/latest/en/users/drivers/iwlwifi.html}.
+\bibitem{nm} NetworkManager, nm-settings-nmcli, \url{https://www.networkmanager.dev/docs/api/latest/nm-settings-nmcli.html}.
+\bibitem{hostap} hostapd configuration reference, \url{https://chromium.googlesource.com/external/w1.fi/cgit/hostap/+/refs/tags/hostap_2_1/hostapd/hostapd.conf}.
+\bibitem{modes} Linux Wireless, Wireless Modes, \url{https://wireless.docs.kernel.org/en/latest/en/users/documentation/modes.html}.
+\bibitem{tsft} Radiotap, TSFT field, \url{https://www.radiotap.org/fields/TSFT.html}.
+\bibitem{timestamp} Radiotap, Timestamp field, \url{https://www.radiotap.org/fields/timestamp.html}.
+\bibitem{ble} Bluetooth SIG, Understanding Reliability in Bluetooth Technology, \url{https://www.bluetooth.com/wp-content/uploads/2020/10/EN-Understanding_Reliability.pdf}.
+\bibitem{ciscoRF} Cisco, Wireless RF Reference Guide, \url{https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/technical-reference/wireless-rf-reference-guide.html}.
+\bibitem{mt76debug} Linux mt76/mt7921 driver, debugfs.c, \url{https://github.com/torvalds/linux/blob/master/drivers/net/wireless/mediatek/mt76/mt7921/debugfs.c}.
+\bibitem{espPower} Espressif, Wi-Fi Performance and Power Save, \url{https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/wifi-driver/wifi-performance-and-power-save.html}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,30 @@
+{
+  "run": "power5-gain20-r2",
+  "frames": 150,
+  "frequency_mhz": 2437,
+  "fs": 80000000,
+  "bandwidth_mhz": 48,
+  "gain": "MANUAL 20",
+  "schedule": "immediate",
+  "rms_median": -47.64174935626643,
+  "rms_p95": -38.353537644084206,
+  "clip_fraction": 0.0,
+  "above_minus40": 0.22666666666666666,
+  "frame_rate": 20.409635413644047,
+  "nominal_ratio": 0.004178872850943619,
+  "call_duration_median_ms": 1.876999999922191,
+  "clock_uncertainty_ms": 0.5955607864038348,
+  "device_clock_relative_ppm": 43.39982966916622,
+  "band2433_2441_mean_db": -46.96931269251985,
+  "band2433_2441_p90_db": -41.70593138044172,
+  "period_mean_ms": 49.00449714404625,
+  "period_std_ms": 0.08177119124889322,
+  "utc": "2026-10-01T23:09:49.194135+00:00",
+  "traffic": {
+    "bytes_received": 45006848,
+    "elapsed_s": 18.109916293000424,
+    "actual_mbps": 19.881637119392046,
+    "requested_mbps": 20.0,
+    "requested_seconds": 18.0
+  }
+}
