@@ -38,9 +38,11 @@ def fast_start(path):
 def main():
     timeline = json.loads((ROOT / 'src/generated/timeline.json').read_text())
     files = []
-    for name in ('wifi-robocon-short.mp4', 'wifi-robocon-short-x.mp4'):
+    for name in ('wifi-robocon-short-no-subs.mp4', 'wifi-robocon-short-x-no-subs.mp4'):
         path = OUT / name
         data = probe(path)
+        assert not any(s['codec_type'] == 'subtitle' for s in data['streams'])
+        assert not any(path.with_suffix('.' + ext).exists() for ext in ('srt', 'vtt', 'ass'))
         video = next(s for s in data['streams'] if s['codec_type'] == 'video')
         audio = next(s for s in data['streams'] if s['codec_type'] == 'audio')
         assert video['codec_name'] == 'h264' and audio['codec_name'] == 'aac'
@@ -53,7 +55,8 @@ def main():
         subprocess.run(['ffmpeg', '-v', 'error', '-xerror', '-i', str(path),
                         '-f', 'null', '-'], check=True)
         files.append({'name': name, 'bytes': path.stat().st_size,
-                      'seconds': float(data['format']['duration']), 'full_decode': 'passed'})
+                      'seconds': float(data['format']['duration']), 'full_decode': 'passed',
+                      'subtitle_tracks': 0, 'subtitle_sidecars': 0})
 
     review = OUT / 'final-review'
     review.mkdir(exist_ok=True)

@@ -12,7 +12,7 @@ VOICEVOX Engineを `http://127.0.0.1:50021` で起動しておく。
 
 ```bash
 bash video/scripts/build.sh --stills # 音声・素材・Manim・代表フレームまで
-bash video/scripts/build.sh          # 最終動画、軽量版、字幕、表紙も生成
+bash video/scripts/build.sh          # 字幕なし動画、軽量版、表紙も生成
 ```
 
 全工程の再実行が不要な場合：
@@ -27,10 +27,10 @@ npm run render
 .venv/bin/python scripts/verify.py
 ```
 
-`out/wifi-robocon-short.mp4` は高画質版、`out/wifi-robocon-short-x.mp4` は軽量版。
+`out/wifi-robocon-short-no-subs.mp4` は高画質版、`out/wifi-robocon-short-x-no-subs.mp4` は軽量版。
 両方ともH.264／AAC、先頭に再生メタデータを配置する。字幕の焼き込みは行わない。
-字幕単体は `out/wifi-robocon-short.srt`、表紙は `out/cover.png`。
-`verify.py` は両MP4を最後までデコードし、尺・解像度・音声・先頭メタデータを検査する。
+字幕ファイルは生成せず、旧版の同名SRT／VTT／ASSも書き出し時に削除する。表紙は `out/cover.png`。
+`verify.py` は両MP4を最後までデコードし、尺・解像度・音声・先頭メタデータ・字幕トラックと同名字幕ファイルの不在を検査する。
 実際の動画から冒頭・末尾・各場面の確認画像を `out/final-review/` に書き出す。
 
 ## 内容と根拠
