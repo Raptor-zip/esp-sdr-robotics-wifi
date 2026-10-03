@@ -22,7 +22,7 @@ body=r'''
 \twocolumn[{
 \begin{center}{\LARGE\bfseries\sffamily 他チーム通信負荷下におけるロボコン無線通信の評価\par}
 \vspace{1mm}{\normalsize 同一・隣接・分離チャネル、帯域幅、Wi-FiとBluetoothの実測\par}
-\vspace{.5mm}{\normalsize 貝淵蒼馬\par}\end{center}
+\vspace{.5mm}{\normalsize \ReportAuthor\par}\end{center}
 \noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
 \textbf{要旨}\quad 操縦と映像相当通信を同じAPへ通し、別チームも通信中の条件を比較した。
 100 Hz UDPの応答とESP32-C5の実測I/Qから、帯域の重なりを青〜緑で示す。

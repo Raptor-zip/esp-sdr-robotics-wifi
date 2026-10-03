@@ -64,6 +64,114 @@ def figure(name, caption):
             r'\caption{' + escape(caption) + r'}\end{figure}')
 
 
+def radio_explanations(source):
+    """Keep mechanism, measured effects and unmeasured causes distinct."""
+    for tag in ('BLE CHANNELS', 'ESPNOW CHANNELS'):
+        source = re.sub(r'% BEGIN '+tag+r'.*?% END '+tag+r'\n?', '', source, flags=re.S)
+    source = re.sub(r'^BLEの広告は2402・2426・2480 MHz、接続通信はデータチャネルを使う[^\n]*\n', '', source, flags=re.M)
+    team = json.loads((ROOT/'experiments/data/two-team/summary.json').read_text())
+    ble = [team['ble-heavy-'+kind] for kind in ('off', 'advert', 'data')]
+    own_rates = [sum(row['delivered_own_mbps'])/len(row['delivered_own_mbps']) for row in ble]
+    notify = [team['ble-'+own+'-data']['delivered_other_mbps'] for own in ('off', 'heavy')]
+    notify_rates = [sum(values)/len(values) for values in notify]
+    explanation = r'''
+% BEGIN BLE CHANNELS
+\subsection{広告と接続通信で異なるチャネルの使い方}
+周波数ホッピングは、送受信機が約束した順序で使用周波数を時間とともに切り替えることである。
+周波数帯全体へ同時に広い信号を送ることではない。BLEは2.4 GHz帯に2 MHz間隔の40チャネルを持ち、
+今回使ったlegacy広告には2402・2426・2480 MHzの3広告チャネル、接続後の通信には37データチャネルを使う\cite{blePrimer}。
+したがって「広告をONにした」と「接続後のホッピング通信を高負荷で動かした」は別の条件である。
+
+GATT通知のような接続通信では、接続イベントの開始ごとに両端が同じデータチャネルを選ぶ。
+1つのイベント中の全パケットが毎回別周波数へ飛ぶという意味ではない。
+AFH（適応的周波数ホッピング）は、使用するチャネルの集合を更新し、通信しにくい周波数を避ける仕組みである\cite{bleAFH}。
+一方、今回のlegacy広告は3広告周波数を使用し、接続後と同じ37チャネルのAFHとして扱わない。
+今回、チャネルマップや更新時刻を取得していないため、Wi-Fiを検出して特定チャネルを除外したかは確認していない。
+
+\subsection{ホッピングしてもWi-Fiと干渉し得る理由}
+Wi-Fi Ch6の中心は2437 MHz、名目20 MHzの範囲は2427--2447 MHzである。
+その内部にもBLEデータチャネルがある。BLEがそこへホップした時にWi-Fiも同時送信すれば、
+周波数と時間が重なり、受信失敗や再送につながり得る\cite{bleAFH}。
+ホッピングは同じ悪い周波数へ留まり続けることを減らすが、全ての送信をWi-Fiから切り離す仕組みではない。
+影響は重なる周波数だけでなく、送信の頻度・長さ、両送信機の強さ、受信側での信号対干渉比によって変わる。
+
+Wi-Fiの幅を20から40 MHzへ広げると、BLEと重なり得る周波数の範囲も広がる。
+ただし達成レートが上がれば同じデータを短時間で送り終える可能性もあるため、幅だけで衝突回数や劣化量は決められない。
+今回の幅比較は別チームWi-Fi同士の実験であり、BLEとの共存を20/40 MHzで直接比較した実験ではない。
+これは今回の観測を読むための機構説明で、幅とBLE干渉の因果効果を測定したという主張ではない。
+
+\subsection{Wi-FiからBLEへ、BLEからWi-Fiへの実測変化}
+'''
+    explanation += ('Wi-Fi大容量通信中のRTT p99は、BLE停止・広告・通知の順に'+
+                    '／'.join(f'{row["pooled_p99_ms"]:.2f}' for row in ble)+
+                    ' msと近い。一方、20 ms期限超過は'+
+                    '／'.join(f'{row["deadline20_pct"]:.2f}' for row in ble)+r'\%、Wi-Fiの実受信平均は'+
+                    '／'.join(f'{rate:.3f}' for rate in own_rates)+' Mbpsだった。\n')
+    explanation += (f'BLE通知の実受信平均は、Wi-Fi待機時{notify_rates[0]:.3f} Mbpsから負荷時{notify_rates[1]:.3f} Mbpsへ変化した。\n')
+    explanation += r'''
+したがって「Wi-Fi p99がほぼ同じなので影響なし」とは言えない。
+指令の期限超過、Wi-Fiの配送量、BLE側の配送量を別々に見る必要がある。
+同時に、各条件3反復で実負荷も変動しており、この変化を全てRF衝突やAFHの効果へ帰属できない。
+通知の受付エラーも無線衝突数ではない。干渉機構を同定するには、再送、チャネルマップ、
+周波数ごとの失敗を対応付ける記録が必要で、今回は取得していない。
+
+図の短い細線は、広帯域Wi-Fiと異なる狭帯域送信を読む手掛かりである。
+ただしC5の取得は間欠的で、図は2450--2470 MHzの一部のみを拡大している。
+広告の3周波数はいずれもこの拡大範囲の外であり、広告の図で帯が見えないことは送信停止の証拠ではない。
+全ての細線をBLEと同定したり、ホッピングの連続した軌跡やAFHで避けたチャネルを図から復元したりはできない。
+同一チップ内の無線資源の共存制御、Bluetooth Classic、音声通信とは分けた実験である。
+% END BLE CHANNELS
+'''
+    marker = '% BEGIN ESPNOW STUDY'
+    source = source.replace(marker, explanation+'\n'+marker, 1)
+    explanation = r'''
+% BEGIN ESPNOW CHANNELS
+\subsection{ESP-NOWの固定チャネルとBLEとの相違}
+ESP-NOWはWi-Fiの無線部からvendor-specific action frameを直接送る方式であり、
+標準でBLEのような自動的な周波数ホッピングを行う方式ではない\cite{espnowGuide}。
+今回のESP32送受信機は2.4 GHzの同じWi-Fiチャネルに合わせて動作させた。
+peerのchannel=0は現在の無線チャネルを使う指定であり、空いている周波数を自動探索する指定ではない。
+送受信機のチャネルが一致しなければ通信できない。
+
+先行試験ではCh6・Ch7・Ch11へ試行間で切り替え、それぞれの30秒試行中は固定した。
+これはホッピング実験ではなく、試行ごとに設定した固定チャネルの比較である。
+後続の600秒試験と配置比較は、ESP-NOWと別系統Wi-FiをともにCh6へ固定した。
+試行前後の実チャネル読出しと取得コードでこの設定を確認しており、途中で自動的に干渉を回避した結果とは解釈しない。
+
+\subsection{ルーターを経由しなくてもWi-Fiと干渉し得る理由}
+ESP-NOWはAPによる中継を省けるが、同じ周波数帯の送信時間から独立するわけではない。
+同一または重複チャネルのWi-Fiと同時に使うと、送信待ちや受信失敗・再送が増える可能性がある。
+Ch6とCh7は中心周波数が5 MHzしか離れず、チャネル番号が違っても帯域は大きく重なる。
+1 Mbpsは今回設定したPHYのbitrateであり、電波の占有幅が1 MHzという意味ではない。
+
+別の無線機同士なら、自チームWi-FiとESP-NOWへ分離したチャネルを割り当てる構成を検討できる。
+一方、同じESP32の無線部でAPへのWi-Fi接続も併用する場合、ESP-NOWのチャネルを接続APに合わせる必要がある\cite{espnowFAQ}。
+その構成で「Wi-FiはCh6、ESP-NOWはCh11を同時に固定する」とは設定できない。
+今回の独立した無線機によるチャネル比較と、同一チップ内の併用を区別する必要がある。
+
+\subsection{Wi-Fiとの相互影響について今回言えること}
+先行30秒試験では、Wi-Fi負荷を加えると同一Ch6のESP-NOW RTT p99が9.4から85.6 msへ変わった。
+ただし同じCh6負荷中でも反復p99は8.6--123.8 msと変動した。
+後続600秒試験では100 Hz・Wi-Fi待機から負荷へのp99が10.711から9.264 msであり、
+同一チャネルなら必ず同じ量だけ悪化するという結果ではない。
+実装・測定時間・配置の異なる系列をまとめず、指令の期限超過と最長更新途絶も比較する。
+
+逆方向については、共存中のWi-Fi実受信量も保存したが、ESP-NOWを停止した同一条件のWi-Fi単独基準は測っていない。
+したがって「ESP-NOWがWi-Fiを何\%遅くした」「Wi-Fiへ影響しない」は今回の記録から定量的に断定できない。
+これはWi-Fi負荷の中でESP-NOW指令が間に合うかを中心に評価した実験である。
+また指令とその応答はどちらも無線時間を使い、指令周期を短くするとヘッダ・応答・送信待ちも増える。
+小さいpayloadのMbpsだけを見て無視できる負荷と決めず、映像と同時に動かして指令更新の尾部を調べることがロボコンでは有用である。
+% END ESPNOW CHANNELS
+'''
+    marker = r'\subsection{ロボコンへの適用条件}'
+    source = source.replace(marker, explanation+'\n'+marker, 1)
+    if r'\bibitem{bleAFH}' not in source:
+        source = source.replace(r'\begin{thebibliography}{99}', r'\begin{thebibliography}{99}'+'\n'+r'\bibitem{bleAFH} Bluetooth SIG, How Bluetooth technology uses adaptive frequency hopping to overcome packet interference, \url{https://www.bluetooth.com/blog/how-bluetooth-technology-uses-adaptive-frequency-hopping-to-overcome-packet-interference/}.'+'\n'+r'\bibitem{espnowFAQ} Espressif, ESP-NOW FAQ, \url{https://docs.espressif.com/projects/esp-faq/en/latest/application-solution/esp-now.html}.')
+    source = re.sub(r'^\\bibitem\{bleAFH\}[^\n]*', lambda _: r'\bibitem{bleAFH} '+
+        r'\href{https://www.bluetooth.com/blog/how-bluetooth-technology-uses-adaptive-frequency-hopping-to-overcome-packet-interference/}{Bluetooth SIG, How Bluetooth technology uses adaptive frequency hopping to overcome packet interference.}', source, flags=re.M)
+    return source
+
+
 def write_full(manifest):
     path = ROOT/'reports/full.tex'; source = path.read_text()
     if BEGIN in source:
@@ -72,6 +180,7 @@ def write_full(manifest):
     if r'\usepackage{adjustbox}' not in source:
         source = source.replace(r'\begin{document}', r'\usepackage{adjustbox}'+'\n'+r'\begin{document}', 1)
     body = convert_notes((ROOT/'docs/operational-results.md').read_text())
+    body = re.sub(r'\\subsection\{保存待ちによる取得中断と補足記録\}.*?(?=\\section\{)', '', body, flags=re.S)
     figures = {
         '生成周期の比較': [('rate-limit-metrics', '流量制限の通信性能。小さい点は各反復、大きい点は統合値。'), ('rate-limit-blue-green', '他チーム通信中の流量比較。共通ゲイン・未校正dBFS。')],
         '実ROS 2のQoSと指令応答': [('payload-shaping-metrics', '同じ平均要求量で生成周期を変更した比較。'), ('payload-shaping-blue-green', '生成周期比較の青緑SDR画像。縦軸は間欠取得順。')],
@@ -105,6 +214,11 @@ def write_full(manifest):
     source = source.replace('実験終了時に両PCのWi-Fiと有線共有を復元し、', '先行系列の終了時に両PCのWi-Fiと有線共有を復元し、')
     if r'\bibitem{rosQoS}' not in source:
         source = source.replace(r'\begin{thebibliography}{99}', r'\begin{thebibliography}{99}'+'\n'+r'\bibitem{rosQoS} ROS 2 Jazzy, Quality of Service settings, \url{https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Quality-of-Service-Settings.html}.')
+    source = radio_explanations(source)
+    source = source.replace(r'\section{主実験の結論と公開データの範囲}', r'\section{主実験の結論}')
+    source = source.replace(r'\section{統合した結論と再現性}', r'\section{統合した結論}')
+    source = re.sub(r'^主比較42、周期Wi-Fi9、BLE18、ESP-NOW18の計[^\n]*公開した相対時刻[^\n]*\n', '', source, flags=re.M)
+    source = re.sub(r'^公開資料は、実験日ではなく[^\n]*\n', '', source, flags=re.M)
     path.write_text(source)
 
 
@@ -132,7 +246,7 @@ def write_twitter(manifest):
 \twocolumn[{
 \begin{center}{\LARGE\bfseries\sffamily ロボコンの無線通信と帯域共有の実測評価\par}
 \vspace{1mm}{\normalsize 他チーム通信・ROS 2・Bluetooth・ESP-NOW\par}
-\vspace{.5mm}{\normalsize 貝淵蒼馬\par}\end{center}
+\vspace{.5mm}{\normalsize \ReportAuthor\par}\end{center}
 \noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
 \textbf{要旨}\quad 指令と大容量データを同時に流し、他チームの通信、チャネル幅、QoS、指令周期を比較した。
 実測SDR画像は帯域の重なりを示す。一方、指令が期限内に届くかはアプリの応答記録から評価する。
@@ -221,14 +335,38 @@ Ch11の一部は名目アナログ帯域の端へかかり、弱い色を無干�
 '''+image('two-team/ble-narrow-blue-green',
            'BLE停止・広告・GATT通知。2450--2470 MHzの拡大、反復1。この図は−90〜−60 dBFSで前ページとは尺度が異なる。', r'.91\textwidth')+r'''}]
 \section{Bluetooth LEとの共存}
-独立したESP32 2台でBLE停止、20 ms設定の広告、BLE 1M GATT通知を比較し、
-広告の復号数と実通知受信量を確認した。Wi-Fi大容量通信中のp99は停止126.2 ms、広告126.0 ms、通知126.3 msだった。
-通知の平均実受信量はWi-Fi待機0.36→負荷0.33 Mbps。
-今回はBLE追加でWi-Fi p99が大きく増える結果ではないが、両リンクの配送量を評価する意義がある。
-通知時の狭い成分は方式の違いを示す手掛かりであり、全ての細線をBLEと同定した結果ではない。
-同一チップ内の共存、Bluetooth音声、連続ホッピングの復元は未検証である。
+\subsection{広告と接続後の周波数の使い方}
+今回の広告は2402・2426・2480 MHzの3周波数を使う方式である。
+接続後のGATT通知は、2 MHz間隔の37データチャネルから、接続イベントごとに周波数を選ぶ。
+\textbf{ホッピングは広帯域を一度に送ることではなく、狭い信号の送信先を時間で切り替えること}である。
+AFHは使用チャネル集合を更新して混雑した周波数を避ける仕組みだが、今回その更新は測っていない\cite{ble}。
+
+Wi-Fi Ch6の名目20 MHz帯域2427--2447 MHz内にもBLEデータチャネルがある。
+同じ周波数へ同時に送れば干渉し得るため、\textbf{ホッピングしてもWi-Fiと無関係にはならない}。
+40 MHz化は重なり得る周波数を増やすが、実送信時間も変わるので劣化量は幅だけで決まらない。
+
+\subsection{双方の実測性能}
+独立したESP32 2台でBLE停止・20 ms設定の広告・BLE 1M通知を各3反復比較した。
+Wi-Fi大容量通信中のp99は停止126.2／広告126.0／通知126.3 msと近いが、20 ms超過は54.6／58.2／56.8\%だった。
+Wi-Fi実受信平均は1.34／1.50／1.19 Mbps、BLE通知はWi-Fi待機0.365→負荷0.326 Mbpsだった。
+\textbf{p99が同じでも、期限超過や双方の配送量まで同じではない}。
+少数反復・実負荷の違いがあり、これを衝突やAFHの効果だけに帰属しない。
+図の細線は狭帯域成分の手掛かりで、全てをBLEと同定したものではない。
+間欠取得から連続ホッピングを復元せず、同一チップの共存制御やBluetooth音声も未検証である。
 
 \section{ESP-NOW指令の周期と更新途絶}
+\subsection{固定チャネルとWi-Fiの共有}
+\textbf{ESP-NOWは標準でBLEのように自動ホッピングしない}。
+Wi-Fiの無線部から専用action frameを送り、送受信機は同じチャネルに合わせる。
+設定のchannel=0は現在のWi-Fiチャネルを使う意味で、自動探索ではない\cite{espnow}。
+先行試験のCh6・7・11は試行間で変更し、各試行中は固定した。
+長時間試験と配置比較はCh6固定である。
+
+APを通らず指令経路を分けても、同一・重複帯域ではWi-Fiと送信時間を共有する。
+別無線なら分離チャネルを選べるが、同じESP32でAP接続も併用する場合はAPのチャネルに合わせる必要がある\cite{espnowFAQ}。
+指令の回数を増やすとヘッダや応答を含む送信機会も増えるため、payloadのMbpsだけで影響を判断しない。
+
+\subsection{今回確認した影響と指令周期}
 2台間で64 byteを往復し、20・50・100・200 Hz、別系統Wi-Fi Ch6の待機／TCP負荷を各600秒測った。
 使用者の終了希望で19試行（8条件、各2--3反復）とし、残り5試行は未実施。
 960,000予定指令を全て送信し、959,997 unique応答を記録した。
@@ -245,8 +383,11 @@ MAC送信成功はアプリ応答やアクチュエータ動作成功とは異�
 \textbf{指令周期を短くすれば必ず通信が良くなるわけではない}。
 20 Hzの通常更新間隔自体が50 msであるため、1応答の20 ms期限と継続更新の周期は別に設計する。
 200 Hzのpayloadは片道0.1024 Mbpsだが、ヘッダ・ACK・送信待ちも必要で空中時間とは一致しない。
-旧30秒系列ではCh6負荷p99が反復8.6--123.8 msと変動した。実装・取得時間が違うので今回へ混ぜない。
-Wi-Fiの実受信は約1.7--2.7 Mbps、AP中継UDP／ROS 2と無線経路も異なり、方式だけの勝敗は決められない。
+先行30秒試験のCh6はWi-Fi待機→負荷でp99が9.4→85.6 msだったが、負荷中の反復差も大きい。実装の異なる長時間系列へ混ぜない。
+Wi-Fiの実受信は約1.7--2.7 Mbpsだった。
+ただしESP-NOW停止時の同一条件Wi-Fi基準がなく、\textbf{ESP-NOWがWi-Fi速度を何\%下げたかは測定していない}。
+主にWi-Fi負荷中にESP-NOW指令が間に合うかを評価した。
+AP中継UDP／ROS 2とは無線経路も異なり、方式だけの勝敗は決められない。
 '''
     if 'placement' in manifest['operational']:
         placement = json.loads((ROOT/'experiments/data/operational/placement/summary.json').read_text())
@@ -254,9 +395,11 @@ Wi-Fiの実受信は約1.7--2.7 Mbps、AP中継UDP／ROS 2と無線経路も異�
         farther = json.loads((ROOT/'experiments/data/operational/placement/op-placement-farther-wifiheavy-ch6-r1.json').read_text())['layout']['placement']['distances_cm']
         body += ('送受信75 cm、C5→送信45 cm、C5→応答95 cmを基準に、応答機の90°回転、手による遮蔽、'
                  f'送受信{farther["sender_echo"]:g} cmへの距離変更、基準復帰を各10秒・3反復で比較した。\n')
+        values = []
         for position, label in [('baseline-before', '基準前'), ('rotated', '回転'), ('obstructed', '遮蔽'), ('farther', '距離変更'), ('baseline-after', '基準後')]:
             row = next(value for value in placement.values() if value['condition']['placement_id'] == position and value['condition']['wifi'] == 'heavy')
-            body += f'{label}の負荷中p99は{row["pooled_rtt_p99_ms"]:.2f} ms、超過{row["planned_deadline20_pct"]:.3f}'+r'\%。'+'\n'
+            values.append(f'{label}{row["pooled_rtt_p99_ms"]:.2f}')
+        body += '負荷中p99は'+ '／'.join(values)+' msで、全配置の負荷中20 ms超過は0'+r'\%。'+'\n'
         body += '全30試行・30,000指令で応答欠落はなかった。基準復帰後もp99が下がったため、回転や遮蔽による改善とは断定できない。届いた最新パケットのRSSIだけで欠落時の感度は判断できない。C5までの距離、ケーブルや反射を含め、短時間の結果を到達距離の保証へ広げない。\n'
     body += r'''
 \section{ロボコン運用への示唆}
@@ -266,15 +409,12 @@ Wi-Fiの実受信は約1.7--2.7 Mbps、AP中継UDP／ROS 2と無線経路も異�
 後者は今回モータで検証しておらず、実機の停止期限は別に確かめる必要がある。
 
 {\footnotesize
-\section{公開データと再現性}
-詳細版には先行受信・5 GHz分割合成も統合し、異なる系列を区別した。
-相対イベント時刻、FFT電力、匿名条件と検算・描画・取得コードを公開。元I/Q、PCAP、私有ログは非公開保管する。
-保存不完了の600秒アプリ記録は補足として保持し、正式19試行へ含めない。
-\url{https://github.com/Raptor-zip/esp-sdr-robotics-wifi}
 \begin{thebibliography}{9}\footnotesize
 \bibitem{rf} \href{https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/technical-reference/wireless-rf-reference-guide.html}{Cisco, Wireless RF Reference Guide.}
 \bibitem{ros} \href{https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Quality-of-Service-Settings.html}{ROS 2 Jazzy, Quality of Service settings.}
 \bibitem{espnow} \href{https://docs.espressif.com/projects/esp-idf/en/v6.0/esp32/api-reference/network/esp_now.html}{Espressif, ESP-NOW Programming Guide.}
+\bibitem{ble} \href{https://www.bluetooth.com/bluetooth-le-primer/}{Bluetooth SIG, Bluetooth LE Primer.}
+\bibitem{espnowFAQ} \href{https://docs.espressif.com/projects/esp-faq/en/latest/application-solution/esp-now.html}{Espressif, ESP-NOW FAQ.}
 \end{thebibliography}}
 \end{document}
 '''
@@ -282,12 +422,21 @@ Wi-Fiの実受信は約1.7--2.7 Mbps、AP中継UDP／ROS 2と無線経路も異�
     # output boxes produced by balance.sty with ltjsarticle. Keep the supplied
     # margins, heading fonts and column spacing. Full-width measured plots sit
     # outside the two-column text; no floats can spill onto a fourth page.
+    # Put fixed-channel mechanics beside the SDR discussion, using the room
+    # on page two while keeping the BLE and ESP-NOW measurements on page three.
+    a = body.index(r'\subsection{固定チャネルとWi-Fiの共有}')
+    b = body.index(r'\subsection{今回確認した影響と指令周期}', a)
+    mechanics = body[a:b].replace('固定チャネルとWi-Fiの共有', 'ESP-NOWの固定チャネルとWi-Fiの共有')
+    body = body[:a]+body[b:]
+    position = body.rfind(r'\clearpage', 0, body.index(r'\section{Bluetooth LEとの共存}'))
+    body = body[:position]+mechanics+'\n'+body[position:]
     body = body.replace(r'\begin{document}', r'\begin{document}\onecolumn', 1)
     body = body.replace(r'\twocolumn[{', '')
     body = body.replace('}]\n', '\n'+r'\begin{multicols}{2}'+'\n')
     body = body.replace('\\balance\n', '')
     body = body.replace(r'\clearpage', r'\end{multicols}'+'\n'+r'\clearpage')
     body = body.replace(r'\end{document}', r'\end{multicols}'+'\n'+r'\end{document}')
+    body = body.replace(r'\begin{multicols}{2}', r'\begin{multicols}{2}\fontsize{10}{14}\selectfont\raggedcolumns')
     if 'placement' in manifest['operational']:
         marker = r'\end{multicols}'+'\n'+r'\clearpage'
         body = body.replace(marker, r'\end{multicols}'+'\n'+image('operational/placement-blue-green',
@@ -305,7 +454,7 @@ def write_readme(manifest):
              '- 実ROS 2は指令側Humble・ロボット側Jazzy、双方CycloneDDSです。合成Image／PointCloud2を追加すると20 ms期限超過は約45%から約70〜80%へ増えました。センサQoSの深さ1や省電力OFFだけで今回の遅延は解消しませんでした。',
              '- 流量制限・生成周期の変更も比較しました。要求量、送信側受付、実受信、期限超過を分け、未送信データの蓄積を「通信速度を達成」と取り違えないようにします。',
              '- ESP-NOW長時間試験は各600秒、19試行、8条件を2〜3反復です。960,000指令のうちunique応答は959,997件でした。100 Hz負荷中のp99は9.26 ms、200 Hzでは14.26 msで、短い区間に期限超過が集中しました。異なる端末・経路・実装のUDP／ROS 2との方式だけの勝敗は決められません。',
-             '- 独立BLEの広告・GATT通知は復号・実受信も確認しました。今回のBLE追加ではWi-Fi p99の大幅増加はなく、BLE側の配送量も併せて評価しました。', '']
+             '- 独立BLEの広告・GATT通知は復号・実受信も確認しました。Wi-Fi p99が近い条件でも、期限超過と双方の配送量は異なりました。広告と接続後のホッピングを分け、今回測っていないAFHの効果だけへ帰属しないように説明しています。', '']
     if 'placement' in manifest['operational']:
         lines += ['- ESP32間で基準前、90°回転、手による遮蔽、75→150 cm、基準復帰を各10秒で比較しました。全30試行・30,000指令で応答欠落はありませんでした。元の配置へ戻した後もp99が低下したため、回転や手だけの改善効果とは断定できません。最新パケットのRSSIと共通尺度の青緑画像も保存しています。', '']
     labels = [('先行操縦通信', manifest['robotics']), ('両チーム・周期Wi-Fi・BLE', manifest['two_team']),

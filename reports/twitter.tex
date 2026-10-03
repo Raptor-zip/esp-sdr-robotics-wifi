@@ -65,16 +65,26 @@
 
 
 
+\newcommand{\ReportAuthor}{貝淵蒼馬}
+
+
+
+
+
+
+
+
+
 \begin{document}\onecolumn
 
 \begin{center}{\LARGE\bfseries\sffamily ロボコンの無線通信と帯域共有の実測評価\par}
 \vspace{1mm}{\normalsize 他チーム通信・ROS 2・Bluetooth・ESP-NOW\par}
-\vspace{.5mm}{\normalsize 貝淵蒼馬\par}\end{center}
+\vspace{.5mm}{\normalsize \ReportAuthor\par}\end{center}
 \noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
 \textbf{要旨}\quad 指令と大容量データを同時に流し、他チームの通信、チャネル幅、QoS、指令周期を比較した。
 実測SDR画像は帯域の重なりを示す。一方、指令が期限内に届くかはアプリの応答記録から評価する。
 チャネルを分離しても端末内部や同じチーム内の遅延は残り、帯域幅・平均速度・接続表示だけでは操縦品質を判断できなかった。}}\vspace{2mm}
-\begin{multicols}{2}
+\begin{multicols}{2}\fontsize{10}{14}\selectfont\raggedcolumns
 \section{目的と実験方法}
 スマートフォンからの指令、カメラ映像、LiDAR点群を同じWi-FiとROS 2で運ぶロボットを想定する。
 自チーム内だけでなく、隣のチームも大容量通信中の条件を作った。
@@ -124,7 +134,7 @@ RTTを2で割って片道値にすることや、別PC時計の差を未同期�
 \clearpage
 
 \begin{center}\includegraphics[width=.98\textwidth]{../experiments/figures/two-team/two-team-blue-green-compact.pdf}\captionof{figure}{自チームCh6で指令＋大容量通信。他チーム負荷を同一・隣接・分離へ変更。反復1、共通ゲインと色尺度。}\end{center}
-\begin{multicols}{2}
+\begin{multicols}{2}\fontsize{10}{14}\selectfont\raggedcolumns
 \section{流量・生成周期・ROS 2の比較}
 追加の流量試験では他チームを負荷中に固定し、自チームTCPの要求量を0--2 Mbpsへ変えた。
 同一Ch6の0→1 Mbpsで20 ms超過は54.08→72.61\%、実受信平均は1.007 Mbpsだった。
@@ -157,20 +167,45 @@ C5：80 MS/s、16,380 I/Q、アナログ帯域48 MHz、ゲイン20、FFT1024。
 緑の割合を占有率、通信成功率、絶対dBmへ換算しない。
 Ch11の一部は名目アナログ帯域の端へかかり、弱い色を無干渉の証拠としない。
 画像で帯域の重複、アプリ記録で届く時刻、実受信量で負荷の実現度を確かめる。
+\subsection{ESP-NOWの固定チャネルとWi-Fiの共有}
+\textbf{ESP-NOWは標準でBLEのように自動ホッピングしない}。
+Wi-Fiの無線部から専用action frameを送り、送受信機は同じチャネルに合わせる。
+設定のchannel=0は現在のWi-Fiチャネルを使う意味で、自動探索ではない\cite{espnow}。
+先行試験のCh6・7・11は試行間で変更し、各試行中は固定した。
+長時間試験と配置比較はCh6固定である。
+
+APを通らず指令経路を分けても、同一・重複帯域ではWi-Fiと送信時間を共有する。
+別無線なら分離チャネルを選べるが、同じESP32でAP接続も併用する場合はAPのチャネルに合わせる必要がある\cite{espnowFAQ}。
+指令の回数を増やすとヘッダや応答を含む送信機会も増えるため、payloadのMbpsだけで影響を判断しない。
+
+
 \end{multicols}
 \clearpage
 
 \begin{center}\includegraphics[width=.91\textwidth]{../experiments/figures/two-team/ble-narrow-blue-green.pdf}\captionof{figure}{BLE停止・広告・GATT通知。2450--2470 MHzの拡大、反復1。この図は−90〜−60 dBFSで前ページとは尺度が異なる。}\end{center}
-\begin{multicols}{2}
+\begin{multicols}{2}\fontsize{10}{14}\selectfont\raggedcolumns
 \section{Bluetooth LEとの共存}
-独立したESP32 2台でBLE停止、20 ms設定の広告、BLE 1M GATT通知を比較し、
-広告の復号数と実通知受信量を確認した。Wi-Fi大容量通信中のp99は停止126.2 ms、広告126.0 ms、通知126.3 msだった。
-通知の平均実受信量はWi-Fi待機0.36→負荷0.33 Mbps。
-今回はBLE追加でWi-Fi p99が大きく増える結果ではないが、両リンクの配送量を評価する意義がある。
-通知時の狭い成分は方式の違いを示す手掛かりであり、全ての細線をBLEと同定した結果ではない。
-同一チップ内の共存、Bluetooth音声、連続ホッピングの復元は未検証である。
+\subsection{広告と接続後の周波数の使い方}
+今回の広告は2402・2426・2480 MHzの3周波数を使う方式である。
+接続後のGATT通知は、2 MHz間隔の37データチャネルから、接続イベントごとに周波数を選ぶ。
+\textbf{ホッピングは広帯域を一度に送ることではなく、狭い信号の送信先を時間で切り替えること}である。
+AFHは使用チャネル集合を更新して混雑した周波数を避ける仕組みだが、今回その更新は測っていない\cite{ble}。
+
+Wi-Fi Ch6の名目20 MHz帯域2427--2447 MHz内にもBLEデータチャネルがある。
+同じ周波数へ同時に送れば干渉し得るため、\textbf{ホッピングしてもWi-Fiと無関係にはならない}。
+40 MHz化は重なり得る周波数を増やすが、実送信時間も変わるので劣化量は幅だけで決まらない。
+
+\subsection{双方の実測性能}
+独立したESP32 2台でBLE停止・20 ms設定の広告・BLE 1M通知を各3反復比較した。
+Wi-Fi大容量通信中のp99は停止126.2／広告126.0／通知126.3 msと近いが、20 ms超過は54.6／58.2／56.8\%だった。
+Wi-Fi実受信平均は1.34／1.50／1.19 Mbps、BLE通知はWi-Fi待機0.365→負荷0.326 Mbpsだった。
+\textbf{p99が同じでも、期限超過や双方の配送量まで同じではない}。
+少数反復・実負荷の違いがあり、これを衝突やAFHの効果だけに帰属しない。
+図の細線は狭帯域成分の手掛かりで、全てをBLEと同定したものではない。
+間欠取得から連続ホッピングを復元せず、同一チップの共存制御やBluetooth音声も未検証である。
 
 \section{ESP-NOW指令の周期と更新途絶}
+\subsection{今回確認した影響と指令周期}
 2台間で64 byteを往復し、20・50・100・200 Hz、別系統Wi-Fi Ch6の待機／TCP負荷を各600秒測った。
 使用者の終了希望で19試行（8条件、各2--3反復）とし、残り5試行は未実施。
 960,000予定指令を全て送信し、959,997 unique応答を記録した。
@@ -186,15 +221,14 @@ MAC送信成功はアプリ応答やアクチュエータ動作成功とは異�
 \textbf{指令周期を短くすれば必ず通信が良くなるわけではない}。
 20 Hzの通常更新間隔自体が50 msであるため、1応答の20 ms期限と継続更新の周期は別に設計する。
 200 Hzのpayloadは片道0.1024 Mbpsだが、ヘッダ・ACK・送信待ちも必要で空中時間とは一致しない。
-旧30秒系列ではCh6負荷p99が反復8.6--123.8 msと変動した。実装・取得時間が違うので今回へ混ぜない。
-Wi-Fiの実受信は約1.7--2.7 Mbps、AP中継UDP／ROS 2と無線経路も異なり、方式だけの勝敗は決められない。
+先行30秒試験のCh6はWi-Fi待機→負荷でp99が9.4→85.6 msだったが、負荷中の反復差も大きい。実装の異なる長時間系列へ混ぜない。
+Wi-Fiの実受信は約1.7--2.7 Mbpsだった。
+ただしESP-NOW停止時の同一条件Wi-Fi基準がなく、\textbf{ESP-NOWがWi-Fi速度を何\%下げたかは測定していない}。
+主にWi-Fi負荷中にESP-NOW指令が間に合うかを評価した。
+AP中継UDP／ROS 2とは無線経路も異なり、方式だけの勝敗は決められない。
 \subsection{短時間の配置比較}
 送受信75 cm、C5→送信45 cm、C5→応答95 cmを基準に、応答機の90°回転、手による遮蔽、送受信150 cmへの距離変更、基準復帰を各10秒・3反復で比較した。
-基準前の負荷中p99は10.91 ms、超過0.000\%。
-回転の負荷中p99は7.79 ms、超過0.000\%。
-遮蔽の負荷中p99は7.93 ms、超過0.000\%。
-距離変更の負荷中p99は8.83 ms、超過0.000\%。
-基準後の負荷中p99は8.63 ms、超過0.000\%。
+負荷中p99は基準前10.91／回転7.79／遮蔽7.93／距離変更8.83／基準後8.63 msで、全配置の負荷中20 ms超過は0\%。
 全30試行・30,000指令で応答欠落はなかった。基準復帰後もp99が下がったため、回転や遮蔽による改善とは断定できない。届いた最新パケットのRSSIだけで欠落時の感度は判断できない。C5までの距離、ケーブルや反射を含め、短時間の結果を到達距離の保証へ広げない。
 
 \section{ロボコン運用への示唆}
@@ -204,15 +238,12 @@ Wi-Fiの実受信は約1.7--2.7 Mbps、AP中継UDP／ROS 2と無線経路も異�
 後者は今回モータで検証しておらず、実機の停止期限は別に確かめる必要がある。
 
 {\footnotesize
-\section{公開データと再現性}
-詳細版には先行受信・5 GHz分割合成も統合し、異なる系列を区別した。
-相対イベント時刻、FFT電力、匿名条件と検算・描画・取得コードを公開。元I/Q、PCAP、私有ログは非公開保管する。
-保存不完了の600秒アプリ記録は補足として保持し、正式19試行へ含めない。
-\url{https://github.com/Raptor-zip/esp-sdr-robotics-wifi}
 \begin{thebibliography}{9}\footnotesize
 \bibitem{rf} \href{https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/technical-reference/wireless-rf-reference-guide.html}{Cisco, Wireless RF Reference Guide.}
 \bibitem{ros} \href{https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Quality-of-Service-Settings.html}{ROS 2 Jazzy, Quality of Service settings.}
 \bibitem{espnow} \href{https://docs.espressif.com/projects/esp-idf/en/v6.0/esp32/api-reference/network/esp_now.html}{Espressif, ESP-NOW Programming Guide.}
+\bibitem{ble} \href{https://www.bluetooth.com/bluetooth-le-primer/}{Bluetooth SIG, Bluetooth LE Primer.}
+\bibitem{espnowFAQ} \href{https://docs.espressif.com/projects/esp-faq/en/latest/application-solution/esp-now.html}{Espressif, ESP-NOW FAQ.}
 \end{thebibliography}}
 \end{multicols}
 \end{document}

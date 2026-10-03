@@ -6,7 +6,7 @@
 
 `make figures`は操縦通信の主要な青・緑パネルと遅延比較図を、公開した実測FFT電力とJSONから生成します。主比較は反復1の画像と全反復の集計値を区別しています。ESP-NOWの反復変動図は同一条件の全3反復、X用小図は反復1・3を明記します。基礎観測・受信系の既存図はそのまま添付しています。公開データだけで生I/QのFFT長変更、STF探索、生PCAPとの照合をやり直すことはできません。
 
-`make reports`で自己完結した2本のLaTeXをLuaLaTeXで各2回コンパイルします。必要パッケージはluatexja、fontspec、geometry、graphicx、booktabs、siunitx、hyperref、TikZ、titlesec、placeinsなどです。見出しの英字・日本語はHaranoAjiGothic-Mediumで統一しています。著者名は貝淵蒼馬、紙面の日付はありません。`make images`はX用3ページのPDFを300 dpi PNGへ書き出します。
+`make reports`で自己完結した2本のLaTeXをLuaLaTeXで各2回コンパイルします。必要パッケージはluatexja、fontspec、geometry、graphicx、booktabs、siunitx、hyperref、TikZ、titlesec、placeinsなどです。見出しの英字・日本語はHaranoAjiGothic-Mediumで統一しています。著者名はLaTeXの著者欄だけに記載し、紙面の日付はありません。`make images`はX用3ページのPDFを300 dpi PNGへ書き出します。
 
 ## 実機取得コード
 
