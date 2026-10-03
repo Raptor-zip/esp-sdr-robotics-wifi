@@ -29,7 +29,7 @@ npm run render
 
 動画は `out/wifi-robocon-short-no-subs.mp4` の通常版のみを生成する。XとYouTube Shortsの両方に使用できる。
 H.264／AAC、先頭に再生メタデータを配置する。字幕の焼き込みは行わない。
-字幕ファイルは生成せず、旧版の同名SRT／VTT／ASSも書き出し時に削除する。表紙は `out/cover.png`。
+字幕ファイルは生成せず、旧版の同名SRT／VTT／ASSも書き出し時に削除する。表紙は `out/cover.png`。YouTubeサムネイルは `thumbnail/youtube-wifi-interference.jpg`。
 `verify.py` は通常版MP4を最後までデコードし、尺・解像度・音声・先頭メタデータ・字幕トラックと同名字幕ファイルの不在を検査する。
 実際の動画から冒頭・末尾・各場面の確認画像を `out/final-review/` に書き出す。
 
