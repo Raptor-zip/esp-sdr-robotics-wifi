@@ -58,24 +58,28 @@ def band(ax,lo,hi,color,height=1.8):
 
 class RadioField(Scene):
     def construct(self):
+        def px(x,y):return np.array([(x-540)/108,(960-y)/108,0])
         phone=VGroup(RoundedRectangle(width=1.3,height=2.1,corner_radius=.16,stroke_color=BLUE,
-            fill_color='#E5EEF4',fill_opacity=1),Circle(radius=.16,stroke_color=BLUE).shift(DOWN*.7)).move_to([0,4.6,0])
-        router=ap().move_to([0,.2,0]);bot=robot().move_to([0,-4.4,0])
-        route1=Arrow([0,3.3,0],[0,1.5,0],color=BLUE,buff=.05,stroke_width=7)
-        route2=Arrow([0,-.5,0],[0,-3,0],color=BLUE,buff=.05,stroke_width=7)
-        texts=VGroup(label('コントローラー',38).move_to([0,6.3,0]),label('AP',42,GREEN).move_to([-2.4,.2,0]),label('ロボット',42).move_to([0,-6,0]))
-        self.add(phone,router,bot,route1,route2,texts)
-        payload=tag('映像・点群・指令',BLUE,34).move_to([0,7.5,0]);self.add(payload)
+            fill_color='#E5EEF4',fill_opacity=1),Circle(radius=.16,stroke_color=BLUE).shift(DOWN*.7)).move_to(px(230,425))
+        # Remotion places the supplied photographs in these reserved areas.
+        route1=Arrow(px(340,425),px(440,425),color=BLUE,buff=.02,stroke_width=7)
+        route2=Arrow(px(738,740),px(738,1040),color=BLUE,buff=.02,stroke_width=7)
+        texts=VGroup(label('コントローラー',29).move_to(px(230,215)),
+            label('Wi-Fiルーター',34,GREEN).move_to(px(738,155)),
+            label('ロボット',38).move_to(px(510,1010)))
+        self.add(phone,route1,route2,texts)
+        payload=tag('映像・点群・指令',BLUE,30).move_to(px(310,790));self.add(payload)
         for i in range(3):
-            packets=VGroup(*[Square(side_length=.28,fill_color=c,fill_opacity=1,stroke_width=0).move_to([.45*j-.45,3.15,0]) for j,c in enumerate((BLUE,GREEN,GOLD))])
+            packets=VGroup(*[Square(side_length=.18,fill_color=c,fill_opacity=1,stroke_width=0).move_to(px(350,400+j*25)) for j,c in enumerate((BLUE,GREEN,GOLD))])
             self.add(packets)
-            self.play(packets.animate.move_to([0,1.4,0]),run_time=.35,rate_func=linear)
-            self.play(packets.animate.move_to([0,-2.8,0]),run_time=.55,rate_func=linear)
+            self.play(packets.animate.move_to(px(430,425)),run_time=.35,rate_func=linear)
+            packets.move_to(px(738,755))
+            self.play(packets.animate.move_to(px(738,1030)),run_time=.55,rate_func=linear)
             self.remove(packets)
-        enemy=tag('他チーム',RED,32).move_to([2.8,-1.7,0])
-        waves=VGroup(*[Arc(radius=r,start_angle=2.1,angle=1.8,color=RED,stroke_width=7).move_to([1.5,-2.5,0]) for r in (.45,.85,1.25)])
+        enemy=tag('他チーム',RED,27).move_to(px(935,845))
+        waves=VGroup(*[Arc(radius=r,start_angle=2.1,angle=1.8,color=RED,stroke_width=6).move_to(px(900,960)) for r in (.3,.55,.8)])
         self.play(FadeIn(enemy),LaggedStart(*[Create(w) for w in waves],lag_ratio=.18),run_time=.7)
-        self.play(Indicate(bot,color=RED,scale_factor=1.1),run_time=.5)
+        self.play(Indicate(route2,color=RED,scale_factor=1.07),run_time=.5)
         self.wait(.45)
 
 

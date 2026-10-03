@@ -34,7 +34,7 @@ def main():
     run('ffmpeg','-v','error','-y','-i',str(OUT/'wifi-robocon-short-no-subs.mp4'),'-map','0:v:0','-map','0:a:0','-sn','-c:v','libx264',
         '-preset','slow','-crf','23','-maxrate','6M','-bufsize','12M','-pix_fmt','yuv420p',
         '-c:a','copy','-movflags','+faststart',str(OUT/'wifi-robocon-short-x-no-subs.mp4'))
-    cover_scene=next(s for s in timeline['scenes'] if s['id']=='sensor')
+    cover_scene=next(s for s in timeline['scenes'] if s['id']=='hook')
     cover_time=(cover_scene['from']+int(cover_scene['duration']*.65))/30
     run('ffmpeg','-v','error','-y','-ss',str(cover_time),'-i',str(OUT/'wifi-robocon-short-no-subs.mp4'),
         '-frames:v','1',str(OUT/'cover.png'))
@@ -42,6 +42,7 @@ def main():
               'speedScale':1.5,'engineVersion':timeline['engineVersion'],
               'visual_mode':'content-only','manim_diagrams':8,
               'captions_burned_in':False,'subtitle_sidecars':False,'character_overlay':False,
+              'supplied_images':['robot-competition.jpg','wifi-router.jpg','competition-wifi-analyzer.png'],
               'files':[{ 'name':name,'bytes':(OUT/name).stat().st_size}
                         for name in ('wifi-robocon-short-no-subs.mp4','wifi-robocon-short-x-no-subs.mp4','cover.png')],
               'loudness_before_normalization':measured,

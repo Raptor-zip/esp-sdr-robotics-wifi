@@ -19,6 +19,25 @@ const Waterfall:React.FC<{channel:number;height:number;duration?:number;moving?:
  :<Img src={staticFile(`generated/sdr-ch${channel}.png`)} style={{width:'100%',height:'100%',objectFit:'fill'}}/>}
 </div>;
 
+const Hook:React.FC<{duration:number}>=({duration})=><>
+ <Manim name="RadioField" duration={duration}/>
+ <div style={{position:'absolute',left:465,top:210,width:545,height:510,overflow:'hidden',borderRadius:7}}>
+  <Img src={staticFile('input/wifi-router.jpg')} style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'50% 100%'}}/>
+ </div>
+ <Img src={staticFile('input/robot-competition.jpg')} style={{position:'absolute',left:255,top:1080,width:570,height:760,objectFit:'contain',borderRadius:7}}/>
+</>;
+
+const Venue:React.FC=()=>{
+ const f=useCurrentFrame();
+ const zoom=interpolate(f,[20,85],[1,1.07],clamp);
+ return <>
+  <div style={{position:'absolute',left:60,top:140,width:960,fontSize:43,fontWeight:900,textAlign:'center',color:C.ink}}>学生ロボコン2026 大会当日</div>
+  <div style={{position:'absolute',left:82,top:270,width:916,height:1390,transform:`scale(${zoom})`,transformOrigin:'50% 20%'}}>
+   <Img src={staticFile('input/competition-wifi-analyzer.png')} style={{width:'100%',height:'100%',objectFit:'contain'}}/>
+  </div>
+ </>;
+};
+
 const Sensor:React.FC<{duration:number}>=({duration})=><>
  <Manim name="SensorPipeline" duration={duration}/>
  <div style={{position:'absolute',left:65,top:960,width:950}}>
@@ -71,7 +90,8 @@ const Scene:React.FC<{id:SceneId;duration:number}>=({id,duration})=>{
  const f=useCurrentFrame();
  let body:React.ReactNode;
  switch(id){
-  case 'hook':body=<Manim name="RadioField" duration={duration}/>;break;
+  case 'hook':body=<Hook duration={duration}/>;break;
+  case 'venue':body=<Venue/>;break;
   case 'sensor':body=<Sensor duration={duration}/>;break;
   case 'overlap':body=<Manim name="ChannelOverlap" duration={duration}/>;break;
   case 'results':body=<Results duration={duration}/>;break;

@@ -38,15 +38,22 @@ def normalize(path):
 def voices():
     script = json.loads((VIDEO/'src/narration.json').read_text())
     (OUT/'audio').mkdir(parents=True,exist_ok=True)
-    frame = 0
-    scenes = []
-    for index, line in enumerate(script):
+    for line in script:
         path = OUT/'audio'/f'{line["id"]}.wav'
         query = requests.post(HOST+'/audio_query',params={'speaker':3,'text':line['text']},timeout=120).json()
         query.update(speedScale=1.5,pitchScale=.015,intonationScale=1.2,
                      prePhonemeLength=.045,postPhonemeLength=.07,outputSamplingRate=RATE)
         r = requests.post(HOST+'/synthesis',params={'speaker':3},json=query,timeout=120)
         r.raise_for_status();path.write_bytes(r.content);normalize(path)
+    write_timeline(script)
+
+
+def write_timeline(script):
+    """Rebuild timing from audio files, including when only one take changes."""
+    frame = 0
+    scenes = []
+    for line in script:
+        path = OUT/'audio'/f'{line["id"]}.wav'
         with wave.open(str(path)) as w:
             duration = w.getnframes()/w.getframerate()
         count = math.ceil(duration*FPS)
@@ -58,6 +65,7 @@ def voices():
         frame+=count+4
         print(line['id'],f'{duration:.2f}s',line['text'],flush=True)
     frame+=12;scenes[-1]['duration']=frame-scenes[-1]['from']
+    assert frame < 60*FPS, 'Short exceeds one minute'
     t={'fps':FPS,'durationInFrames':frame,'speedScale':1.5,
        'engineVersion':requests.get(HOST+'/version',timeout=10).json(),
        'speaker':'VOICEVOX:ずんだもん（ノーマル）','speakerId':3,'scenes':scenes,'lines':script}
@@ -68,6 +76,8 @@ def voices():
 
 def assets():
     """Input art/fonts stay tracked. Only derived measurement views are ignored."""
+    for name in ('robot-competition.jpg','wifi-router.jpg','competition-wifi-analyzer.png'):
+        assert (VIDEO/'public/input'/name).exists(), f'Missing supplied input: {name}'
     for name in ('noto-sans-jp.woff2',):
         assert (VIDEO/'public/fonts'/name).exists(), f'Missing tracked font input: {name}'
     OUT.mkdir(parents=True,exist_ok=True)
