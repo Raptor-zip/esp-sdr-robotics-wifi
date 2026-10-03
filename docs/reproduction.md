@@ -2,7 +2,7 @@
 
 ## 公開データからの再生成
 
-リポジトリ直下で`make check`を実行すると、公開データの全SHA-256を確認し、先行56試行と追加87試行のRTT p99、損失率、20 ms期限超過、送信ジッターおよび条件群の統計を相対時刻から再計算します。原集計と一致しない場合はエラーになります。
+リポジトリ直下で`make check`を実行すると、公開データの全SHA-256を確認し、先行56試行・追加87試行と各運用評価系列のRTT p99、損失率、20 ms期限超過、送信ジッターおよび条件群の統計を相対時刻から再計算します。原集計と一致しない場合はエラーになります。
 
 `make figures`は操縦通信の主要な青・緑パネルと遅延比較図を、公開した実測FFT電力とJSONから生成します。主比較は反復1の画像と全反復の集計値を区別しています。ESP-NOWの反復変動図は同一条件の全3反復、X用小図は反復1・3を明記します。基礎観測・受信系の既存図はそのまま添付しています。公開データだけで生I/QのFFT長変更、STF探索、生PCAPとの照合をやり直すことはできません。
 
@@ -81,10 +81,22 @@ make reports images
 
 USB割当は取得コード既定でESP32-1=ttyUSB0、2=ttyUSB1、3=ttyUSB2、C5=ttyACM0です。変わった場合は必ず識別して合わせます。実験終了後にHTTP `/stop`でロボット側を復帰させてから観測PCの一時APを終了・削除し、元接続を戻します。ESP32の電波出力と負荷を停止し、C5を通常表示用設定へ戻します。
 
-主実験の相対時刻とFFTからは統計・図を再生成できます。時刻とI/Qの厳密なパケット一致、連続占有率、元I/Qの再FFT、ROS 2トピックの評価は再現範囲に含みません。
+主実験の相対時刻とFFTからは統計・図を再生成できます。時刻とI/Qの厳密なパケット一致、連続占有率、元I/Qの再FFTは再現範囲に含みません。この先行系列自体はROS 2ではなく、実ROS 2の追加系列は後述します。
 
 ## ESP-NOW指令の追加測定
 
 [ESP-NOWの測定条件](espnow-method.md)を参照してください。ESP32-1/2を`espnow-link`へ書き換え、UART115200で動作させます。ESP32-3は`team-controller`の460800 baudです。独立Wi-Fi負荷用のAPとロボットhelperを起動してから、`run_espnow.py --pilot`、`run_espnow.py`を実行します。MACはUARTで取得してその場でpeer設定し、公開時には除去します。元フラッシュと元I/Qは非公開保管します。
 
 公開処理は`analyze_espnow.py --raw /非公開の保存先/raw`、検算は`make check`、画像は`make figures`、表と考察の数値反映は`make report-sources`、組版は`make reports images`です。読み出しのUARTが遅くても、ベンチマーク時刻はESP内部で記録します。追加ESP-NOWの負荷helperはkeepaliveを加えた版で、先行69試行で使用した版はコミット`b5af98b`に保持しています。
+
+## 流量・ROS 2・長時間ESP-NOW・配置比較
+
+[運用評価の方法](operational-method.md)、[実ROS 2](ros2-method.md)、[長時間ESP-NOW](espnow-long-method.md)、[配置比較](placement-method.md)を参照してください。流量45・生成周期36・ROS 2 QoS45・省電力24試行は完全行列、ESP-NOW長時間19試行は使用者の希望による途中終了の宣言付き行列です。予定24試行を完了したことにはしません。
+
+`make check`は各系列の独立数値検算、全公開SHA256、イベント・カウンタ・設定を確認します。`make figures`は公開データから各系列の実測図を再生成し、`make report-sources`は旧通信系列を更新後、運用評価の結果と考察を2本のLaTeXへ統合します。`make reports images`でPDFとX用3ページPNGを作成します。追加組版にはadjustboxとmulticolが必要です。
+
+実ROS 2では指令側Humble・ロボット側Jazzy、双方CycloneDDSと標準Image・PointCloud2を使います。センサ内容は合成payloadです。標準QoSの履歴・reliabilityの比較であり、実機センサや無線優先制御を再現するものではありません。生成・実publish・受信をそれぞれ記録し、測定窓のあとにログを転送します。相手PCの監督プロセスは期限付きで元Wi-Fi・省電力へ戻ります。
+
+長時間／配置測定は`espnow-stream` v2を送信機・応答機、`team-controller` v1を別系統Wi-Fi受信機、`operational_traffic.py` helper v2をロボット役に使います。`run_long_espnow.py`は前段のROS 2と省電力の完了検算を要求します。配置は`--placement /私有の確認JSON`で、実際の変更・距離の確認がない入力を拒否します。取得終了時にWi-Fi受信機もSTOPされるため、次の配置前には同じファームウェアのままcold startして現行TCP接続を確認します。
+
+圧縮I/Qの保存はRF窓終了後に行い、最大120秒待ちます。終了設定と負荷カウンタの揃わない取得は正式行列へ補完しません。公開データの再描画には生I/Qの私有保管場所は不要です。`make operational-*`の解析段階は非公開rawを必要とするため、公開cloneからの再検算・再描画は`make check figures`を使ってください。

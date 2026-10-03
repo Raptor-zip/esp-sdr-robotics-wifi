@@ -54,3 +54,9 @@ experiments/firmware/ble-link/sdkconfig.old
 
 experiments/firmware/espnow-link/sdkconfig
 experiments/firmware/espnow-link/sdkconfig.old
+
+experiments/firmware/operational-wifi/sdkconfig
+experiments/firmware/operational-wifi/sdkconfig.old
+
+experiments/firmware/espnow-stream/sdkconfig
+experiments/firmware/espnow-stream/sdkconfig.old

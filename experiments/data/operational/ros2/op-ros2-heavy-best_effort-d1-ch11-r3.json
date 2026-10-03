@@ -1,0 +1,857 @@
+{
+  "run_id": 428415140,
+  "seconds": 30,
+  "acquisition_segment": "ros2-qos-eb59f6a0",
+  "trace_download_transport": "authenticated experiment-Wi-Fi HTTP after measurement",
+  "condition": {
+    "repeat": 3,
+    "bulk": "heavy",
+    "reliability": "best_effort",
+    "depth": 1,
+    "own_channel": 6,
+    "own_width_mhz": 20,
+    "other_channel": 11,
+    "other_width_mhz": 20
+  },
+  "robot_power_save": {
+    "before": "off",
+    "after": "off"
+  },
+  "controller_power_save": "off",
+  "layout": {
+    "description": "All boards and PCs on one desk, approximately 30 cm spacing, fixed throughout this series; exact pair distances and orientations not measured",
+    "source": "user report",
+    "moving_people": "negligible influence reported by user"
+  },
+  "pre_measurement_setup_attempts": 1,
+  "pre_load_peer_verification": {
+    "receiver": {
+      "version": 7,
+      "udp_ready": 0,
+      "udp_tx_bytes": 0,
+      "udp_tx_packets": 0,
+      "udp_run_id": 0,
+      "tcp_connected": 0,
+      "active": 1,
+      "ap": 0,
+      "connected": 1,
+      "ap_clients": 0,
+      "primary": 11,
+      "secondary": 0,
+      "configured_bw": 1,
+      "ap_bw": 1,
+      "rssi": -74,
+      "tx_qdbm": 78,
+      "tx_bytes": 0,
+      "rx_bytes": 104876544,
+      "echoes": 0,
+      "tcp_peer_ready": 1,
+      "tcp_nonce": 3989066627,
+      "tcp_challenge": 2923547488,
+      "send_attempts": 0,
+      "send_eagain": 0,
+      "handshake_failures": 0,
+      "last_send_errno": 0,
+      "load_rate_setting": 0,
+      "load_remaining_ms": 0,
+      "power_save": 0,
+      "network_generation": 32
+    },
+    "transmitter": {
+      "version": 7,
+      "udp_ready": 0,
+      "udp_tx_bytes": 0,
+      "udp_tx_packets": 0,
+      "udp_run_id": 0,
+      "tcp_connected": 1,
+      "active": 1,
+      "ap": 1,
+      "connected": 0,
+      "ap_clients": 1,
+      "primary": 11,
+      "secondary": 0,
+      "configured_bw": 1,
+      "ap_bw": 0,
+      "rssi": 0,
+      "tx_qdbm": 72,
+      "tx_bytes": 1133490432,
+      "rx_bytes": 0,
+      "echoes": 0,
+      "tcp_peer_ready": 1,
+      "tcp_nonce": 3989066627,
+      "tcp_challenge": 2923547488,
+      "send_attempts": 277396,
+      "send_eagain": 144,
+      "handshake_failures": 0,
+      "last_send_errno": 128,
+      "load_rate_setting": 0,
+      "load_remaining_ms": 0,
+      "power_save": 0,
+      "network_generation": 278
+    }
+  },
+  "external_radio": {
+    "receiver": {
+      "before": {
+        "version": 7,
+        "udp_ready": 0,
+        "udp_tx_bytes": 0,
+        "udp_tx_packets": 0,
+        "udp_run_id": 0,
+        "tcp_connected": 0,
+        "active": 1,
+        "ap": 0,
+        "connected": 1,
+        "ap_clients": 0,
+        "primary": 11,
+        "secondary": 0,
+        "configured_bw": 1,
+        "ap_bw": 1,
+        "rssi": -82,
+        "tx_qdbm": 78,
+        "tx_bytes": 0,
+        "rx_bytes": 106382240,
+        "echoes": 0,
+        "tcp_peer_ready": 1,
+        "tcp_nonce": 3989066627,
+        "tcp_challenge": 2923547488,
+        "send_attempts": 0,
+        "send_eagain": 0,
+        "handshake_failures": 0,
+        "last_send_errno": 0,
+        "load_rate_setting": 0,
+        "load_remaining_ms": 0,
+        "power_save": 0,
+        "network_generation": 32
+      },
+      "after": {
+        "version": 7,
+        "udp_ready": 0,
+        "udp_tx_bytes": 0,
+        "udp_tx_packets": 0,
+        "udp_run_id": 0,
+        "tcp_connected": 0,
+        "active": 1,
+        "ap": 0,
+        "connected": 1,
+        "ap_clients": 0,
+        "primary": 11,
+        "secondary": 0,
+        "configured_bw": 1,
+        "ap_bw": 1,
+        "rssi": -52,
+        "tx_qdbm": 78,
+        "tx_bytes": 0,
+        "rx_bytes": 109950336,
+        "echoes": 0,
+        "tcp_peer_ready": 1,
+        "tcp_nonce": 3989066627,
+        "tcp_challenge": 2923547488,
+        "send_attempts": 0,
+        "send_eagain": 0,
+        "handshake_failures": 0,
+        "last_send_errno": 0,
+        "load_rate_setting": 0,
+        "load_remaining_ms": 0,
+        "power_save": 0,
+        "network_generation": 32
+      }
+    },
+    "transmitter": {
+      "before": {
+        "version": 7,
+        "udp_ready": 0,
+        "udp_tx_bytes": 0,
+        "udp_tx_packets": 0,
+        "udp_run_id": 0,
+        "tcp_connected": 1,
+        "active": 1,
+        "ap": 1,
+        "connected": 0,
+        "ap_clients": 1,
+        "primary": 11,
+        "secondary": 0,
+        "configured_bw": 1,
+        "ap_bw": 0,
+        "rssi": 0,
+        "tx_qdbm": 72,
+        "tx_bytes": 1135053376,
+        "rx_bytes": 0,
+        "echoes": 0,
+        "tcp_peer_ready": 1,
+        "tcp_nonce": 3989066627,
+        "tcp_challenge": 2923547488,
+        "send_attempts": 277779,
+        "send_eagain": 144,
+        "handshake_failures": 0,
+        "last_send_errno": 0,
+        "load_rate_setting": 1000,
+        "load_remaining_ms": 40936,
+        "power_save": 0,
+        "network_generation": 278
+      },
+      "after": {
+        "version": 7,
+        "udp_ready": 0,
+        "udp_tx_bytes": 0,
+        "udp_tx_packets": 0,
+        "udp_run_id": 0,
+        "tcp_connected": 1,
+        "active": 1,
+        "ap": 1,
+        "connected": 0,
+        "ap_clients": 1,
+        "primary": 11,
+        "secondary": 0,
+        "configured_bw": 1,
+        "ap_bw": 0,
+        "rssi": 0,
+        "tx_qdbm": 72,
+        "tx_bytes": 1138593824,
+        "rx_bytes": 0,
+        "echoes": 0,
+        "tcp_peer_ready": 1,
+        "tcp_nonce": 3989066627,
+        "tcp_challenge": 2923547488,
+        "send_attempts": 278653,
+        "send_eagain": 144,
+        "handshake_failures": 0,
+        "last_send_errno": 0,
+        "load_rate_setting": 1000,
+        "load_remaining_ms": 8391,
+        "power_save": 0,
+        "network_generation": 278
+      }
+    }
+  },
+  "other_load_command_ack": "OK LOAD 1000 44",
+  "other_counter_window_seconds": 32.557069702,
+  "other_delivered_mbps": 0.87676096962272,
+  "other_socket_accepted_mbps": 0.8699672378150196,
+  "other_send_attempts": 874,
+  "roles": {
+    "control": {
+      "role": "control",
+      "run_id": 428415140,
+      "ready": true,
+      "done": true,
+      "counts": {
+        "publisher_matched_subscriptions": [
+          1
+        ],
+        "subscriber_publishers_in_graph": [
+          1
+        ]
+      },
+      "endpoint_qos": {
+        "publishers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "subscribers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "process_cpu_ns": 6114718071,
+      "sent": 3000,
+      "received": 2445,
+      "publish_calls": 3000,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "humble",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "command": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "response": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 36.08958334
+    },
+    "sink": {
+      "role": "sink",
+      "run_id": 428415140,
+      "ready": true,
+      "done": true,
+      "counts": {
+        "publisher_matched_subscriptions": [],
+        "subscriber_publishers_in_graph": [
+          1,
+          1
+        ]
+      },
+      "endpoint_qos": {
+        "publishers": [],
+        "subscribers": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          },
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ]
+      },
+      "process_cpu_ns": 6205154729,
+      "sent": 0,
+      "received": 488,
+      "publish_calls": 0,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "humble",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "image": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ],
+        "cloud": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 36.095015097
+    },
+    "echo": {
+      "role": "echo",
+      "run_id": 428415140,
+      "ready": true,
+      "done": true,
+      "counts": {
+        "publisher_matched_subscriptions": [
+          1
+        ],
+        "subscriber_publishers_in_graph": [
+          1
+        ]
+      },
+      "endpoint_qos": {
+        "publishers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "subscribers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "process_cpu_ns": 12018542664,
+      "sent": 2618,
+      "received": 2618,
+      "publish_calls": 2618,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "jazzy",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "response": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "command": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 36.000302264
+    },
+    "bulk": {
+      "role": "bulk",
+      "run_id": 428415140,
+      "ready": true,
+      "done": true,
+      "counts": {
+        "publisher_matched_subscriptions": [
+          1,
+          1
+        ],
+        "subscriber_publishers_in_graph": []
+      },
+      "endpoint_qos": {
+        "publishers": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          },
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ],
+        "subscribers": []
+      },
+      "process_cpu_ns": 2964409936,
+      "sent": 493,
+      "received": 0,
+      "publish_calls": 493,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "jazzy",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "image": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ],
+        "cloud": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 35.99989888
+    }
+  },
+  "roles_before": {
+    "control": {
+      "role": "control",
+      "run_id": 428415140,
+      "ready": true,
+      "done": false,
+      "counts": {
+        "publisher_matched_subscriptions": [
+          1
+        ],
+        "subscriber_publishers_in_graph": [
+          1
+        ]
+      },
+      "endpoint_qos": {
+        "publishers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "subscribers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "process_cpu_ns": 638304354,
+      "sent": 0,
+      "received": 0,
+      "publish_calls": 0,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "humble",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "command": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "response": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 0.500744443
+    },
+    "sink": {
+      "role": "sink",
+      "run_id": 428415140,
+      "ready": true,
+      "done": false,
+      "counts": {
+        "publisher_matched_subscriptions": [],
+        "subscriber_publishers_in_graph": [
+          1,
+          1
+        ]
+      },
+      "endpoint_qos": {
+        "publishers": [],
+        "subscribers": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          },
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ]
+      },
+      "process_cpu_ns": 501630895,
+      "sent": 0,
+      "received": 0,
+      "publish_calls": 0,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "humble",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "image": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ],
+        "cloud": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 0.501555617
+    },
+    "echo": {
+      "role": "echo",
+      "run_id": 428415140,
+      "ready": true,
+      "done": false,
+      "counts": {
+        "publisher_matched_subscriptions": [
+          1
+        ],
+        "subscriber_publishers_in_graph": [
+          1
+        ]
+      },
+      "endpoint_qos": {
+        "publishers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "subscribers": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "process_cpu_ns": 165022835,
+      "sent": 0,
+      "received": 0,
+      "publish_calls": 0,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "jazzy",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "response": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ],
+        "command": [
+          {
+            "reliability": 1,
+            "history": 1,
+            "depth": 10,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 0.50133335
+    },
+    "bulk": {
+      "role": "bulk",
+      "run_id": 428415140,
+      "ready": true,
+      "done": false,
+      "counts": {
+        "publisher_matched_subscriptions": [
+          1,
+          1
+        ],
+        "subscriber_publishers_in_graph": []
+      },
+      "endpoint_qos": {
+        "publishers": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          },
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ],
+        "subscribers": []
+      },
+      "process_cpu_ns": 150976220,
+      "sent": 0,
+      "received": 0,
+      "publish_calls": 0,
+      "requested_seconds": 30.0,
+      "control_hz": 100,
+      "bulk_hz": 10,
+      "bulk": "heavy",
+      "bulk_reliability": "best_effort",
+      "bulk_depth": 1,
+      "control_reliability": "reliable",
+      "control_depth": 10,
+      "image_payload_bytes": 691200,
+      "cloud_payload_bytes": 65536,
+      "requested_sensor_payload_mbps": 60.53888,
+      "ros_distro": "jazzy",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domain_id": "77",
+      "semantics": "Actual ROS 2 standard topics; separate control and sensor processes; synthetic sensor content; RTT uses the controller clock only",
+      "graph_publisher_qos": {
+        "image": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ],
+        "cloud": [
+          {
+            "reliability": 2,
+            "history": 1,
+            "depth": 1,
+            "durability": 2
+          }
+        ]
+      },
+      "dds_experimental_interface_only": true,
+      "role_lifetime_seconds": 0.503930797
+    }
+  },
+  "experimental_route_verified": true,
+  "control": {
+    "planned": 3000,
+    "published": 3000,
+    "unsent_planned": 0,
+    "responses": 2445,
+    "unique_responses": 2445,
+    "duplicate_responses": 0,
+    "lost_published": 555,
+    "rtt_p99_ms": 262.3650663199999,
+    "publication_p99_ms": 0.07873936999999998,
+    "send_lateness_p99_ms": 0.5800751499999989,
+    "echo_pre_publish_p99_ms": 0.003491759999999977,
+    "published_deadline20_pct": 74.23333333333333,
+    "planned_deadline20_pct": 74.63333333333333,
+    "longest_planned_deadline20_run": 193,
+    "maximum_response_gap_ms": 362.594125
+  },
+  "sensors": {
+    "image": {
+      "planned": 300,
+      "published": 247,
+      "unsent_planned": 53,
+      "received_callbacks": 244,
+      "unique_received": 244,
+      "duplicate_received": 0,
+      "received_within_window": 243,
+      "payload_bytes": 691200,
+      "delivered_payload_mbps": 44.78976,
+      "delivered_including_grace": 244,
+      "publication_p99_ms": 231.52207351999908,
+      "maximum_update_gap_ms": 3277.465954
+    },
+    "cloud": {
+      "planned": 300,
+      "published": 246,
+      "unsent_planned": 54,
+      "received_callbacks": 244,
+      "unique_received": 244,
+      "duplicate_received": 0,
+      "received_within_window": 244,
+      "payload_bytes": 65536,
+      "delivered_payload_mbps": 4.264209066666666,
+      "delivered_including_grace": 244,
+      "publication_p99_ms": 12.575452150000025,
+      "maximum_update_gap_ms": 3206.576853
+    }
+  },
+  "sdr": {
+    "frames": 568,
+    "samples": 16380,
+    "sample_rate_hz": 80000000,
+    "lo_mhz": 2442,
+    "bandwidth_mhz": 48,
+    "gain": "MANUAL 20",
+    "fft_length": 1024,
+    "all_crcs_verified": true,
+    "nominal_observation_pct": 0.38762021388599394
+  },
+  "clock_semantics": "Control and RTT use only the controller clock. Echo processing and sensor generation use only the robot clock. Sensor receipt gaps use only the sink clock. No cross-PC one-way latency or sensor age is inferred.",
+  "topology": "Controller and sink on the PC AP; echo and synthetic sensor source on the robot STA. Control and bulk run in separate processes. This differs from the STA-AP-STA UDP/TCP topology."
+}

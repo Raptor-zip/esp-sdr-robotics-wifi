@@ -1,0 +1,8 @@
+{
+  "binaries/bootloader.bin": "4f791f50dbb719bff4b15c33beda1b8a66b0d328d4a121b5a10176c04247e099",
+  "binaries/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820",
+  "binaries/app.bin": "14a03cc4c607c42f9703b18034122720be3d28963dddf568fd9c8565316f79b6",
+  "binaries/sdkconfig.measured.json": "b7672f809db13369b7a4e5f75c5d89c1c97f840585cfc9b59715ac36300288a2",
+  "main/espnow_stream.c": "e0cedb7a4a3ece856c157444e54877706a4cf55cba1abbb4d78aab20b7fb3dba",
+  "sdkconfig.defaults": "e0a45530717db6cbbb91fc27897d820ac9fcb8a4c5d67355418e2595f5d01c83"
+}

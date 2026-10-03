@@ -16,10 +16,10 @@ def api(path='',data=None):
  body=json.dumps(data).encode() if data is not None else None
  req=urllib.request.Request('http://192.168.8.20:8134'+path,body,{'X-Lab-Token':TOKEN,'Content-Type':'application/json'})
  with urllib.request.urlopen(req,timeout=12) as r:return json.load(r)
-def capture(receiver,path,seconds,lo):
+def capture(receiver,path,seconds,lo,stop_event=None):
  receiver.command(f'FREQ {lo}');receiver.command('BANDWIDTH 48');receiver.command('GAIN MANUAL 20')
  before=receiver.clock(16);shots=[];timing=[];until=time.monotonic()+seconds
- while time.monotonic()<until:
+ while time.monotonic()<until and (stop_event is None or not stop_event.is_set()):
   x,t=receiver.take(0);shots.append(x);timing.append(t)
  meta=dict(lo_mhz=lo,sample_rate_hz=80000000,bandwidth_mhz=48,gain='MANUAL 20',frames=len(shots),samples=16380,clock_before=before,clock_after=receiver.clock(16),timing=timing,all_crcs_verified=True)
  np.savez_compressed(str(path)+'-iq.npz',iq=np.stack(shots));Path(str(path)+'-iq.json').write_text(json.dumps(meta,indent=2)+'\n')

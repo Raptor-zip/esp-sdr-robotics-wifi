@@ -34,3 +34,17 @@ FFT電力はDC除去・Hann窓・窓和の二乗による規格化・区間の�
 ## ESP-NOW (`espnow`)
 
 時刻NPZの欠落印は`received_ns == -1`で、相対ns単位、実時計の分解能は1µsです。`radio`には送信側・echo側・独立Wi-Fi受信側の前後カウンタ、実チャネル、受信rate・sig_modeがあります。MACは除去します。`wifi_delivered_mbps`を実受信bytes差と`counter_window_seconds`で検算します。`sent`はAPI受付失敗を含む送信要求数で、欠落をそのままPHY損失率としません。FFTとSDR設定は`two-team`と同じ形式です。`manifest.espnow`と`summary.json`は先行群と分けた18試行の集計です。
+
+## 運用評価 (`operational`)
+
+`limit`は45試行の流量制限、`shape`は36試行の生成周期比較です。UDP指令の欠落印は`received_ns == -1`、予定・実送信・応答は指令機の単一時計で記録しています。要求生成量、TCP送信受付、実受信、別チームの実配送と現行接続確認を区別して保存します。旧取得やpilotを正式行列へ追加しません。
+
+`ros2`は45試行の実ROS 2（指令側Humble・ロボット側Jazzy、双方CycloneDDS）のQoS比較、`power`は24試行の省電力ON／OFF比較です。`*-control.npz`には全予定slot、publish、応答の相対時刻、`*-echo.npz`にはロボット時計内だけのcallback・publish時刻、`*-sensors.npz`には生成／publish／初回受信の相対イベント列があります。各roleの時計の起点は独立で、列同士を引いて未同期PC間の片道遅延やセンサの古さを推定できません。指令のRTTは指令側の時計だけで算出します。センサ更新間隔は各unique sequenceの初回受信間隔で、古いsequenceの遅着を除く下記ESP-NOWの更新指標とは異なります。
+
+`espnow-long`には19試行・各600秒・8条件を2〜3反復した全アプリイベントを保存しました。`*-events.npz`の各イベントは種別、sequence、送信機の相対µs時刻、引数の4列です。種別は送信呼出し1、応答callback2、飛ばした予定slot3、終了4。`block_event_counts`と`block_received_ns`はUARTのブロック数とホスト側の相対受信時間で、アプリ時刻とは違います。`*-control.npz`はこれを相対nsへ換算した全予定・送信・初回応答・API結果で、未送信／未受信は−1です。nsへの換算はµs時計の精度を増やしません。UART CRC・END・全slot被覆・trace drop=0・実機カウンタを検算してから欠落を算出します。MAC成功／失敗は集計値であり、個々のsequenceへ対応づけません。
+
+長時間系列の`timeline`は10秒窓のp99・全予定指令の20 ms期限超過です。最新sequenceへの最長更新途絶では、順序が戻った応答を新しい情報の更新に数えません。`counter_samples`は10秒ごとの実負荷と最後に受信したRSSIで、RSSIの全パケット分布ではありません。`manifest.operational.espnow-long.status`の`stopped_at_user_request`は、使用者の終了希望で進行中試行を保存後に終了したことを表します。予定24試行の完全行列とは呼ばず、残り5試行を補完しません。
+
+`placement`は使用者が変更・確認したESP32間の短い配置比較用です。各試行10秒、100 Hz、監視2秒、`layout.placement`に中心間距離cm・回転角・遮蔽物と距離の注記を残します。私有の確認返答原文は公開しません。短い配置系列と600秒系列を同じ安定性集計へ混ぜません。
+
+保存待ち超過で最終設定が揃わなかった600秒試行は`operational/supplemental/espnow-storage-timeout*`に全12000送信／応答を保持しています。未確認の終了設定・負荷量は補完せず、正式19試行には含めません。`manifest.supplemental`の別集計です。旧有効試行を消したり、悪い通信結果を理由に再測定へ置き換えたりしていません。

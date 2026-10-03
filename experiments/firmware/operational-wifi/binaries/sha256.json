@@ -1,0 +1,8 @@
+{
+  "binaries/app.bin": "0bddb98f3208485ddcc17bb39b7a1c11a09fabbfd4b18763ad1c7072895e6b7f",
+  "binaries/bootloader.bin": "40979a59109e1850d42e847e863fa5518617ba3465a6a2d2a7d1ce73a94fb53c",
+  "binaries/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820",
+  "binaries/sdkconfig.measured": "8a63c58884029861b140ab317b366084219d5023c44d2bfc56728fe6019dec6e",
+  "main/lab.c": "608a3b428d157629bcdf179532efc0f1459be220276c24633b808aba75bcbcf2",
+  "sdkconfig.defaults": "356fae6f4df9b2a7d5e943e8115a216ea89aa0115527aeecddfd5b3c1e347582"
+}

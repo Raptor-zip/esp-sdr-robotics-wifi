@@ -1,0 +1,1362 @@
+{
+  "op-power-heavy-psoff-ch11": {
+    "condition": {
+      "bulk": "heavy",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "power_save": "off"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 7601,
+    "pooled_rtt_p99_ms": 163.382183,
+    "planned_deadline20_pct": 72.54444444444445,
+    "pooled_publication_p99_ms": 0.08561767,
+    "pooled_send_lateness_p99_ms": 0.99797537,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2580,
+        "unique_responses": 2580,
+        "duplicate_responses": 0,
+        "lost_published": 420,
+        "rtt_p99_ms": 138.22085937000003,
+        "publication_p99_ms": 0.08570261999999984,
+        "send_lateness_p99_ms": 0.5211720899999993,
+        "echo_pre_publish_p99_ms": 0.003328610000000016,
+        "published_deadline20_pct": 69.66666666666667,
+        "planned_deadline20_pct": 70.03333333333333,
+        "longest_planned_deadline20_run": 21,
+        "maximum_response_gap_ms": 230.529288
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2596,
+        "unique_responses": 2596,
+        "duplicate_responses": 0,
+        "lost_published": 404,
+        "rtt_p99_ms": 133.15081385000002,
+        "publication_p99_ms": 0.0828769599999999,
+        "send_lateness_p99_ms": 0.5451794799999993,
+        "echo_pre_publish_p99_ms": 0.0031905000000000162,
+        "published_deadline20_pct": 70.13333333333334,
+        "planned_deadline20_pct": 70.7,
+        "longest_planned_deadline20_run": 36,
+        "maximum_response_gap_ms": 373.977486
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2425,
+        "unique_responses": 2425,
+        "duplicate_responses": 0,
+        "lost_published": 575,
+        "rtt_p99_ms": 242.46543743999976,
+        "publication_p99_ms": 0.08696426999999991,
+        "send_lateness_p99_ms": 1.03471375,
+        "echo_pre_publish_p99_ms": 0.003429359999999915,
+        "published_deadline20_pct": 76.2,
+        "planned_deadline20_pct": 76.9,
+        "longest_planned_deadline20_run": 213,
+        "maximum_response_gap_ms": 635.269979
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 273,
+          "unsent_planned": 27,
+          "received_callbacks": 273,
+          "unique_received": 273,
+          "duplicate_received": 0,
+          "received_within_window": 273,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 50.31936,
+          "delivered_including_grace": 273,
+          "publication_p99_ms": 167.88653639999998,
+          "maximum_update_gap_ms": 197.043654
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 273,
+          "unsent_planned": 27,
+          "received_callbacks": 273,
+          "unique_received": 273,
+          "duplicate_received": 0,
+          "received_within_window": 273,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.7710208,
+          "delivered_including_grace": 273,
+          "publication_p99_ms": 12.269024959999996,
+          "maximum_update_gap_ms": 199.691947
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 273,
+          "unsent_planned": 27,
+          "received_callbacks": 273,
+          "unique_received": 273,
+          "duplicate_received": 0,
+          "received_within_window": 273,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 50.31936,
+          "delivered_including_grace": 273,
+          "publication_p99_ms": 168.24883488,
+          "maximum_update_gap_ms": 200.92549
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 273,
+          "unsent_planned": 27,
+          "received_callbacks": 273,
+          "unique_received": 273,
+          "duplicate_received": 0,
+          "received_within_window": 273,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.7710208,
+          "delivered_including_grace": 273,
+          "publication_p99_ms": 13.21029963999995,
+          "maximum_update_gap_ms": 202.454146
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 232,
+          "unsent_planned": 68,
+          "received_callbacks": 230,
+          "unique_received": 230,
+          "duplicate_received": 0,
+          "received_within_window": 230,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 42.3936,
+          "delivered_including_grace": 230,
+          "publication_p99_ms": 241.03694453999995,
+          "maximum_update_gap_ms": 2995.271075
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 232,
+          "unsent_planned": 68,
+          "received_callbacks": 231,
+          "unique_received": 231,
+          "duplicate_received": 0,
+          "received_within_window": 231,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.0370176,
+          "delivered_including_grace": 231,
+          "publication_p99_ms": 120.24414191999999,
+          "maximum_update_gap_ms": 2574.461904
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      0.610039335705694,
+      0.6780391291122477,
+      1.0154433212937173
+    ]
+  },
+  "op-power-heavy-psoff-ch6": {
+    "condition": {
+      "bulk": "heavy",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "power_save": "off"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 7281,
+    "pooled_rtt_p99_ms": 157.88396239999997,
+    "planned_deadline20_pct": 79.85555555555555,
+    "pooled_publication_p99_ms": 0.08718510000000006,
+    "pooled_send_lateness_p99_ms": 1.0437466,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2413,
+        "unique_responses": 2413,
+        "duplicate_responses": 0,
+        "lost_published": 587,
+        "rtt_p99_ms": 144.9023012400003,
+        "publication_p99_ms": 0.08614671999999998,
+        "send_lateness_p99_ms": 1.0575852799999994,
+        "echo_pre_publish_p99_ms": 0.003616880000000055,
+        "published_deadline20_pct": 79.63333333333334,
+        "planned_deadline20_pct": 80.33333333333333,
+        "longest_planned_deadline20_run": 42,
+        "maximum_response_gap_ms": 403.886616
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2411,
+        "unique_responses": 2411,
+        "duplicate_responses": 0,
+        "lost_published": 589,
+        "rtt_p99_ms": 152.8531046000001,
+        "publication_p99_ms": 0.08562243999999997,
+        "send_lateness_p99_ms": 1.0435508599999987,
+        "echo_pre_publish_p99_ms": 0.0033180000000000162,
+        "published_deadline20_pct": 78.5,
+        "planned_deadline20_pct": 79.03333333333333,
+        "longest_planned_deadline20_run": 61,
+        "maximum_response_gap_ms": 408.814948
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2457,
+        "unique_responses": 2457,
+        "duplicate_responses": 0,
+        "lost_published": 543,
+        "rtt_p99_ms": 173.5021220800001,
+        "publication_p99_ms": 0.09023227999999996,
+        "send_lateness_p99_ms": 0.9993752399999999,
+        "echo_pre_publish_p99_ms": 0.003143600000000002,
+        "published_deadline20_pct": 79.80000000000001,
+        "planned_deadline20_pct": 80.2,
+        "longest_planned_deadline20_run": 39,
+        "maximum_response_gap_ms": 375.289342
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 233,
+          "unsent_planned": 67,
+          "received_callbacks": 232,
+          "unique_received": 232,
+          "duplicate_received": 0,
+          "received_within_window": 231,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 42.57792,
+          "delivered_including_grace": 232,
+          "publication_p99_ms": 186.8126638,
+          "maximum_update_gap_ms": 294.672405
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 232,
+          "unsent_planned": 68,
+          "received_callbacks": 232,
+          "unique_received": 232,
+          "duplicate_received": 0,
+          "received_within_window": 232,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.054493866666666,
+          "delivered_including_grace": 232,
+          "publication_p99_ms": 123.17139698,
+          "maximum_update_gap_ms": 222.383319
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 246,
+          "unsent_planned": 54,
+          "received_callbacks": 246,
+          "unique_received": 246,
+          "duplicate_received": 0,
+          "received_within_window": 245,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 45.1584,
+          "delivered_including_grace": 246,
+          "publication_p99_ms": 185.85895525000004,
+          "maximum_update_gap_ms": 206.352531
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 245,
+          "unsent_planned": 55,
+          "received_callbacks": 245,
+          "unique_received": 245,
+          "duplicate_received": 0,
+          "received_within_window": 245,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.281685333333333,
+          "delivered_including_grace": 245,
+          "publication_p99_ms": 121.93525828,
+          "maximum_update_gap_ms": 205.357477
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 241,
+          "unsent_planned": 59,
+          "received_callbacks": 241,
+          "unique_received": 241,
+          "duplicate_received": 0,
+          "received_within_window": 240,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 44.2368,
+          "delivered_including_grace": 241,
+          "publication_p99_ms": 186.9851388,
+          "maximum_update_gap_ms": 270.488807
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 241,
+          "unsent_planned": 59,
+          "received_callbacks": 241,
+          "unique_received": 241,
+          "duplicate_received": 0,
+          "received_within_window": 240,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.194304,
+          "delivered_including_grace": 241,
+          "publication_p99_ms": 120.15244,
+          "maximum_update_gap_ms": 269.4302
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      1.4711201943242909,
+      1.371428435288234,
+      1.806406848453574
+    ]
+  },
+  "op-power-heavy-pson-ch11": {
+    "condition": {
+      "bulk": "heavy",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "power_save": "on"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 7322,
+    "pooled_rtt_p99_ms": 248.65869826,
+    "planned_deadline20_pct": 75.75555555555556,
+    "pooled_publication_p99_ms": 0.08603952000000002,
+    "pooled_send_lateness_p99_ms": 1.02697655,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2445,
+        "unique_responses": 2445,
+        "duplicate_responses": 0,
+        "lost_published": 555,
+        "rtt_p99_ms": 232.35435923999995,
+        "publication_p99_ms": 0.08922859999999994,
+        "send_lateness_p99_ms": 1.0073695499999997,
+        "echo_pre_publish_p99_ms": 0.002899039999999997,
+        "published_deadline20_pct": 74.76666666666667,
+        "planned_deadline20_pct": 75.16666666666667,
+        "longest_planned_deadline20_run": 216,
+        "maximum_response_gap_ms": 462.839788
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2454,
+        "unique_responses": 2454,
+        "duplicate_responses": 0,
+        "lost_published": 546,
+        "rtt_p99_ms": 236.17051259999897,
+        "publication_p99_ms": 0.08337969999999986,
+        "send_lateness_p99_ms": 1.0275944,
+        "echo_pre_publish_p99_ms": 0.0031742699999999916,
+        "published_deadline20_pct": 74.83333333333333,
+        "planned_deadline20_pct": 75.33333333333333,
+        "longest_planned_deadline20_run": 124,
+        "maximum_response_gap_ms": 424.685547
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2423,
+        "unique_responses": 2423,
+        "duplicate_responses": 0,
+        "lost_published": 577,
+        "rtt_p99_ms": 281.20556776000086,
+        "publication_p99_ms": 0.08236732999999985,
+        "send_lateness_p99_ms": 1.0670444999999993,
+        "echo_pre_publish_p99_ms": 0.002628400000000006,
+        "published_deadline20_pct": 76.5,
+        "planned_deadline20_pct": 76.76666666666667,
+        "longest_planned_deadline20_run": 297,
+        "maximum_response_gap_ms": 450.024431
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 240,
+          "unsent_planned": 60,
+          "received_callbacks": 238,
+          "unique_received": 238,
+          "duplicate_received": 0,
+          "received_within_window": 237,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 43.68384,
+          "delivered_including_grace": 238,
+          "publication_p99_ms": 495.9934238699931,
+          "maximum_update_gap_ms": 2650.570979
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 239,
+          "unsent_planned": 61,
+          "received_callbacks": 237,
+          "unique_received": 237,
+          "duplicate_received": 0,
+          "received_within_window": 237,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.1418752,
+          "delivered_including_grace": 237,
+          "publication_p99_ms": 118.5533671,
+          "maximum_update_gap_ms": 2391.470923
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 249,
+          "unsent_planned": 51,
+          "received_callbacks": 247,
+          "unique_received": 247,
+          "duplicate_received": 0,
+          "received_within_window": 246,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 45.34272,
+          "delivered_including_grace": 247,
+          "publication_p99_ms": 218.56384452000006,
+          "maximum_update_gap_ms": 1322.201745
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 248,
+          "unsent_planned": 52,
+          "received_callbacks": 248,
+          "unique_received": 248,
+          "duplicate_received": 0,
+          "received_within_window": 248,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.334114133333334,
+          "delivered_including_grace": 248,
+          "publication_p99_ms": 116.85736582000001,
+          "maximum_update_gap_ms": 649.508285
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 242,
+          "unsent_planned": 58,
+          "received_callbacks": 240,
+          "unique_received": 240,
+          "duplicate_received": 0,
+          "received_within_window": 239,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 44.05248,
+          "delivered_including_grace": 240,
+          "publication_p99_ms": 282.1764426400006,
+          "maximum_update_gap_ms": 3016.186141
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 242,
+          "unsent_planned": 58,
+          "received_callbacks": 241,
+          "unique_received": 241,
+          "duplicate_received": 0,
+          "received_within_window": 240,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.194304,
+          "delivered_including_grace": 241,
+          "publication_p99_ms": 87.62076594000013,
+          "maximum_update_gap_ms": 2797.696102
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      1.5106343272876939,
+      0.7016801334854184,
+      0.9158868371631155
+    ]
+  },
+  "op-power-heavy-pson-ch6": {
+    "condition": {
+      "bulk": "heavy",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "power_save": "on"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 7277,
+    "pooled_rtt_p99_ms": 153.24019671999957,
+    "planned_deadline20_pct": 80.27777777777779,
+    "pooled_publication_p99_ms": 0.08587656,
+    "pooled_send_lateness_p99_ms": 1.0327349900000002,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2354,
+        "unique_responses": 2354,
+        "duplicate_responses": 0,
+        "lost_published": 646,
+        "rtt_p99_ms": 149.34643728999993,
+        "publication_p99_ms": 0.0888772099999999,
+        "send_lateness_p99_ms": 1.0437310899999999,
+        "echo_pre_publish_p99_ms": 0.002958369999999986,
+        "published_deadline20_pct": 82.16666666666667,
+        "planned_deadline20_pct": 82.6,
+        "longest_planned_deadline20_run": 62,
+        "maximum_response_gap_ms": 622.121993
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2471,
+        "unique_responses": 2471,
+        "duplicate_responses": 0,
+        "lost_published": 529,
+        "rtt_p99_ms": 149.83022340000008,
+        "publication_p99_ms": 0.08356030999999998,
+        "send_lateness_p99_ms": 1.0093594899999996,
+        "echo_pre_publish_p99_ms": 0.003316300000000055,
+        "published_deadline20_pct": 78.60000000000001,
+        "planned_deadline20_pct": 78.8,
+        "longest_planned_deadline20_run": 47,
+        "maximum_response_gap_ms": 466.897511
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2452,
+        "unique_responses": 2452,
+        "duplicate_responses": 0,
+        "lost_published": 548,
+        "rtt_p99_ms": 165.54369487999995,
+        "publication_p99_ms": 0.08153740999999996,
+        "send_lateness_p99_ms": 1.02946242,
+        "echo_pre_publish_p99_ms": 0.0026596999999999936,
+        "published_deadline20_pct": 79.0,
+        "planned_deadline20_pct": 79.43333333333334,
+        "longest_planned_deadline20_run": 40,
+        "maximum_response_gap_ms": 365.207984
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 230,
+          "unsent_planned": 70,
+          "received_callbacks": 230,
+          "unique_received": 230,
+          "duplicate_received": 0,
+          "received_within_window": 229,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 42.20928,
+          "delivered_including_grace": 230,
+          "publication_p99_ms": 189.50568652,
+          "maximum_update_gap_ms": 198.353236
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 230,
+          "unsent_planned": 70,
+          "received_callbacks": 230,
+          "unique_received": 230,
+          "duplicate_received": 0,
+          "received_within_window": 229,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.002065066666667,
+          "delivered_including_grace": 230,
+          "publication_p99_ms": 122.05040418,
+          "maximum_update_gap_ms": 202.709395
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 236,
+          "unsent_planned": 64,
+          "received_callbacks": 236,
+          "unique_received": 236,
+          "duplicate_received": 0,
+          "received_within_window": 235,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 43.3152,
+          "delivered_including_grace": 236,
+          "publication_p99_ms": 183.68832675000002,
+          "maximum_update_gap_ms": 213.727492
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 235,
+          "unsent_planned": 65,
+          "received_callbacks": 235,
+          "unique_received": 235,
+          "duplicate_received": 0,
+          "received_within_window": 235,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.106922666666667,
+          "delivered_including_grace": 235,
+          "publication_p99_ms": 122.19494885999998,
+          "maximum_update_gap_ms": 221.692297
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 235,
+          "unsent_planned": 65,
+          "received_callbacks": 235,
+          "unique_received": 235,
+          "duplicate_received": 0,
+          "received_within_window": 234,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 43.13088,
+          "delivered_including_grace": 235,
+          "publication_p99_ms": 186.62154647999998,
+          "maximum_update_gap_ms": 216.671205
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 234,
+          "unsent_planned": 66,
+          "received_callbacks": 234,
+          "unique_received": 234,
+          "duplicate_received": 0,
+          "received_within_window": 234,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 4.0894464,
+          "delivered_including_grace": 234,
+          "publication_p99_ms": 122.04040642999999,
+          "maximum_update_gap_ms": 220.965618
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      1.7664992933155363,
+      1.5983518351814339,
+      1.6949498791327797
+    ]
+  },
+  "op-power-off-psoff-ch11": {
+    "condition": {
+      "bulk": "off",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "power_save": "off"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 8547,
+    "pooled_rtt_p99_ms": 103.60781169999997,
+    "planned_deadline20_pct": 44.477777777777774,
+    "pooled_publication_p99_ms": 0.08497308,
+    "pooled_send_lateness_p99_ms": 0.5127051100000002,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2841,
+        "unique_responses": 2841,
+        "duplicate_responses": 0,
+        "lost_published": 159,
+        "rtt_p99_ms": 102.68970039999995,
+        "publication_p99_ms": 0.07928341999999977,
+        "send_lateness_p99_ms": 0.5522818399999991,
+        "echo_pre_publish_p99_ms": 0.005439999999999995,
+        "published_deadline20_pct": 45.53333333333333,
+        "planned_deadline20_pct": 45.63333333333333,
+        "longest_planned_deadline20_run": 14,
+        "maximum_response_gap_ms": 155.775738
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2884,
+        "unique_responses": 2884,
+        "duplicate_responses": 0,
+        "lost_published": 116,
+        "rtt_p99_ms": 101.08235912,
+        "publication_p99_ms": 0.07569811999999972,
+        "send_lateness_p99_ms": 0.5042239799999991,
+        "echo_pre_publish_p99_ms": 0.004339700000000001,
+        "published_deadline20_pct": 43.233333333333334,
+        "planned_deadline20_pct": 43.43333333333334,
+        "longest_planned_deadline20_run": 13,
+        "maximum_response_gap_ms": 147.180269
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2822,
+        "unique_responses": 2822,
+        "duplicate_responses": 0,
+        "lost_published": 178,
+        "rtt_p99_ms": 112.34293822,
+        "publication_p99_ms": 0.09224355999999992,
+        "send_lateness_p99_ms": 0.4953974699999993,
+        "echo_pre_publish_p99_ms": 0.004648499999999998,
+        "published_deadline20_pct": 44.3,
+        "planned_deadline20_pct": 44.36666666666667,
+        "longest_planned_deadline20_run": 11,
+        "maximum_response_gap_ms": 128.614212
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      0.12177913649247674,
+      1.4199842029853638,
+      0.737310073080933
+    ]
+  },
+  "op-power-off-psoff-ch6": {
+    "condition": {
+      "bulk": "off",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "power_save": "off"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 8408,
+    "pooled_rtt_p99_ms": 106.28599076000003,
+    "planned_deadline20_pct": 46.233333333333334,
+    "pooled_publication_p99_ms": 0.07726592000000006,
+    "pooled_send_lateness_p99_ms": 0.99515103,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2807,
+        "unique_responses": 2807,
+        "duplicate_responses": 0,
+        "lost_published": 193,
+        "rtt_p99_ms": 103.5580933,
+        "publication_p99_ms": 0.07897366999999998,
+        "send_lateness_p99_ms": 0.9986563199999999,
+        "echo_pre_publish_p99_ms": 0.004786600000000002,
+        "published_deadline20_pct": 45.83333333333333,
+        "planned_deadline20_pct": 45.9,
+        "longest_planned_deadline20_run": 27,
+        "maximum_response_gap_ms": 284.71867
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2819,
+        "unique_responses": 2819,
+        "duplicate_responses": 0,
+        "lost_published": 181,
+        "rtt_p99_ms": 106.79862866,
+        "publication_p99_ms": 0.07410659999999991,
+        "send_lateness_p99_ms": 0.47719597999999963,
+        "echo_pre_publish_p99_ms": 0.006123000000000009,
+        "published_deadline20_pct": 46.266666666666666,
+        "planned_deadline20_pct": 46.5,
+        "longest_planned_deadline20_run": 14,
+        "maximum_response_gap_ms": 143.514316
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2782,
+        "unique_responses": 2782,
+        "duplicate_responses": 0,
+        "lost_published": 218,
+        "rtt_p99_ms": 113.1344761,
+        "publication_p99_ms": 0.07726341999999989,
+        "send_lateness_p99_ms": 0.99662407,
+        "echo_pre_publish_p99_ms": 0.0051519900000000065,
+        "published_deadline20_pct": 46.300000000000004,
+        "planned_deadline20_pct": 46.300000000000004,
+        "longest_planned_deadline20_run": 23,
+        "maximum_response_gap_ms": 246.872538
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      2.7908523866398545,
+      2.358342877270939,
+      1.896174819850265
+    ]
+  },
+  "op-power-off-pson-ch11": {
+    "condition": {
+      "bulk": "off",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "power_save": "on"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 8506,
+    "pooled_rtt_p99_ms": 103.26618155000001,
+    "planned_deadline20_pct": 44.41111111111111,
+    "pooled_publication_p99_ms": 0.08117866000000004,
+    "pooled_send_lateness_p99_ms": 1.02157333,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2800,
+        "unique_responses": 2800,
+        "duplicate_responses": 0,
+        "lost_published": 200,
+        "rtt_p99_ms": 103.56826224999988,
+        "publication_p99_ms": 0.08455654999999994,
+        "send_lateness_p99_ms": 0.9964263299999996,
+        "echo_pre_publish_p99_ms": 0.005690209999999995,
+        "published_deadline20_pct": 44.9,
+        "planned_deadline20_pct": 44.93333333333333,
+        "longest_planned_deadline20_run": 15,
+        "maximum_response_gap_ms": 160.391157
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2892,
+        "unique_responses": 2892,
+        "duplicate_responses": 0,
+        "lost_published": 108,
+        "rtt_p99_ms": 100.79079985000001,
+        "publication_p99_ms": 0.08542384999999998,
+        "send_lateness_p99_ms": 1.0659772099999987,
+        "echo_pre_publish_p99_ms": 0.007115700000000004,
+        "published_deadline20_pct": 42.96666666666666,
+        "planned_deadline20_pct": 43.13333333333333,
+        "longest_planned_deadline20_run": 11,
+        "maximum_response_gap_ms": 131.039887
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2814,
+        "unique_responses": 2814,
+        "duplicate_responses": 0,
+        "lost_published": 186,
+        "rtt_p99_ms": 104.70746818999994,
+        "publication_p99_ms": 0.07549742999999992,
+        "send_lateness_p99_ms": 0.5160527699999998,
+        "echo_pre_publish_p99_ms": 0.003975369999999973,
+        "published_deadline20_pct": 45.13333333333333,
+        "planned_deadline20_pct": 45.166666666666664,
+        "longest_planned_deadline20_run": 11,
+        "maximum_response_gap_ms": 133.198916
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      1.2125438554429708,
+      0.6468387259215475,
+      0.8369345815215458
+    ]
+  },
+  "op-power-off-pson-ch6": {
+    "condition": {
+      "bulk": "off",
+      "reliability": "best_effort",
+      "depth": 1,
+      "own_channel": 6,
+      "own_width_mhz": 20,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "power_save": "on"
+    },
+    "runs": 3,
+    "planned": 9000,
+    "published": 9000,
+    "received": 8392,
+    "pooled_rtt_p99_ms": 108.53398543,
+    "planned_deadline20_pct": 46.75555555555555,
+    "pooled_publication_p99_ms": 0.08192255000000007,
+    "pooled_send_lateness_p99_ms": 1.00332455,
+    "run_control": [
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2807,
+        "unique_responses": 2807,
+        "duplicate_responses": 0,
+        "lost_published": 193,
+        "rtt_p99_ms": 104.36859224,
+        "publication_p99_ms": 0.07960444999999983,
+        "send_lateness_p99_ms": 0.6058878699999996,
+        "echo_pre_publish_p99_ms": 0.004692000000000005,
+        "published_deadline20_pct": 46.06666666666667,
+        "planned_deadline20_pct": 46.166666666666664,
+        "longest_planned_deadline20_run": 12,
+        "maximum_response_gap_ms": 137.759634
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2764,
+        "unique_responses": 2764,
+        "duplicate_responses": 0,
+        "lost_published": 236,
+        "rtt_p99_ms": 102.3077986,
+        "publication_p99_ms": 0.07969045999999996,
+        "send_lateness_p99_ms": 1.02097014,
+        "echo_pre_publish_p99_ms": 0.003934399999999998,
+        "published_deadline20_pct": 47.099999999999994,
+        "planned_deadline20_pct": 47.333333333333336,
+        "longest_planned_deadline20_run": 27,
+        "maximum_response_gap_ms": 134.150269
+      },
+      {
+        "planned": 3000,
+        "published": 3000,
+        "unsent_planned": 0,
+        "responses": 2821,
+        "unique_responses": 2821,
+        "duplicate_responses": 0,
+        "lost_published": 179,
+        "rtt_p99_ms": 115.1079406,
+        "publication_p99_ms": 0.08605988999999997,
+        "send_lateness_p99_ms": 1.009535209999999,
+        "echo_pre_publish_p99_ms": 0.005083200000000005,
+        "published_deadline20_pct": 46.56666666666667,
+        "planned_deadline20_pct": 46.766666666666666,
+        "longest_planned_deadline20_run": 14,
+        "maximum_response_gap_ms": 151.106135
+      }
+    ],
+    "run_sensors": [
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      },
+      {
+        "image": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 691200,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        },
+        "cloud": {
+          "planned": 300,
+          "published": 0,
+          "unsent_planned": 300,
+          "received_callbacks": 0,
+          "unique_received": 0,
+          "duplicate_received": 0,
+          "received_within_window": 0,
+          "payload_bytes": 65536,
+          "delivered_payload_mbps": 0.0,
+          "delivered_including_grace": 0,
+          "publication_p99_ms": null,
+          "maximum_update_gap_ms": 30000.0
+        }
+      }
+    ],
+    "delivered_other_mbps": [
+      2.9047114863015864,
+      2.8597826862878426,
+      2.250108408694393
+    ]
+  }
+}

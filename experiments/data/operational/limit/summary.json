@@ -1,0 +1,887 @@
+{
+  "op-limit-m0-p100-ch11": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0,
+      "generation_period_ms": 100,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8059,
+    "loss_pct": 10.455555555555556,
+    "pooled_p99_ms": 372.40314000000006,
+    "run_p99_ms": [
+      143.1659399999999,
+      415.3504199999998,
+      124.61708000000002
+    ],
+    "deadline20_pct": 53.766666666666666,
+    "run_deadline20_pct": [
+      53.166666666666664,
+      56.233333333333334,
+      51.9
+    ],
+    "delivered_own_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delivered_other_mbps": [
+      1.680577595547658,
+      1.682346217970468,
+      0.6393731569437525
+    ],
+    "send_lateness_p99_ms": [
+      1.432039999999999,
+      1.4541199999999972,
+      1.4834499999999895
+    ],
+    "longest_echo_gap_ms": 216.324,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      1.6803853794250998,
+      1.6819698237063567,
+      0.6479539005513796
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 372.40314000000006,
+      "deadline20_pct": 53.766666666666666
+    }
+  },
+  "op-limit-m0-p100-ch6": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0,
+      "generation_period_ms": 100,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8328,
+    "loss_pct": 7.466666666666668,
+    "pooled_p99_ms": 128.89392,
+    "run_p99_ms": [
+      128.83777000000003,
+      131.69718999999995,
+      127.32078000000003
+    ],
+    "deadline20_pct": 54.077777777777776,
+    "run_deadline20_pct": [
+      53.86666666666666,
+      55.166666666666664,
+      53.2
+    ],
+    "delivered_own_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delivered_other_mbps": [
+      2.7737690022099892,
+      3.376979990510713,
+      4.033923922321719
+    ],
+    "send_lateness_p99_ms": [
+      1.3841899999999954,
+      1.5765199999999877,
+      1.587059999999975
+    ],
+    "longest_echo_gap_ms": 154.097,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      2.7753553132482933,
+      3.3763230840268164,
+      4.02824239552741
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 128.89392,
+      "deadline20_pct": 54.077777777777776
+    }
+  },
+  "op-limit-m0-p100-ch7": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0,
+      "generation_period_ms": 100,
+      "other_channel": 7,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8293,
+    "loss_pct": 7.855555555555556,
+    "pooled_p99_ms": 123.73096,
+    "run_p99_ms": [
+      123.18635999999998,
+      125.51053999999998,
+      122.11580999999998
+    ],
+    "deadline20_pct": 51.44444444444444,
+    "run_deadline20_pct": [
+      52.03333333333333,
+      51.0,
+      51.300000000000004
+    ],
+    "delivered_own_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delivered_other_mbps": [
+      2.695211406881667,
+      2.1166175688083304,
+      2.840190280256584
+    ],
+    "send_lateness_p99_ms": [
+      1.4851599999999963,
+      1.6400199999999994,
+      1.1150199999999995
+    ],
+    "longest_echo_gap_ms": 143.902,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      2.6960092315832482,
+      2.110023943790803,
+      2.838009040200349
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 123.73096,
+      "deadline20_pct": 51.44444444444444
+    }
+  },
+  "op-limit-m0p25-p100-ch11": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0.25,
+      "generation_period_ms": 100,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 7907,
+    "loss_pct": 12.144444444444444,
+    "pooled_p99_ms": 137.8409799999997,
+    "run_p99_ms": [
+      122.01160000000003,
+      166.37539999999993,
+      131.80891999999994
+    ],
+    "deadline20_pct": 51.577777777777776,
+    "run_deadline20_pct": [
+      49.86666666666667,
+      53.96666666666666,
+      50.9
+    ],
+    "delivered_own_mbps": [
+      0.25,
+      0.25,
+      0.25
+    ],
+    "delivered_other_mbps": [
+      1.453429805783157,
+      0.6790962499251236,
+      0.6775706089234887
+    ],
+    "send_lateness_p99_ms": [
+      1.8520999999999976,
+      1.564089999999998,
+      1.3581599999999963
+    ],
+    "longest_echo_gap_ms": 230.352,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      1.4551760457433633,
+      0.6794952723412029,
+      0.6775546482472288
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 137.8409799999997,
+      "deadline20_pct": 51.577777777777776
+    }
+  },
+  "op-limit-m0p25-p100-ch6": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0.25,
+      "generation_period_ms": 100,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8201,
+    "loss_pct": 8.877777777777778,
+    "pooled_p99_ms": 134.252,
+    "run_p99_ms": [
+      133.76179999999997,
+      142.50184000000002,
+      125.0834900000001
+    ],
+    "deadline20_pct": 55.37777777777778,
+    "run_deadline20_pct": [
+      55.800000000000004,
+      59.166666666666664,
+      51.16666666666667
+    ],
+    "delivered_own_mbps": [
+      0.25,
+      0.25,
+      0.25
+    ],
+    "delivered_other_mbps": [
+      2.9385606201479457,
+      3.5335228187984264,
+      2.436614325143578
+    ],
+    "send_lateness_p99_ms": [
+      1.293079999999998,
+      1.726,
+      1.564
+    ],
+    "longest_echo_gap_ms": 258.398,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      2.929836710938998,
+      3.5317525367605604,
+      2.433414385585628
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 134.252,
+      "deadline20_pct": 55.37777777777778
+    }
+  },
+  "op-limit-m0p25-p100-ch7": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0.25,
+      "generation_period_ms": 100,
+      "other_channel": 7,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8164,
+    "loss_pct": 9.288888888888888,
+    "pooled_p99_ms": 126.82338,
+    "run_p99_ms": [
+      126.76980000000002,
+      125.95334,
+      127.004
+    ],
+    "deadline20_pct": 53.077777777777776,
+    "run_deadline20_pct": [
+      54.166666666666664,
+      53.06666666666666,
+      52.0
+    ],
+    "delivered_own_mbps": [
+      0.25,
+      0.25,
+      0.25
+    ],
+    "delivered_other_mbps": [
+      2.4941614952421687,
+      2.363462528089957,
+      2.0483218156167213
+    ],
+    "send_lateness_p99_ms": [
+      1.6480099999999998,
+      1.784,
+      1.6591399999999967
+    ],
+    "longest_echo_gap_ms": 161.7,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      2.4962046077317117,
+      2.3603239693255262,
+      2.0515699278380706
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 126.82338,
+      "deadline20_pct": 53.077777777777776
+    }
+  },
+  "op-limit-m0p5-p100-ch11": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0.5,
+      "generation_period_ms": 100,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 7796,
+    "loss_pct": 13.377777777777776,
+    "pooled_p99_ms": 393.3387000000001,
+    "run_p99_ms": [
+      218.65176,
+      525.8755099999998,
+      124.32398000000002
+    ],
+    "deadline20_pct": 53.733333333333334,
+    "run_deadline20_pct": [
+      54.13333333333333,
+      56.10000000000001,
+      50.96666666666667
+    ],
+    "delivered_own_mbps": [
+      0.5,
+      0.48285226666666664,
+      0.5
+    ],
+    "delivered_other_mbps": [
+      1.517340547268166,
+      1.928398400412851,
+      0.0743441972104818
+    ],
+    "send_lateness_p99_ms": [
+      1.680249999999994,
+      1.4993699999999914,
+      1.7200199999999994
+    ],
+    "longest_echo_gap_ms": 258.828,
+    "application_pending_bytes": [
+      0,
+      159040,
+      6250
+    ],
+    "other_socket_accepted_mbps": [
+      1.5171729708589003,
+      1.9282948053386113,
+      0.07443997073345826
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 393.3387000000001,
+      "deadline20_pct": 53.733333333333334
+    }
+  },
+  "op-limit-m0p5-p100-ch6": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0.5,
+      "generation_period_ms": 100,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8248,
+    "loss_pct": 8.355555555555554,
+    "pooled_p99_ms": 141.64500999999996,
+    "run_p99_ms": [
+      142.16605999999996,
+      145.60664000000003,
+      132.28346
+    ],
+    "deadline20_pct": 58.87777777777778,
+    "run_deadline20_pct": [
+      60.03333333333334,
+      62.63333333333333,
+      53.96666666666666
+    ],
+    "delivered_own_mbps": [
+      0.5,
+      0.5421813333333334,
+      0.5
+    ],
+    "delivered_other_mbps": [
+      2.7171681465083766,
+      3.5901577487964556,
+      2.3319653246411223
+    ],
+    "send_lateness_p99_ms": [
+      1.1900099999999998,
+      1.757,
+      1.6650299999999993
+    ],
+    "longest_echo_gap_ms": 292.865,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      2.725789241430026,
+      3.5880364434667036,
+      2.3323244876071834
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 141.64500999999996,
+      "deadline20_pct": 58.87777777777778
+    }
+  },
+  "op-limit-m0p5-p100-ch7": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 0.5,
+      "generation_period_ms": 100,
+      "other_channel": 7,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8344,
+    "loss_pct": 7.28888888888889,
+    "pooled_p99_ms": 130.39204999999993,
+    "run_p99_ms": [
+      127.84196,
+      134.56692000000007,
+      129.32631
+    ],
+    "deadline20_pct": 54.2,
+    "run_deadline20_pct": [
+      53.96666666666666,
+      55.56666666666666,
+      53.06666666666666
+    ],
+    "delivered_own_mbps": [
+      0.4983333333333333,
+      0.5085946666666666,
+      0.4983333333333333
+    ],
+    "delivered_other_mbps": [
+      1.6533070450391174,
+      1.9753729659494679,
+      2.6599256550040544
+    ],
+    "send_lateness_p99_ms": [
+      1.5303299999999922,
+      1.303,
+      1.7630299999999992
+    ],
+    "longest_echo_gap_ms": 178.805,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      1.6549441329352923,
+      1.9820089340343157,
+      2.6635951341408863
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 130.39204999999993,
+      "deadline20_pct": 54.2
+    }
+  },
+  "op-limit-m1-p100-ch11": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 1,
+      "generation_period_ms": 100,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 7879,
+    "loss_pct": 12.455555555555556,
+    "pooled_p99_ms": 244.81742000000003,
+    "run_p99_ms": [
+      280.0021199999999,
+      218.00016999999966,
+      127.64404
+    ],
+    "deadline20_pct": 56.82222222222222,
+    "run_deadline20_pct": [
+      57.766666666666666,
+      58.53333333333334,
+      54.166666666666664
+    ],
+    "delivered_own_mbps": [
+      0.9026048000000001,
+      1.0006453333333334,
+      0.8764010666666666
+    ],
+    "delivered_other_mbps": [
+      1.8042140452555528,
+      1.8679614007843686,
+      0.20953895723695212
+    ],
+    "send_lateness_p99_ms": [
+      1.965209999999995,
+      1.8350299999999993,
+      2.111309999999993
+    ],
+    "longest_echo_gap_ms": 249.16,
+    "application_pending_bytes": [
+      146708,
+      0,
+      663432
+    ],
+    "other_socket_accepted_mbps": [
+      1.8035172519766554,
+      1.8688065059231176,
+      0.20651565147889153
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 244.81742000000003,
+      "deadline20_pct": 56.82222222222222
+    }
+  },
+  "op-limit-m1-p100-ch6": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 1,
+      "generation_period_ms": 100,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8506,
+    "loss_pct": 5.488888888888889,
+    "pooled_p99_ms": 157.23255000000003,
+    "run_p99_ms": [
+      162.2604799999999,
+      159.18764000000002,
+      147.85791999999992
+    ],
+    "deadline20_pct": 72.61111111111111,
+    "run_deadline20_pct": [
+      72.83333333333334,
+      71.26666666666667,
+      73.73333333333333
+    ],
+    "delivered_own_mbps": [
+      0.9988511999999999,
+      1.0237845333333333,
+      0.9969685333333334
+    ],
+    "delivered_other_mbps": [
+      3.174842782648329,
+      3.1524456511973473,
+      3.400953181802678
+    ],
+    "send_lateness_p99_ms": [
+      1.75,
+      2.025199999999995,
+      1.8201999999999954
+    ],
+    "longest_echo_gap_ms": 259.846,
+    "application_pending_bytes": [
+      0,
+      0,
+      105696
+    ],
+    "other_socket_accepted_mbps": [
+      3.185171300361591,
+      3.1516611118161246,
+      3.397997078364661
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 157.23255000000003,
+      "deadline20_pct": 72.61111111111111
+    }
+  },
+  "op-limit-m1-p100-ch7": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 1,
+      "generation_period_ms": 100,
+      "other_channel": 7,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8435,
+    "loss_pct": 6.277777777777778,
+    "pooled_p99_ms": 137.6062,
+    "run_p99_ms": [
+      133.9862,
+      144.4703799999999,
+      136.70544000000015
+    ],
+    "deadline20_pct": 61.355555555555554,
+    "run_deadline20_pct": [
+      58.699999999999996,
+      66.23333333333333,
+      59.13333333333334
+    ],
+    "delivered_own_mbps": [
+      0.9513706666666666,
+      1.0777898666666668,
+      1.0
+    ],
+    "delivered_other_mbps": [
+      1.8034265488228818,
+      2.4123235589360412,
+      2.102006899871883
+    ],
+    "send_lateness_p99_ms": [
+      1.759,
+      1.781039999999999,
+      1.7310499999999989
+    ],
+    "longest_echo_gap_ms": 189.974,
+    "application_pending_bytes": [
+      0,
+      0,
+      0
+    ],
+    "other_socket_accepted_mbps": [
+      1.8058490097661744,
+      2.412028872927554,
+      2.1026757101156264
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 137.6062,
+      "deadline20_pct": 61.355555555555554
+    }
+  },
+  "op-limit-m2-p100-ch11": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 2,
+      "generation_period_ms": 100,
+      "other_channel": 11,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 7854,
+    "loss_pct": 12.733333333333333,
+    "pooled_p99_ms": 125.72986000000002,
+    "run_p99_ms": [
+      125.43918000000001,
+      127.92876,
+      122.93539999999999
+    ],
+    "deadline20_pct": 52.611111111111114,
+    "run_deadline20_pct": [
+      52.13333333333333,
+      53.46666666666666,
+      52.233333333333334
+    ],
+    "delivered_own_mbps": [
+      0.8314197333333333,
+      1.2575594666666665,
+      1.0766016
+    ],
+    "delivered_other_mbps": [
+      0.9484939791500459,
+      1.3454028301522984,
+      1.2911301254482874
+    ],
+    "send_lateness_p99_ms": [
+      1.8702299999999947,
+      1.84001,
+      2.0550599999999988
+    ],
+    "longest_echo_gap_ms": 169.151,
+    "application_pending_bytes": [
+      4779000,
+      3440736,
+      3906832
+    ],
+    "other_socket_accepted_mbps": [
+      0.9481532218511617,
+      1.3486573159420627,
+      1.2902337462955926
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 125.72986000000002,
+      "deadline20_pct": 52.611111111111114
+    }
+  },
+  "op-limit-m2-p100-ch6": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 2,
+      "generation_period_ms": 100,
+      "other_channel": 6,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8428,
+    "loss_pct": 6.355555555555556,
+    "pooled_p99_ms": 162.88117999999992,
+    "run_p99_ms": [
+      171.2018799999999,
+      138.88185000000004,
+      178.17800000000003
+    ],
+    "deadline20_pct": 69.46666666666667,
+    "run_deadline20_pct": [
+      79.4,
+      65.93333333333334,
+      63.06666666666667
+    ],
+    "delivered_own_mbps": [
+      1.2648725333333335,
+      1.086848,
+      0.9644757333333333
+    ],
+    "delivered_other_mbps": [
+      4.403736573059358,
+      2.1012912857549595,
+      3.105759352220776
+    ],
+    "send_lateness_p99_ms": [
+      1.691169999999996,
+      1.894159999999996,
+      1.8857699999999817
+    ],
+    "longest_echo_gap_ms": 199.946,
+    "application_pending_bytes": [
+      3202320,
+      3865872,
+      4308800
+    ],
+    "other_socket_accepted_mbps": [
+      4.4014884601401745,
+      2.1161042626089737,
+      3.0986030226971057
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 162.88117999999992,
+      "deadline20_pct": 69.46666666666667
+    }
+  },
+  "op-limit-m2-p100-ch7": {
+    "condition": {
+      "mode": "limit",
+      "requested_mbps": 2,
+      "generation_period_ms": 100,
+      "other_channel": 7,
+      "other_width_mhz": 20,
+      "own_channel": 6,
+      "own_width_mhz": 20
+    },
+    "runs": 3,
+    "sent": 9000,
+    "received": 8223,
+    "loss_pct": 8.633333333333333,
+    "pooled_p99_ms": 130.20935999999995,
+    "run_p99_ms": [
+      128.76783,
+      132.132,
+      128.99153
+    ],
+    "deadline20_pct": 58.888888888888886,
+    "run_deadline20_pct": [
+      56.89999999999999,
+      60.53333333333333,
+      59.233333333333334
+    ],
+    "delivered_own_mbps": [
+      0.6702848,
+      1.2582442666666667,
+      1.0026282666666668
+    ],
+    "delivered_other_mbps": [
+      2.621037783588328,
+      1.7088314471892374,
+      2.0824537955504487
+    ],
+    "send_lateness_p99_ms": [
+      1.6600599999999985,
+      1.9521799999999958,
+      1.8561999999999954
+    ],
+    "longest_echo_gap_ms": 146.033,
+    "application_pending_bytes": [
+      5565432,
+      3330424,
+      4010920
+    ],
+    "other_socket_accepted_mbps": [
+      2.6211408333029413,
+      1.7123135326673584,
+      2.0824300073156086
+    ],
+    "other_zero_delivery_runs": [],
+    "receiver_delivery_observed_subset": {
+      "runs": 3,
+      "pooled_p99_ms": 130.20935999999995,
+      "deadline20_pct": 58.888888888888886
+    }
+  }
+}
