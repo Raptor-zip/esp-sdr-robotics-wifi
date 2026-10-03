@@ -358,7 +358,7 @@ def main():
         lines.extend(notes(manifest))
     target = ROOT/'docs/operational-results.md'
     temporary = target.with_suffix('.md.tmp')
-    temporary.write_text('\n'.join(lines)+'\n')
+    temporary.write_text('\n'.join(lines).rstrip()+'\n')
     temporary.replace(target)
 
 
