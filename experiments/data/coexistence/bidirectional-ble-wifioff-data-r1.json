@@ -1,0 +1,184 @@
+{
+  "name": "bidirectional-ble-wifioff-data-r1",
+  "run_id": 1826339273,
+  "seconds": 20,
+  "mode": "ble",
+  "condition": {
+    "repeat": 1,
+    "wifi_load": "off",
+    "radio": "data",
+    "radio_channel": 6,
+    "wifi_channel": 6,
+    "wifi_width_mhz": 20,
+    "wifi_hops": 1,
+    "requested_mbps": 0,
+    "period_ms": 10
+  },
+  "placement": {
+    "source": "User explicitly confirmed unchanged previous final placement during this series",
+    "pair_cm": 75,
+    "c5_sender_cm": 45,
+    "c5_echo_cm": 95,
+    "load_board": "unchanged on the same desk; distance not remeasured"
+  },
+  "wifi": {
+    "goodput_mbps": 0.0,
+    "rtt_p99_ms": 9.755239999999997,
+    "deadline20_pct": 0.0,
+    "sent": 2000,
+    "received": 2000,
+    "loss_pct": 0.0,
+    "benchmark_rx_bytes": 0
+  },
+  "radio": {
+    "sender": {
+      "before": {
+        "version": 1,
+        "role": 2,
+        "synced": 1,
+        "connected": 1,
+        "subscribed": 0,
+        "value_handle": 16,
+        "mtu": 247,
+        "interval_units": 6,
+        "tx_bytes": 0,
+        "rx_bytes": 0,
+        "tx_messages": 0,
+        "rx_messages": 0,
+        "tx_errors": 0,
+        "advertisements": 1643
+      },
+      "after": {
+        "version": 1,
+        "role": 2,
+        "synced": 1,
+        "connected": 1,
+        "subscribed": 0,
+        "value_handle": 16,
+        "mtu": 247,
+        "interval_units": 6,
+        "tx_bytes": 0,
+        "rx_bytes": 1338340,
+        "tx_messages": 0,
+        "rx_messages": 5485,
+        "tx_errors": 0,
+        "advertisements": 1643
+      }
+    },
+    "echo": {
+      "before": {
+        "version": 1,
+        "role": 1,
+        "synced": 1,
+        "connected": 1,
+        "subscribed": 1,
+        "value_handle": 16,
+        "mtu": 247,
+        "interval_units": 6,
+        "tx_bytes": 705404,
+        "rx_bytes": 0,
+        "tx_messages": 2891,
+        "rx_messages": 0,
+        "tx_errors": 2893,
+        "advertisements": 0
+      },
+      "after": {
+        "version": 1,
+        "role": 1,
+        "synced": 1,
+        "connected": 1,
+        "subscribed": 1,
+        "value_handle": 16,
+        "mtu": 247,
+        "interval_units": 6,
+        "tx_bytes": 2044964,
+        "rx_bytes": 0,
+        "tx_messages": 8381,
+        "rx_messages": 0,
+        "tx_errors": 8329,
+        "advertisements": 0
+      }
+    },
+    "wifi": {
+      "before": {
+        "version": 1,
+        "connected": 1,
+        "tcp_connected": 1,
+        "running": 0,
+        "done": 1,
+        "run_id": 1130472858,
+        "rx_bytes": 3301152,
+        "bench_rx_bytes": 0,
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "rssi": -48
+      },
+      "after": {
+        "version": 1,
+        "connected": 1,
+        "tcp_connected": 1,
+        "running": 0,
+        "done": 1,
+        "run_id": 1826339273,
+        "rx_bytes": 3301152,
+        "bench_rx_bytes": 0,
+        "primary": 6,
+        "secondary": 0,
+        "ap_bw": 1,
+        "rssi": -49
+      }
+    }
+  },
+  "source": {
+    "before": {
+      "helper_version": 2,
+      "configuration_generation": 9,
+      "tcp_connection_generation": 9,
+      "run_id": 1826339273,
+      "requested_mbps": 0.0,
+      "period_ms": 10.0,
+      "sent_payload_bytes": [
+        0,
+        0
+      ],
+      "generated_payload_bytes": 0,
+      "pending_application_bytes": 0,
+      "tcp_connected": true
+    },
+    "after": {
+      "helper_version": 2,
+      "configuration_generation": 9,
+      "tcp_connection_generation": 9,
+      "run_id": 1826339273,
+      "requested_mbps": 0.0,
+      "period_ms": 10.0,
+      "sent_payload_bytes": [
+        0,
+        0
+      ],
+      "generated_payload_bytes": 0,
+      "pending_application_bytes": 0,
+      "tcp_connected": true
+    }
+  },
+  "wifi_uart_crc_verified": true,
+  "semantics": "Separate one-hop cohort; AP PC->ESP32 TCP plus 100 Hz UDP echo; fixed 20 s receiver counter. Radio stop means no intentional external-pair transmission, not a shielded RF environment.",
+  "ble": {
+    "received_bytes": 1338340,
+    "received_notifications": 5485,
+    "decoded_advertisements": 0,
+    "counter_window_seconds": 21.852298231,
+    "goodput_mbps": 0.4899585337349682
+  },
+  "sdr": {
+    "lo_mhz": 2442,
+    "samples": 16380,
+    "sample_rate_hz": 80000000,
+    "bandwidth_mhz": 48,
+    "gain": "MANUAL 20",
+    "frames": 372,
+    "all_crcs_verified": true,
+    "observation_pct": 0.3801132424379002
+  }
+}

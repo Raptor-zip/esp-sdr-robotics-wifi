@@ -1,0 +1,350 @@
+{
+  "6": {
+    "blocks": [
+      {
+        "repeat": 1,
+        "channel": 6,
+        "before_mbps": 0.716460024281055,
+        "on_mbps": 1.4012709638667111,
+        "after_mbps": 0.5068364825166085,
+        "reference_mbps": 0.6116482533988318,
+        "reduction_pct": -129.09751741790677,
+        "return_change_pct": -29.258232791815164,
+        "counter_uncertainty_ms": [
+          11.010455,
+          22.462626,
+          11.367031
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 9.06,
+          "send_lateness_p99_ms": 1.20903,
+          "planned_deadline20_pct": 0.0,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 0,
+          "maximum_reply_gap_ms": 13.383,
+          "maximum_increasing_sequence_gap_ms": 13.383,
+          "out_of_order_first_replies": 0
+        }
+      },
+      {
+        "repeat": 2,
+        "channel": 6,
+        "before_mbps": 0.5898925495225996,
+        "on_mbps": 1.4672168533630785,
+        "after_mbps": 0.6462920039934217,
+        "reference_mbps": 0.6180922767580106,
+        "reduction_pct": -137.378286145049,
+        "return_change_pct": 9.560970810101965,
+        "counter_uncertainty_ms": [
+          10.726526,
+          11.357848,
+          11.958811
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 8.97494,
+          "send_lateness_p99_ms": 1.1800599999999999,
+          "planned_deadline20_pct": 0.0,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 0,
+          "maximum_reply_gap_ms": 13.448,
+          "maximum_increasing_sequence_gap_ms": 13.448,
+          "out_of_order_first_replies": 0
+        }
+      },
+      {
+        "repeat": 3,
+        "channel": 6,
+        "before_mbps": 0.481170607451707,
+        "on_mbps": 1.3278909797470504,
+        "after_mbps": 0.6402933100614994,
+        "reference_mbps": 0.5607319587566032,
+        "reduction_pct": -136.81385713979748,
+        "return_change_pct": 33.06991327930662,
+        "counter_uncertainty_ms": [
+          54.46376,
+          11.308719,
+          11.809102
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 10.011249999999999,
+          "send_lateness_p99_ms": 1.1760499999999998,
+          "planned_deadline20_pct": 0.0,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 0,
+          "maximum_reply_gap_ms": 18.845,
+          "maximum_increasing_sequence_gap_ms": 18.845,
+          "out_of_order_first_replies": 0
+        }
+      }
+    ],
+    "mean_reduction_pct": -134.42988690091775
+  },
+  "7": {
+    "blocks": [
+      {
+        "repeat": 1,
+        "channel": 7,
+        "before_mbps": 0.676168083895058,
+        "on_mbps": 1.0329106258357306,
+        "after_mbps": 0.5430958440438224,
+        "reference_mbps": 0.6096319639694402,
+        "reduction_pct": -69.43183541595084,
+        "return_change_pct": -19.68034916476309,
+        "counter_uncertainty_ms": [
+          13.921494,
+          33.359307,
+          11.119879
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 14.275170000000001,
+          "send_lateness_p99_ms": 1.20407,
+          "planned_deadline20_pct": 0.15,
+          "called_deadline20_pct": 0.1,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 3,
+          "maximum_reply_gap_ms": 19.268,
+          "maximum_increasing_sequence_gap_ms": 19.268,
+          "out_of_order_first_replies": 0
+        }
+      },
+      {
+        "repeat": 2,
+        "channel": 7,
+        "before_mbps": 0.582223786642172,
+        "on_mbps": 0.21159262961759068,
+        "after_mbps": 0.014960617935473038,
+        "reference_mbps": 0.2985922022888225,
+        "reduction_pct": 29.13658561889664,
+        "return_change_pct": -97.43043512156132,
+        "counter_uncertainty_ms": [
+          10.771112,
+          11.284836,
+          11.591578
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 10.45211,
+          "send_lateness_p99_ms": 1.14102,
+          "planned_deadline20_pct": 0.0,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 0,
+          "maximum_reply_gap_ms": 15.524,
+          "maximum_increasing_sequence_gap_ms": 15.524,
+          "out_of_order_first_replies": 0
+        }
+      },
+      {
+        "repeat": 3,
+        "channel": 7,
+        "before_mbps": 0.9548150852784,
+        "on_mbps": 1.224952319584231,
+        "after_mbps": 0.34900109654391787,
+        "reference_mbps": 0.651908090911159,
+        "reduction_pct": -87.9026103008078,
+        "return_change_pct": -63.44830512997625,
+        "counter_uncertainty_ms": [
+          11.192907,
+          11.783492,
+          11.706272
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 16.11062,
+          "send_lateness_p99_ms": 1.1700199999999998,
+          "planned_deadline20_pct": 0.05,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 1,
+          "maximum_reply_gap_ms": 20.461,
+          "maximum_increasing_sequence_gap_ms": 20.461,
+          "out_of_order_first_replies": 0
+        }
+      }
+    ],
+    "mean_reduction_pct": -42.732620032620666
+  },
+  "11": {
+    "blocks": [
+      {
+        "repeat": 1,
+        "channel": 11,
+        "before_mbps": 0.7835857010364651,
+        "on_mbps": 0.8485882428339633,
+        "after_mbps": 0.8845307372059319,
+        "reference_mbps": 0.8340582191211985,
+        "reduction_pct": -1.7420874681954857,
+        "return_change_pct": 12.882450003355682,
+        "counter_uncertainty_ms": [
+          12.027687,
+          12.010236,
+          10.671901
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 8.180259999999999,
+          "send_lateness_p99_ms": 1.1300299999999999,
+          "planned_deadline20_pct": 0.0,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 0,
+          "maximum_reply_gap_ms": 17.932,
+          "maximum_increasing_sequence_gap_ms": 17.932,
+          "out_of_order_first_replies": 0
+        }
+      },
+      {
+        "repeat": 2,
+        "channel": 11,
+        "before_mbps": 0.6957860691238587,
+        "on_mbps": 0.8195538868085844,
+        "after_mbps": 1.2009973767329931,
+        "reference_mbps": 0.9483917229284259,
+        "reduction_pct": 13.584875637887095,
+        "return_change_pct": 72.61014987628339,
+        "counter_uncertainty_ms": [
+          10.638116,
+          11.338184,
+          11.838474
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 8.92024,
+          "send_lateness_p99_ms": 1.04104,
+          "planned_deadline20_pct": 0.0,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 0,
+          "maximum_reply_gap_ms": 14.241,
+          "maximum_increasing_sequence_gap_ms": 14.241,
+          "out_of_order_first_replies": 0
+        }
+      },
+      {
+        "repeat": 3,
+        "channel": 11,
+        "before_mbps": 0.8054184250484644,
+        "on_mbps": 0.5972598713234404,
+        "after_mbps": 0.33731974168804063,
+        "reference_mbps": 0.5713690833682525,
+        "reduction_pct": -4.5313596252986255,
+        "return_change_pct": -58.11869567451935,
+        "counter_uncertainty_ms": [
+          13.699983,
+          11.106069,
+          11.900588
+        ],
+        "espnow": {
+          "planned": 2000,
+          "send_calls": 2000,
+          "unsent_planned": 0,
+          "api_errors": 0,
+          "api_accepted": 2000,
+          "reply_callbacks": 2000,
+          "unique_replies": 2000,
+          "duplicate_replies": 0,
+          "replies_after_api_error": 0,
+          "api_accepted_without_reply": 0,
+          "loss_from_planned_pct": 0.0,
+          "rtt_p99_ms": 7.323699999999997,
+          "send_lateness_p99_ms": 1.07301,
+          "planned_deadline20_pct": 0.0,
+          "called_deadline20_pct": 0.0,
+          "longest_missing_reply_run": 0,
+          "longest_planned_deadline20_run": 0,
+          "maximum_reply_gap_ms": 14.46,
+          "maximum_increasing_sequence_gap_ms": 14.46,
+          "out_of_order_first_replies": 0
+        }
+      }
+    ],
+    "mean_reduction_pct": 2.4371428481309945
+  }
+}

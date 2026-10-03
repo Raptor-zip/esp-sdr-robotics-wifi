@@ -1,0 +1,16 @@
+{
+  "scope": "Auxiliary single-point readback during TCP bracket acquisition; not a matched trial or a time series",
+  "wifi_phy_tx_mbps": 65.0,
+  "wifi_phy_rx_mbps": 72.2,
+  "wifi_signal_dbm": -51,
+  "tcp": {
+    "congestion_control": "bbr",
+    "rtt_ms": 4.971,
+    "min_rtt_ms": 2.778,
+    "cwnd": 8,
+    "bytes_sent": 5162656,
+    "bytes_retrans": 1452704,
+    "receiver_window_limited_pct": 86.6
+  },
+  "semantics": "PHY readback is distinct from application goodput. TCP retransmissions are not counted RF collisions. Diagnostic values cannot establish all-trial PHY rate or explain the throughput change."
+}

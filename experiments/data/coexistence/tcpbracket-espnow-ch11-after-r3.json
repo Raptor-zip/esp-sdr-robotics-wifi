@@ -1,0 +1,95 @@
+{
+  "name": "tcpbracket-espnow-ch11-after-r3",
+  "run_id": 554930157,
+  "condition": {
+    "repeat": 3,
+    "channel": 11,
+    "phase": "after",
+    "hz": 0,
+    "wifi_control_hz": 0,
+    "wifi_hops": 1
+  },
+  "nominal_seconds": 10,
+  "counter_seconds": 10.016277088,
+  "counter_uncertainty_ms": 11.900588,
+  "wifi_goodput_mbps": 0.33731974168804063,
+  "receiver": {
+    "before": {
+      "version": 1,
+      "connected": 1,
+      "tcp_connected": 1,
+      "running": 0,
+      "done": 0,
+      "run_id": 0,
+      "rx_bytes": 24596160,
+      "bench_rx_bytes": 0,
+      "primary": 6,
+      "secondary": 0,
+      "ap_bw": 1,
+      "rssi": -47
+    },
+    "after": {
+      "version": 1,
+      "connected": 1,
+      "tcp_connected": 1,
+      "running": 0,
+      "done": 0,
+      "run_id": 0,
+      "rx_bytes": 25018496,
+      "bench_rx_bytes": 0,
+      "primary": 6,
+      "secondary": 0,
+      "ap_bw": 1,
+      "rssi": -48
+    }
+  },
+  "source": {
+    "before": {
+      "helper_version": 2,
+      "configuration_generation": 13,
+      "tcp_connection_generation": 13,
+      "run_id": 516475300,
+      "requested_mbps": 20.0,
+      "period_ms": 10.0,
+      "sent_payload_bytes": [
+        2957312,
+        0
+      ],
+      "generated_payload_bytes": 80875000,
+      "pending_application_bytes": 77917688,
+      "tcp_connected": true
+    },
+    "after": {
+      "helper_version": 2,
+      "configuration_generation": 13,
+      "tcp_connection_generation": 13,
+      "run_id": 516475300,
+      "requested_mbps": 20.0,
+      "period_ms": 10.0,
+      "sent_payload_bytes": [
+        3432448,
+        0
+      ],
+      "generated_payload_bytes": 107000000,
+      "pending_application_bytes": 103567552,
+      "tcp_connected": true
+    }
+  },
+  "placement": {
+    "source": "User explicitly confirmed unchanged previous final placement during this series",
+    "pair_cm": 75,
+    "c5_sender_cm": 45,
+    "c5_echo_cm": 95,
+    "load_board": "unchanged on the same desk; distance not remeasured"
+  },
+  "semantics": "TCP-only one-hop cohort; no UDP probe; same connection within before/on/after block. Each block is one repetition, not three independent repetitions.",
+  "sdr": {
+    "lo_mhz": 2442,
+    "samples": 16380,
+    "sample_rate_hz": 80000000,
+    "bandwidth_mhz": 48,
+    "gain": "MANUAL 20",
+    "frames": 186,
+    "all_crcs_verified": true
+  }
+}

@@ -1,0 +1,1336 @@
+{
+  "bidirectional-espnow-wifiheavy-hz0-ch6": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": 0,
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.4138112,
+      0.41978879999999996,
+      0.4007424
+    ],
+    "wifi_p99_ms": [
+      9.102129999999997,
+      9.55135,
+      9.738539999999997
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.05,
+      0.1
+    ],
+    "matched_wifi_reduction_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_mean_pct": 0.0
+  },
+  "bidirectional-espnow-wifiheavy-hz100-ch11": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": 100,
+      "radio_channel": 11,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.4255872,
+      0.4299392,
+      0.404992
+    ],
+    "wifi_p99_ms": [
+      9.647519999999997,
+      10.953029999999993,
+      9.36543
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.1,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [
+      -2.845742212873903,
+      -2.417977802171012,
+      -1.060431838507725
+    ],
+    "matched_wifi_reduction_mean_pct": -2.1080506178508798,
+    "espnow": [
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 7.764149999999999,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 16.962,
+        "maximum_increasing_sequence_gap_ms": 16.962,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 7.57614,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 20.994,
+        "maximum_increasing_sequence_gap_ms": 20.994,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 7.661149999999999,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 17.412,
+        "maximum_increasing_sequence_gap_ms": 17.412,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifiheavy-hz100-ch6": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": 100,
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.51264,
+      0.6204928000000001,
+      0.3700096
+    ],
+    "wifi_p99_ms": [
+      14.71129,
+      14.838049999999999,
+      14.883289999999999
+    ],
+    "wifi_deadline20_pct": [
+      0.35000000000000003,
+      0.44999999999999996,
+      0.5
+    ],
+    "matched_wifi_reduction_pct": [
+      -23.88258220173838,
+      -47.81070862300283,
+      7.66896639836464
+    ],
+    "matched_wifi_reduction_mean_pct": -21.341441475458854,
+    "espnow": [
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 9.07414,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 19.059,
+        "maximum_increasing_sequence_gap_ms": 19.059,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.574349999999999,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 18.085,
+        "maximum_increasing_sequence_gap_ms": 18.085,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.731219999999999,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 21.538,
+        "maximum_increasing_sequence_gap_ms": 21.538,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifiheavy-hz100-ch7": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": 100,
+      "radio_channel": 7,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.2989056,
+      0.423296,
+      0.40325120000000003
+    ],
+    "wifi_p99_ms": [
+      13.363899999999997,
+      15.585059999999999,
+      17.73365
+    ],
+    "wifi_deadline20_pct": [
+      0.4,
+      0.35000000000000003,
+      0.65
+    ],
+    "matched_wifi_reduction_pct": [
+      27.767638961922735,
+      -0.8354677399682986,
+      -0.6260380733358994
+    ],
+    "matched_wifi_reduction_mean_pct": 8.768711049539514,
+    "espnow": [
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 11.023499999999999,
+        "send_lateness_p99_ms": 1.0,
+        "planned_deadline20_pct": 0.1,
+        "called_deadline20_pct": 0.05,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 29.407,
+        "maximum_increasing_sequence_gap_ms": 29.407,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 11.800659999999999,
+        "send_lateness_p99_ms": 1.01013,
+        "planned_deadline20_pct": 0.05,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 25.266,
+        "maximum_increasing_sequence_gap_ms": 25.266,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 11.177109999999999,
+        "send_lateness_p99_ms": 1.0,
+        "planned_deadline20_pct": 0.05,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 26.183,
+        "maximum_increasing_sequence_gap_ms": 26.183,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifiheavy-hz200-ch11": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": 200,
+      "radio_channel": 11,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.1965056,
+      0.538816,
+      0.08875519999999999
+    ],
+    "wifi_p99_ms": [
+      8.52962,
+      11.344729999999998,
+      7.672579999999997
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.15,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [
+      52.513223421695685,
+      -28.35406756921577,
+      77.85230611984157
+    ],
+    "matched_wifi_reduction_mean_pct": 34.00382065744049,
+    "espnow": [
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 7.961349999999992,
+        "send_lateness_p99_ms": 1.0590499999999987,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 13.527,
+        "maximum_increasing_sequence_gap_ms": 13.527,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 7.460509999999988,
+        "send_lateness_p99_ms": 1.0,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 15.759,
+        "maximum_increasing_sequence_gap_ms": 15.759,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.22307,
+        "send_lateness_p99_ms": 1.0,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 13.736,
+        "maximum_increasing_sequence_gap_ms": 13.736,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifiheavy-hz200-ch6": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": 200,
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      1.0915968,
+      1.1331072,
+      1.0971263999999998
+    ],
+    "wifi_p99_ms": [
+      23.87728,
+      24.52321,
+      25.98418
+    ],
+    "wifi_deadline20_pct": [
+      2.45,
+      2.15,
+      3.5999999999999996
+    ],
+    "matched_wifi_reduction_pct": [
+      -163.79102353923724,
+      -169.9231613611416,
+      -173.77347642775004
+    ],
+    "matched_wifi_reduction_mean_pct": -169.16255377604298,
+    "espnow": [
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 9.83737999999999,
+        "send_lateness_p99_ms": 1.1780199999999994,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 15.143,
+        "maximum_increasing_sequence_gap_ms": 15.143,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 9.575059999999997,
+        "send_lateness_p99_ms": 1.1710399999999992,
+        "planned_deadline20_pct": 0.17500000000000002,
+        "called_deadline20_pct": 0.17500000000000002,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 7,
+        "maximum_reply_gap_ms": 37.19,
+        "maximum_increasing_sequence_gap_ms": 37.19,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 9.835269999999994,
+        "send_lateness_p99_ms": 1.206,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 16.568,
+        "maximum_increasing_sequence_gap_ms": 16.568,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifiheavy-hz200-ch7": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": 200,
+      "radio_channel": 7,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.8503808,
+      0.5181696,
+      0.39573759999999997
+    ],
+    "wifi_p99_ms": [
+      34.2821,
+      30.913319999999995,
+      29.504129999999996
+    ],
+    "wifi_deadline20_pct": [
+      6.45,
+      4.95,
+      4.35
+    ],
+    "matched_wifi_reduction_pct": [
+      -105.49970614618456,
+      -23.435784851811214,
+      1.248882074869051
+    ],
+    "matched_wifi_reduction_mean_pct": -42.56220297437557,
+    "espnow": [
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 19.627869999999977,
+        "send_lateness_p99_ms": 1.1830499999999988,
+        "planned_deadline20_pct": 1.125,
+        "called_deadline20_pct": 0.95,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 9,
+        "maximum_reply_gap_ms": 32.976,
+        "maximum_increasing_sequence_gap_ms": 32.976,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 17.403109999999973,
+        "send_lateness_p99_ms": 1.1900199999999994,
+        "planned_deadline20_pct": 0.775,
+        "called_deadline20_pct": 0.6,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 16,
+        "maximum_reply_gap_ms": 23.994,
+        "maximum_increasing_sequence_gap_ms": 23.994,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 16.50278999999998,
+        "send_lateness_p99_ms": 1.1880199999999994,
+        "planned_deadline20_pct": 0.4,
+        "called_deadline20_pct": 0.375,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 7,
+        "maximum_reply_gap_ms": 20.737,
+        "maximum_increasing_sequence_gap_ms": 20.737,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifioff-hz0-ch6": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": 0,
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      7.662509999999999,
+      7.841659999999999,
+      7.886769999999999
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null
+  },
+  "bidirectional-espnow-wifioff-hz100-ch11": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": 100,
+      "radio_channel": 11,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      7.596579999999999,
+      6.509669999999997,
+      7.028079999999999
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "espnow": [
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 6.191569999999998,
+        "send_lateness_p99_ms": 0.976,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 16.008,
+        "maximum_increasing_sequence_gap_ms": 16.008,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 7.95814,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 20.727,
+        "maximum_increasing_sequence_gap_ms": 20.727,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 6.30011,
+        "send_lateness_p99_ms": 1.0394799999999986,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 17.724,
+        "maximum_increasing_sequence_gap_ms": 17.724,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifioff-hz100-ch6": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": 100,
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      9.06237,
+      9.397099999999996,
+      9.186849999999993
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.0,
+      0.05
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "espnow": [
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.440399999999999,
+        "send_lateness_p99_ms": 0.975,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 16.892,
+        "maximum_increasing_sequence_gap_ms": 16.892,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.33729,
+        "send_lateness_p99_ms": 1.1850100000000001,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 19.271,
+        "maximum_increasing_sequence_gap_ms": 19.271,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.75103,
+        "send_lateness_p99_ms": 0.992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 17.556,
+        "maximum_increasing_sequence_gap_ms": 17.556,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifioff-hz100-ch7": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": 100,
+      "radio_channel": 7,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      10.99404,
+      11.837399999999999,
+      10.99304
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "espnow": [
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 9.832419999999999,
+        "send_lateness_p99_ms": 0.99208,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 21.117,
+        "maximum_increasing_sequence_gap_ms": 21.117,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 10.74338,
+        "send_lateness_p99_ms": 1.0,
+        "planned_deadline20_pct": 0.05,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 26.506,
+        "maximum_increasing_sequence_gap_ms": 26.506,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 2000,
+        "send_calls": 2000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 2000,
+        "reply_callbacks": 2000,
+        "unique_replies": 2000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 10.382359999999998,
+        "send_lateness_p99_ms": 1.0,
+        "planned_deadline20_pct": 0.05,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 25.792,
+        "maximum_increasing_sequence_gap_ms": 25.792,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifioff-hz200-ch11": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": 200,
+      "radio_channel": 11,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      6.778179999999999,
+      6.85438,
+      6.86041
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "espnow": [
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.915469999999988,
+        "send_lateness_p99_ms": 1.0600599999999987,
+        "planned_deadline20_pct": 0.025,
+        "called_deadline20_pct": 0.025,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 15.539,
+        "maximum_increasing_sequence_gap_ms": 15.539,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.263159999999996,
+        "send_lateness_p99_ms": 1.0910599999999986,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 16.423,
+        "maximum_increasing_sequence_gap_ms": 16.423,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 8.519029999999999,
+        "send_lateness_p99_ms": 1.0430299999999992,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 14.34,
+        "maximum_increasing_sequence_gap_ms": 14.34,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifioff-hz200-ch6": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": 200,
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      16.07721,
+      14.016679999999997,
+      15.471639999999997
+    ],
+    "wifi_deadline20_pct": [
+      0.3,
+      0.15,
+      0.1
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "espnow": [
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 10.403239999999995,
+        "send_lateness_p99_ms": 1.2070199999999995,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 15.781,
+        "maximum_increasing_sequence_gap_ms": 15.781,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 9.558159999999996,
+        "send_lateness_p99_ms": 1.1880299999999993,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 14.587,
+        "maximum_increasing_sequence_gap_ms": 14.587,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 9.499179999999996,
+        "send_lateness_p99_ms": 1.2040099999999998,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 15.77,
+        "maximum_increasing_sequence_gap_ms": 15.77,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  },
+  "bidirectional-espnow-wifioff-hz200-ch7": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": 200,
+      "radio_channel": 7,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      20.812729999999995,
+      19.5109,
+      20.32794999999999
+    ],
+    "wifi_deadline20_pct": [
+      1.15,
+      0.8,
+      1.0999999999999999
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "espnow": [
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 13.876289999999992,
+        "send_lateness_p99_ms": 1.1550099999999999,
+        "planned_deadline20_pct": 0.1,
+        "called_deadline20_pct": 0.05,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 19.643,
+        "maximum_increasing_sequence_gap_ms": 19.643,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 13.243639999999985,
+        "send_lateness_p99_ms": 1.1800199999999994,
+        "planned_deadline20_pct": 0.025,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 1,
+        "maximum_reply_gap_ms": 16.743,
+        "maximum_increasing_sequence_gap_ms": 16.743,
+        "out_of_order_first_replies": 0
+      },
+      {
+        "planned": 4000,
+        "send_calls": 4000,
+        "unsent_planned": 0,
+        "api_errors": 0,
+        "api_accepted": 4000,
+        "reply_callbacks": 4000,
+        "unique_replies": 4000,
+        "duplicate_replies": 0,
+        "replies_after_api_error": 0,
+        "api_accepted_without_reply": 0,
+        "loss_from_planned_pct": 0.0,
+        "rtt_p99_ms": 13.476059999999999,
+        "send_lateness_p99_ms": 1.186,
+        "planned_deadline20_pct": 0.0,
+        "called_deadline20_pct": 0.0,
+        "longest_missing_reply_run": 0,
+        "longest_planned_deadline20_run": 0,
+        "maximum_reply_gap_ms": 17.617,
+        "maximum_increasing_sequence_gap_ms": 17.617,
+        "out_of_order_first_replies": 0
+      }
+    ]
+  }
+}

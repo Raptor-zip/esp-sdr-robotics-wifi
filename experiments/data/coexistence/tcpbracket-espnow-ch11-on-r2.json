@@ -1,0 +1,117 @@
+{
+  "name": "tcpbracket-espnow-ch11-on-r2",
+  "run_id": 1297240176,
+  "condition": {
+    "repeat": 2,
+    "channel": 11,
+    "phase": "on",
+    "hz": 200,
+    "wifi_control_hz": 0,
+    "wifi_hops": 1
+  },
+  "nominal_seconds": 10,
+  "counter_seconds": 10.015985687,
+  "counter_uncertainty_ms": 11.338184,
+  "wifi_goodput_mbps": 0.8195538868085844,
+  "receiver": {
+    "before": {
+      "version": 1,
+      "connected": 1,
+      "tcp_connected": 1,
+      "running": 0,
+      "done": 0,
+      "run_id": 0,
+      "rx_bytes": 18579072,
+      "bench_rx_bytes": 0,
+      "primary": 6,
+      "secondary": 0,
+      "ap_bw": 1,
+      "rssi": -47
+    },
+    "after": {
+      "version": 1,
+      "connected": 1,
+      "tcp_connected": 1,
+      "running": 0,
+      "done": 0,
+      "run_id": 0,
+      "rx_bytes": 19605152,
+      "bench_rx_bytes": 0,
+      "primary": 6,
+      "secondary": 0,
+      "ap_bw": 1,
+      "rssi": -47
+    }
+  },
+  "source": {
+    "before": {
+      "helper_version": 2,
+      "configuration_generation": 11,
+      "tcp_connection_generation": 11,
+      "run_id": 724801741,
+      "requested_mbps": 20.0,
+      "period_ms": 10.0,
+      "sent_payload_bytes": [
+        1703936,
+        0
+      ],
+      "generated_payload_bytes": 45175000,
+      "pending_application_bytes": 43471064,
+      "tcp_connected": true
+    },
+    "after": {
+      "helper_version": 2,
+      "configuration_generation": 11,
+      "tcp_connection_generation": 11,
+      "run_id": 724801741,
+      "requested_mbps": 20.0,
+      "period_ms": 10.0,
+      "sent_payload_bytes": [
+        2998272,
+        0
+      ],
+      "generated_payload_bytes": 75425000,
+      "pending_application_bytes": 72426728,
+      "tcp_connected": true
+    }
+  },
+  "placement": {
+    "source": "User explicitly confirmed unchanged previous final placement during this series",
+    "pair_cm": 75,
+    "c5_sender_cm": 45,
+    "c5_echo_cm": 95,
+    "load_board": "unchanged on the same desk; distance not remeasured"
+  },
+  "semantics": "TCP-only one-hop cohort; no UDP probe; same connection within before/on/after block. Each block is one repetition, not three independent repetitions.",
+  "espnow": {
+    "planned": 2000,
+    "send_calls": 2000,
+    "unsent_planned": 0,
+    "api_errors": 0,
+    "api_accepted": 2000,
+    "reply_callbacks": 2000,
+    "unique_replies": 2000,
+    "duplicate_replies": 0,
+    "replies_after_api_error": 0,
+    "api_accepted_without_reply": 0,
+    "loss_from_planned_pct": 0.0,
+    "rtt_p99_ms": 8.92024,
+    "send_lateness_p99_ms": 1.04104,
+    "planned_deadline20_pct": 0.0,
+    "called_deadline20_pct": 0.0,
+    "longest_missing_reply_run": 0,
+    "longest_planned_deadline20_run": 0,
+    "maximum_reply_gap_ms": 14.241,
+    "maximum_increasing_sequence_gap_ms": 14.241,
+    "out_of_order_first_replies": 0
+  },
+  "sdr": {
+    "lo_mhz": 2442,
+    "samples": 16380,
+    "sample_rate_hz": 80000000,
+    "bandwidth_mhz": 48,
+    "gain": "MANUAL 20",
+    "frames": 186,
+    "all_crcs_verified": true
+  }
+}

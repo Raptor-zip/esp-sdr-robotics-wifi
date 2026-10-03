@@ -100,3 +100,13 @@ USB割当は取得コード既定でESP32-1=ttyUSB0、2=ttyUSB1、3=ttyUSB2、C5
 長時間／配置測定は`espnow-stream` v2を送信機・応答機、`team-controller` v1を別系統Wi-Fi受信機、`operational_traffic.py` helper v2をロボット役に使います。`run_long_espnow.py`は前段のROS 2と省電力の完了検算を要求します。配置は`--placement /私有の確認JSON`で、実際の変更・距離の確認がない入力を拒否します。取得終了時にWi-Fi受信機もSTOPされるため、次の配置前には同じファームウェアのままcold startして現行TCP接続を確認します。
 
 圧縮I/Qの保存はRF窓終了後に行い、最大120秒待ちます。終了設定と負荷カウンタの揃わない取得は正式行列へ補完しません。公開データの再描画には生I/Qの私有保管場所は不要です。`make operational-*`の解析段階は非公開rawを必要とするため、公開cloneからの再検算・再描画は`make check figures`を使ってください。
+
+## Wi-FiとESP-NOW・BLEの双方向評価
+
+[双方向評価の方法](coexistence-method.md)を参照してください。観測PC AP→独立したESP32の1ホップ系列で、ESP-NOW42試行、BLE18試行、各20秒・3反復。別に同じTCP接続のESP-NOW停止前／動作／停止後を各10秒、9ブロック・27窓で測ります。前の2ホップ系列へ新しい停止対照を流用しません。
+
+`experiments/data/coexistence/`には匿名化した条件、相対アプリ時刻、ESP-NOW連続イベント、実受信カウンタ、FFT電力と反復ごとの集計を置きます。`check_bidirectional.py`は停止対照の有無と全行列、CRCイベントの被覆、両方向の期限超過、速度低下率、同一TCP接続とSHA256を検算します。負の速度低下率も保持します。
+
+`run_bidirectional.py espnow`／`ble`は実機取得用です。`--tcp-brackets`は別のTCP単独系列を取得します。ローカルNetworkManagerで期限付き試行用APを作り、終了時に通常Wi-Fiを復元して実験APを削除します。有線インターネットは維持します。測定中のBLEへの切替には、停止・バイナリ確認・書込みを順に行い、終了後に計測前のESP-NOW v2を復元します。独立無線機であり、同じESP32内の共存制御は対象に含めません。
+
+`make coexistence`の解析は非公開rawを必要とします。公開cloneでは`python3 experiments/scripts/check_bidirectional.py`と`python3 experiments/scripts/render_bidirectional.py`で検算・再描画できます。`make report-sources`の最後に`write_bidirectional_reports.py`が両方のLaTeXへ測定値と目的・解釈を統合します。

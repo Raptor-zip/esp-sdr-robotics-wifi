@@ -1,0 +1,284 @@
+{
+  "bidirectional-ble-wifiheavy-advert": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": "advert",
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.5408768,
+      0.6452864,
+      0.313088
+    ],
+    "wifi_p99_ms": [
+      15.80217,
+      17.11214,
+      13.873169999999998
+    ],
+    "wifi_deadline20_pct": [
+      0.2,
+      0.4,
+      0.44999999999999996
+    ],
+    "matched_wifi_reduction_pct": [
+      -10.783105681252136,
+      -103.2782258064516,
+      48.609126817379625
+    ],
+    "matched_wifi_reduction_mean_pct": -21.8174015567747,
+    "ble_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "advertisements": [
+      727,
+      756,
+      736
+    ]
+  },
+  "bidirectional-ble-wifiheavy-data": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": "data",
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.47136,
+      0.38339840000000003,
+      0.2802944
+    ],
+    "wifi_p99_ms": [
+      13.925149999999999,
+      18.005819999999996,
+      16.72176
+    ],
+    "wifi_deadline20_pct": [
+      0.15,
+      0.65,
+      0.65
+    ],
+    "matched_wifi_reduction_pct": [
+      3.455417769970903,
+      -20.778225806451612,
+      53.99193209513405
+    ],
+    "matched_wifi_reduction_mean_pct": 12.223041352884445,
+    "ble_goodput_mbps": [
+      0.4936997151567893,
+      0.49635148905955273,
+      0.4931865938949821
+    ],
+    "advertisements": [
+      0,
+      0,
+      0
+    ]
+  },
+  "bidirectional-ble-wifiheavy-off": {
+    "condition": {
+      "wifi_load": "heavy",
+      "radio": "off",
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 20,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.4882304,
+      0.31744,
+      0.6092288
+    ],
+    "wifi_p99_ms": [
+      10.69477,
+      10.80426,
+      12.9833
+    ],
+    "wifi_deadline20_pct": [
+      0.1,
+      0.0,
+      0.1
+    ],
+    "matched_wifi_reduction_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_mean_pct": 0.0,
+    "ble_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "advertisements": [
+      0,
+      0,
+      0
+    ]
+  },
+  "bidirectional-ble-wifioff-advert": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": "advert",
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      7.96505,
+      13.365509999999997,
+      9.0761
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.05,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "ble_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "advertisements": [
+      744,
+      735,
+      742
+    ]
+  },
+  "bidirectional-ble-wifioff-data": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": "data",
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      9.755239999999997,
+      10.64142,
+      11.99905
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "ble_goodput_mbps": [
+      0.4899585337349682,
+      0.5011419678801203,
+      0.5013236363421474
+    ],
+    "advertisements": [
+      0,
+      0,
+      0
+    ]
+  },
+  "bidirectional-ble-wifioff-off": {
+    "condition": {
+      "wifi_load": "off",
+      "radio": "off",
+      "radio_channel": 6,
+      "wifi_channel": 6,
+      "wifi_width_mhz": 20,
+      "wifi_hops": 1,
+      "requested_mbps": 0,
+      "period_ms": 10
+    },
+    "runs": 3,
+    "repetitions": [
+      1,
+      2,
+      3
+    ],
+    "wifi_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "wifi_p99_ms": [
+      7.0093,
+      7.733789999999997,
+      8.36217
+    ],
+    "wifi_deadline20_pct": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "matched_wifi_reduction_pct": [],
+    "matched_wifi_reduction_mean_pct": null,
+    "ble_goodput_mbps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "advertisements": [
+      0,
+      0,
+      0
+    ]
+  }
+}
