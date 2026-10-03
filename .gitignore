@@ -21,6 +21,14 @@ venv/
 .pytest_cache/
 .ruff_cache/
 
+# Video pipeline outputs; keep character artwork, fonts and source files
+/video/node_modules/
+/video/.venv/
+/video/out/
+/video/public/generated/
+/video/src/generated/
+/video/.cache/
+
 # Editor and operating-system files
 .vscode/
 .idea/

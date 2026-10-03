@@ -1,0 +1,18 @@
+[
+  {"id":"hook-a", "scene":"hook", "text":"チャンネルを変えたのに、ロボットがラグる。", "caption":"チャンネルを変えても\nロボットがラグる", "pose":"shock"},
+  {"id":"hook-b", "scene":"hook", "text":"そのワイファイ、まだ重なってるのだ。", "caption":"そのWi-Fi\nまだ重なってる", "pose":"shock"},
+  {"id":"sensor-a", "scene":"sensor", "text":"イーエスピー、さんじゅうに、シーごで、電波を見える化。", "caption":"ESP32-C5で\n電波を見える化", "pose":"sparkle"},
+  {"id":"sensor-b", "scene":"sensor", "text":"青は弱く、緑は強い。これは実測なのだ。", "caption":"青は弱い／緑は強い\nこれは実測", "pose":"sparkle"},
+  {"id":"overlap-a", "scene":"overlap", "text":"チャンネル6と7。幅20メガヘルツに対して、中心の差はたった5。", "caption":"幅20 MHzに対して\n中心の差は5 MHz", "pose":"question"},
+  {"id":"overlap-b", "scene":"overlap", "text":"番号が違っても、ほとんど重なるのだ。", "caption":"番号が違っても\n帯域は重なる", "pose":"shock"},
+  {"id":"results-a", "scene":"results", "text":"他チームも重い通信を流すと、指令往復の遅い側は、", "caption":"他チームも重い通信\n指令往復の遅い側は…", "pose":"question"},
+  {"id":"results-b", "scene":"results", "text":"同じチャンネルで約23ミリ秒、隣で9、離して1、増えたのだ。", "caption":"追加遅延は\n約23／9／1 ms", "pose":"amazed"},
+  {"id":"width-a", "scene":"width", "text":"幅を20から40にすると、重なる範囲も広がる。", "caption":"20→40 MHz\n重なる範囲が広がる", "pose":"question"},
+  {"id":"width-b", "scene":"width", "text":"でも今回、遅延は単純には悪化しなかった。", "caption":"ただし遅延は\n単純には悪化せず", "pose":"smug"},
+  {"id":"queue-a", "scene":"queue", "text":"分けても、もとの遅延は残る。映像や点群は、自分の指令も待たせるのだ。", "caption":"映像・点群の追加で\n自分の指令も遅れた", "pose":"shock"},
+  {"id":"radios-a", "scene":"radios", "text":"イーエスピーナウはチャンネル固定。ビーエルイーの接続データはホッピング。", "caption":"ESP-NOW：固定\nBLE接続：ホッピング", "pose":"question"},
+  {"id":"radios-b", "scene":"radios", "text":"飛び回っても、ワイファイ指令への影響はゼロとは限らない。", "caption":"ホッピングしても\n無干渉とは限らない", "pose":"amazed"},
+  {"id":"sampling-a", "scene":"sampling", "text":"画像の一行は約205マイクロ秒。間の電波は記録していない。", "caption":"1行は約205 µs\n行間の電波は未記録", "pose":"question"},
+  {"id":"end-a", "scene":"end", "text":"ロボコンでは、他チームと帯域を分ける。映像の量を見直す。", "caption":"他チームと帯域を分ける\n映像・点群の量を見直す", "pose":"cheer"},
+  {"id":"end-b", "scene":"end", "text":"そして速度だけでなく、指令の遅れを測るのだ。", "caption":"速度だけでなく\n指令の遅れを測る", "pose":"cheer"}
+]

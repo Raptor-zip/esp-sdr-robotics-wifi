@@ -47,6 +47,12 @@ ESP-NOW42試行とBLE18試行（各20秒・3反復）、同じTCP接続の停止
 [追加結果と考察](docs/coexistence-results.md) · [双方向評価の方法](docs/coexistence-method.md)
 <!-- MUTUAL OVERVIEW END -->
 
+## ショート動画
+
+ESP32-C5の実測SDR画像とManimの図解を、54.8秒の縦動画にまとめました。白地の画面に、ずんだもんの1.5倍速音声と同期字幕を合成しています。チャンネルの重なり、追加遅延、帯域幅、BLE／ESP-NOW、間欠取得の読み方を説明します。
+
+[制作ソース・再生成手順](video/README.md) · [X／YouTube用投稿文](video/post-texts.md)
+
 ## ディレクトリ
 
 | 場所 | 内容 |
@@ -57,6 +63,7 @@ ESP-NOW42試行とBLE18試行（各20秒・3反復）、同じTCP接続の停止
 | `experiments/scripts/` | 図の生成、結果検算、実機取得コード |
 | `experiments/firmware/` | ESP32の通信負荷・コントローラー・BLEファームウェア |
 | `docs/` | 実験条件・データ形式・再生成方法 |
+| `video/` | Remotion・Manim・VOICEVOXによるショート動画の制作ソースと入力素材 |
 | `main/`, `components/` | 上流ESP-SDRとC5用の変更 |
 
 実験は日付別に分けず、役割別に整理しました。`baseline`は基礎観測、`receiver`は受信系の補足評価、`robotics`は先行操縦通信、`two-team`は両チーム負荷・周期Wi-Fi・BLE比較、`espnow`は先行ESP-NOW指令と外部Wi-Fi比較、`operational`は流量・周期・ROS 2・省電力・長時間・配置比較です。
