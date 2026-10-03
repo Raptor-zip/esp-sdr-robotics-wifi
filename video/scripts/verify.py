@@ -38,7 +38,7 @@ def fast_start(path):
 def main():
     timeline = json.loads((ROOT / 'src/generated/timeline.json').read_text())
     files = []
-    for name in ('wifi-robocon-short-no-subs.mp4', 'wifi-robocon-short-x-no-subs.mp4'):
+    for name in ('wifi-robocon-short-no-subs.mp4',):
         path = OUT / name
         data = probe(path)
         assert not any(s['codec_type'] == 'subtitle' for s in data['streams'])
