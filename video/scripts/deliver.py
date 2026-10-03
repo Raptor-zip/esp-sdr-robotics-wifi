@@ -39,10 +39,14 @@ def main():
     for i,line in enumerate(timeline['lines'],1):
         subtitles.append(f'{i}\n{timestamp(line["fromFrame"])} --> {timestamp(line["fromFrame"]+line["durationFrames"])}\n{line["caption"]}\n')
     (OUT/'wifi-robocon-short.srt').write_text('\n'.join(subtitles))
-    run('ffmpeg','-v','error','-y','-ss','2.8','-i',str(OUT/'wifi-robocon-short.mp4'),
+    cover_scene=next(s for s in timeline['scenes'] if s['id']=='sensor')
+    cover_time=(cover_scene['from']+int(cover_scene['duration']*.65))/30
+    run('ffmpeg','-v','error','-y','-ss',str(cover_time),'-i',str(OUT/'wifi-robocon-short.mp4'),
         '-frames:v','1',str(OUT/'cover.png'))
     manifest={'seconds':duration,'width':1080,'height':1920,'fps':30,'voice':'VOICEVOX:ずんだもん',
               'speedScale':1.5,'engineVersion':timeline['engineVersion'],
+              'visual_mode':'content-only','manim_diagrams':8,
+              'captions_burned_in':False,'character_overlay':False,
               'files':[{ 'name':name,'bytes':(OUT/name).stat().st_size}
                         for name in ('wifi-robocon-short.mp4','wifi-robocon-short-x.mp4','wifi-robocon-short.srt','cover.png')],
               'loudness_before_normalization':measured,

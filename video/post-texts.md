@@ -4,7 +4,6 @@
 ESP32-C5で電波とロボコン操縦の遅延を実測。帯域幅・BLE・ESP-NOWも比較しました。続きは論文画像で。
 
 音声：VOICEVOX：ずんだもん
-立ち絵：東北ずん子・ずんだもん公式素材
 
 # YouTube Shorts用タイトル
 
@@ -23,7 +22,6 @@ ESP32-C5-WROOM-1で受信した実測SDR画像と、端末で測った通信品�
 https://github.com/Raptor-zip/esp-sdr-robotics-wifi
 
 音声：VOICEVOX：ずんだもん（1.5倍速）
-立ち絵：東北ずん子・ずんだもんプロジェクト公式素材 https://zunko.jp/con_illust.html
 BGM・効果音：オリジナル合成音
 図解：Manim／編集：Remotion
 

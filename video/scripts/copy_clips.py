@@ -3,10 +3,10 @@
 import json,shutil,subprocess
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
-names=['RadioField','ChannelOverlap','Bandwidth','QueueSplit','RadioProtocols','Sampling']
+names=['RadioField','SensorPipeline','ChannelOverlap','LatencyBars','Bandwidth','QueueSplit','RadioProtocols','Sampling']
 durations={}
 for name in names:
- src=root/'out/manim/videos/diagrams/900p30'/f'{name}.mp4'
+ src=root/'out/manim/videos/diagrams/1920p30'/f'{name}.mp4'
  dest=root/'public/generated'/src.name
  assert src.exists(),name
  shutil.copy2(src,dest)

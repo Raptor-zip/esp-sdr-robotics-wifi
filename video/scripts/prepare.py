@@ -68,10 +68,7 @@ def voices():
 
 def assets():
     """Input art/fonts stay tracked. Only derived measurement views are ignored."""
-    for pose in ('shock','sparkle','question','amazed','smug','cheer'):
-        dest=VIDEO/'public/character'/f'{pose}.png'
-        assert dest.exists(), f'Missing tracked character input: {dest.name}'
-    for name in ('DelaGothicOne-Regular.ttf','noto-sans-jp.woff2'):
+    for name in ('noto-sans-jp.woff2',):
         assert (VIDEO/'public/fonts'/name).exists(), f'Missing tracked font input: {name}'
     OUT.mkdir(parents=True,exist_ok=True)
     figures=[('two-team/two-team-blue-green.png','measurement-overview.png'),
