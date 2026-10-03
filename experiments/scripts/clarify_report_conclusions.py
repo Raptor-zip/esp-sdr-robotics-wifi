@@ -371,6 +371,154 @@ def twitter_verdicts(source):
     return source
 
 
+
+def twitter_standalone(source):
+    """Restore the premises needed to read the three-page paper by itself."""
+    replacements = [
+        ('ロボコンの無線通信と帯域共有の実測評価',
+         'ESP32-C5による無線可視化とロボコン通信の評価'),
+        (r'\textbf{要旨}\quad 操縦と画像・点群が同じWi-Fiを使い、他チームやBLE・ESP-NOWも動く状況を比較した。'+'\n'
+         '無線の停止対照と双方の通信記録を使い、帯域の重なり、実受信速度、指令期限を分けて評価する。',
+         r'\textbf{要旨}\quad ESP32-C5-WROOM-1をSDR受信機として使い、2.4 GHz帯で他チーム通信・BLE・ESP-NOWを追加した時のWi-Fiを観測した。'+'\n'
+         '青緑の周波数画像と、端末で記録した指令応答・実受信量を別々に評価した。'),
+        ('AP（アクセスポイント）はIntel BE200。両チーム比較の自通信はESP32→AP→PCの2ホップ、ROS 2はPC AP↔PC、新共存評価はPC AP↔ESP32の1ホップ。実センサ・モータは使わない。',
+         '観測専用のESP32-C5（以下C5）はESP-SDRでI/Qを取得し、FFTで周波数別の強さを描く。通信性能はC5で復号せず、送受信端末のログから測る。\n'
+         'AP（アクセスポイント）はIntel BE200搭載PC。自通信はESP32→AP→PCの2ホップ、ROS 2はAP↔PC、共存試験はAP↔ESP32の1ホップ。基本の指令は64 byte・100 Hzの要求と同じ内容の応答。実スマホ・センサ・モータは使わない。'),
+        ('基本3反復。期限の起点はWi-Fi UDPで送信API、ROS 2と連続ESP-NOWで予定送信時刻とし、系列間で合算しない。',
+         '基本3反復、順序は反復内で無作為化。期限の起点はUDPで送信API、ROS 2と連続ESP-NOWで予定送信時刻とし、異なる経路・指標を合算しない。'),
+        ('自チームCh6・20 MHzを固定し、他チームを待機／TCP負荷とした30秒・3反復。',
+         '自チームCh6・20 MHzを固定。他チームは別のESP32 AP→ESP32で、Ch6／7／11・20 MHzのTCP待機／負荷を各30秒・3反復した。自TCPは要求15.73 Mbps。待機でもビーコンと接続は残る。'),
+        ('他チームの実受信量は一定でない。',
+         '他負荷の実受信はCh6で2.5--4.7、Ch7で2.3--3.8、Ch11で1.0--1.3 Mbpsと異なる。自TCPも実受信約1 Mbpsであり、同じ空中時間の比較や競技用PCの速度上限ではない。'),
+        ('Ch1の20 MHzは名目2402--2422 MHz、Ch1＋副Ch5の40 MHzは2402--2442 MHzで自Ch6へ重なる。',
+         'Ch1の20 MHzは名目2402--2422 MHz、上側副Ch5を使う40 MHzは2402--2442 MHzで自Ch6へ重なる。'),
+        ('実ROS 2は模擬画像・点群を合計約60.5 Mbps生成し、指令QoS（配送方針）を固定してセンサのreliable／best effortと深さ1／10を比較した。',
+         '実ROS 2（Humble／Jazzy・CycloneDDS）は非圧縮の合成画像640×360・rgb8と4,096点×16 byteの点群を各10 Hz、合計60.5 Mbps生成した。指令はreliable・深さ10に固定し、センサのreliable／best effort（再送保証なし）と深さ1／10を各30秒・3反復した。'),
+        ('Wi-FiはPC AP→別のESP32という1ホップに統一し、UDP100 Hz指令も同時に送る。\n先行の2ホップ系列の絶対Mbpsとは混ぜない。',
+         'Wi-FiはCh6・20 MHz、PC AP→負荷ESP32の1ホップ。TCPなしでもUDP指令とビーコンは残り、要求20 Mbpsは実達成量ではない。別のESP32とM5 ATOM LITEは75 cm離し、64 byteのESP-NOW要求・応答を1 Mbps PHYで送る。'),
+        (r'\textbf{判定：200 Hz・隣接Ch7で遅延と期限超過が悪化した。}Ch6／11では同じ規模の悪化はなかった。APを経由しなくても帯域と送信機会は共有し、小さな指令も要求・応答・ACKを繰り返す。',
+         r'\textbf{判定：反復平均では200 Hz・隣接Ch7で悪化した。}Ch6／11の変化は小さく、Wi-Fi同士の同一Ch最悪という順位とは異なった。APを通らなくても空中時間を共有し、要求・応答・ACKを繰り返す。'),
+        ('600秒系列は20/50/100/200 Hz、Wi-Fi待機／負荷、計19試行。',
+         'ESP-NOW Ch6・64 byte要求／応答、20/50/100/200 Hz、Wi-Fi待機／負荷を各600秒・2〜3反復、計19試行した。'),
+        ('独立したESP32 2台で停止／広告／BLE 1M通知、Wi-Fi TCPなし／要求20 Mbps、各20秒・3反復の18試行を行った。',
+         '同じESP32・M5を独立BLEリンクに使い、停止／20 ms設定の広告／BLE 1MのGATT通知（2 ms生成要求）を比較した。Wi-Fi Ch6・20 MHz、TCPなし／要求20 Mbps、各20秒・3反復、18試行。'),
+        ('C5は80 MS/s・16,380 I/Q・48 MHzアナログ帯域・手動ゲイン設定20・FFT1024。',
+         'C5は中心周波数2442 MHz・80 MS/s・16,380 I/Q・48 MHzアナログ帯域・固定ゲイン20・FFT1024。DC除去とHann窓を用い、各比較図内で色尺度を共通にした。'),
+        ('青緑の未校正dBFSを絶対dBm、占有率、通信成功率へ変換しない。',
+         '緑は青より受信電力が強いという意味で、干渉や通信失敗そのものではない。dBFSはデジタル振幅基準の未校正値で、dBm・占有率・成功率へ変換しない。'),
+        ('配置比較はESP32間75 cm、C5まで45 cm・95 cmから、90°回転、手の遮蔽、150 cm、基準復帰を各10秒・3反復した。',
+         '配置は机上で固定。ESP32--M5間75 cm、C5まで45／95 cmを基準に、ESP-NOW Ch6・100 Hzを90°回転、手の遮蔽、150 cm、基準復帰で比較した。各配置はWi-Fi待機／負荷×10秒×3反復。'),
+        ('この測定は構成を選ぶ材料であり、機体の安全停止は実機で別に確認する。',
+         '少数反復の室内結果で、有意差検定は行っていない。ESP32受信の約0.3〜1 Mbpsを競技PCの上限とせず、同じチップ内の共存制御も区別する。機体の安全停止は実機で別に確認する。'),
+    ]
+    for old,new in replacements:
+        assert old in source, old
+        source = source.replace(old,new,1)
+    setup = r'''
+\begin{center}\small
+PC APはIntel BE200、PC STAはMT7921E。通信端末3台はESP32-WROOM-32／32DとM5 ATOM LITE、観測は別のC5。
+\begin{tabularx}{\textwidth}{@{}lXXX@{}}\toprule
+系列 & 指令の経路（応答は逆） & 大容量データの経路・要求量 & 独立した追加通信\\\midrule
+Wi-Fi 2チーム & ESP32→PC AP→PC STA & PC STA→AP→ESP32、TCP 15.73 Mbps & ESP32 AP→ESP32 STA、飽和TCP\\
+ROS 2 & PC AP→PC STA & PC STA→AP、模擬センサ60.5 Mbps & 同じ他チームTCP\\
+ESP-NOW／BLE共存 & PC AP→負荷ESP32 & 同じ経路でTCP 20 Mbps & 別のESP32↔M5、75 cm\\\bottomrule
+\end{tabularx}\end{center}
+'''
+    cols = r'\begin{multicols}{2}\fontsize{10}{14}\selectfont\raggedcolumns'
+    source = source.replace(cols, setup+cols,1)
+    start = source.index(r'\section{目的と評価方法}')
+    end = source.index(r'\section{他チーム通信とチャネル配置}')
+    source = source[:start]+r'''\section{目的と評価方法}
+スマホ操縦とロボットの画像・点群を同じWi-Fi／ROS 2へ載せる運用を模擬し、他チーム・追加無線との両立条件を調べた。実スマホ・センサ・モータは使わない。
+C5はESP-SDRでI/Qを取得しFFTで可視化する観測専用機。通信性能は送受信端末のログから測る。
+基本指令は64 byte・100 Hzの要求と同内容の応答。RTTは実送信から応答までの往復時間、p99は返った応答の99\%が収まる値である。
+20 ms超過率は\textbf{全要求のうち期限内の応答がない割合（欠落込み）}。起点はUDPで送信API、ROS 2と連続ESP-NOWで予定送信時刻である。
+欠落は終了後の応答猶予（UDP 1秒、連続ESP-NOW／ROS 2は2秒）後に判定する。更新途絶は\textbf{送信側で応答の最新連番が進まない時間}で、ロボット側の受信途絶とは異なる。
+基本3反復、配置以外は反復内で順序を無作為化。20 msは比較目標で安全停止期限ではない。\textbf{異なる端末・経路・期限起点の絶対値で方式を順位付けしない}。
+
+'''+source[end:]
+    source = source.replace('自チームCh6・20 MHzを固定。他チームは別のESP32 AP→ESP32で、Ch6／7／11・20 MHzのTCP待機／負荷を各30秒・3反復した。自TCPは要求15.73 Mbps。待機でもビーコンと接続は残る。',
+                            '自チームCh6・20 MHz、他チームCh6／7／11・20 MHz。自TCP負荷中に、他TCP待機／負荷を各30秒・3反復した。待機でもビーコンと接続は残る。')
+    source = source.replace('他負荷の実受信はCh6で2.5--4.7、Ch7で2.3--3.8、Ch11で1.0--1.3 Mbpsと異なる。自TCPも実受信約1 Mbpsであり、同じ空中時間の比較や競技用PCの速度上限ではない。',
+                            '他負荷の実受信はCh6／7／11で2.5--4.7／2.3--3.8／1.0--1.3 Mbpsと異なる。自TCPも約1 Mbpsで、等しい空中時間の比較ではない。')
+    source = source.replace(r'\textbf{判定：同一・隣接で遅延が悪化し、分離で増分が小さかった。}',
+                            r'\textbf{判定：統合値では同一・隣接で悪化し、分離で増分が小さかった。}')
+    source = source.replace('Ch6と7は中心が5 MHz違うだけで20 MHz帯域は重なる。\n'+r'\textbf{番号が違っても別の帯域とは限らない}。送信待ち・再送が原因候補だが未同定である\cite{rf}。',
+                            r'Ch6（2437 MHz）とCh7（2442 MHz）は20 MHz帯域が重なる。\textbf{番号が違っても独立とは限らない}。送信待ち・再送は原因候補だが未同定\cite{rf}。')
+    source = source.replace(r'\textbf{目的：}他チームの幅20→40 MHzで重なりと操縦品質が変わるかを調べる。',
+                            '他チームCh1の20→40 MHz化を比較した。')
+    source = source.replace(r'\textbf{判定：一方向の悪化は確認できなかった。}p99と期限超過の変化が逆方向だった。幅は帯域の重なりだけでなく送信時間も変え、他チーム実受信量も揃っていない。幅だけで劣化を決めず、両指標で評価する。',
+                            r'\textbf{判定：一方向の悪化は確認できなかった。}p99と期限超過の方向は逆。他TCP実受信も20 MHzの0.9--1.2から40 MHzの0.4--0.8 Mbpsへ変わり、幅だけの効果は分離できない。広い帯域は他チームと重なる範囲を増やすが、指令品質は実負荷でも確かめる。')
+    source = source.replace(r'\textbf{目的：}干渉を避けるだけでなく、画像・点群の量や送り方で指令を改善できるかを調べる。',
+                            '自チームのデータ量・生成周期・センサQoSで指令を改善できるかを比較した。')
+    source = source.replace('同じ1 Mbpsの生成周期100→10 msではCh6超過63.47→59.42\\%、Ch7は53.88→53.88\\%。'+r'\textbf{小分け化には一貫した改善がなかった。}0.5 Mbps・Ch6では超過54.71→58.50\%と逆に増えた。TCPやOSもデータをまとめ直すため、生成周期だけで無線の平滑化を保証できない。',
+                            r'生成周期100→10 msでは1 Mbps・Ch6で超過63.47→59.42\%、0.5 Mbps・Ch6で54.71→58.50\%。\textbf{小分け化の効果は一貫しなかった。}TCPやOSもデータをまとめ直す。')
+    source = source.replace('実ROS 2（Humble／Jazzy・CycloneDDS）は非圧縮の合成画像640×360・rgb8と4,096点×16 byteの点群を各10 Hz、合計60.5 Mbps生成した。指令はreliable・深さ10に固定し、センサのreliable／best effort（再送保証なし）と深さ1／10を各30秒・3反復した。',
+                            'ROS 2（Humble／Jazzy・CycloneDDS）は非圧縮の合成画像640×360・rgb8と4,096点×16 byteの点群を各10 Hzで生成。指令は100 Hz、reliable（再送あり）・深さ10に固定し、センサはreliable／best effort（再送保証なし）×深さ1／10、各30秒・3反復した。')
+    source = source.replace(r'\textbf{QoS変更だけでは悪化を解消できなかった。}深さ1は保持履歴数で、無線待ち行列や指令優先度を設定する値ではない\cite{ros}。',
+                            r'\textbf{QoS変更だけでは解消しなかった。}深さは保持履歴数で、無線の指令優先度ではない\cite{ros}。')
+    source = source.replace(r'\textbf{省電力OFFも一貫した改善を示さず}、指令のみp99約103--109 msが残った。自チーム内の処理や待ちも調べる必要がある。',
+                            r'STAの省電力OFFも一貫した改善はなく、指令のみp99約103--109 msが残った。')
+    source = source.replace(r'\textbf{判定：BLE配送はほぼ維持されたが、Wi-Fi指令期限は悪化した。}',
+                            r'\textbf{判定：反復平均ではBLE配送はほぼ維持され、Wi-Fi指令期限が悪化した。}')
+    source = source.replace('BLE 1MのGATT通知（2 ms生成要求）',
+                            'GATT通知（接続相手へのデータ送信、2 ms生成要求、PHY 1 Mbps設定）')
+    source = source.replace('AFHは使用チャネル集合を更新する仕組みだが、',
+                            '適応的周波数ホッピング（AFH）は使用チャネル集合を更新するが、')
+    source = source.replace('ESP-NOW Ch6・64 byte要求／応答、20/50/100/200 Hz、Wi-Fi待機／負荷を各600秒・2〜3反復、計19試行した。',
+                            'ESP-NOW Ch6・64 byte要求／応答を20/50/100/200 Hz、別系統Wi-Fi TCP待機／15.73 Mbps要求で各600秒・2〜3反復、計19試行した。')
+    source = source.replace('配置は机上で固定。ESP32--M5間75 cm、C5まで45／95 cmを基準に、ESP-NOW Ch6・100 Hzを90°回転、手の遮蔽、150 cm、基準復帰で比較した。各配置はWi-Fi待機／負荷×10秒×3反復。',
+                            '共存試験はESP32--M5間75 cm、C5から各機へ45／95 cmで固定し、負荷ESP32も同じ机上に置いた。配置比較はESP-NOW Ch6・100 Hz、M5だけ90°回転、両端間の手、両端間75→150 cm、基準復帰を各Wi-Fi待機／負荷×10秒×3反復した。')
+    source = source.replace('チャネルを分離しても自チーム内の待ち行列・端末処理は残る。今回もQoS深さ1や省電力OFFだけでは遅延を解消できなかった。',
+                            '両チーム比較は分離後も20 ms超過57.2\\%で目標を満たさなかった。基準遅延が大きく、分離だけでは解消しない。自チーム内の処理・待ちも候補で、QoS深さ1や省電力OFFだけでも改善しなかった。')
+    source = re.sub(r'\\section\{目的と評価方法\}.*?(?=\\section\{他チーム通信とチャネル配置\})',
+                    lambda _: r'''\section{目的と評価方法}
+スマホ操縦とロボットの画像・点群が同じWi-Fi／ROS 2を使う運用を模擬した。実スマホ・センサ・モータは使わない。
+C5は受動観測専用、通信性能は端末ログで測る。基本指令は64 byte・100 Hz。Mbpsは実受信量、RTTは実送信からアプリ応答までの往復時間、p99は返った応答の99\%が収まる値である。
+20 ms超過率は\textbf{全要求のうち期限内の応答がない割合（欠落込み）}。起点はUDPで送信API、ROS 2と連続ESP-NOWで予定送信時刻である。20 msは比較目標で安全停止期限ではない。
+
+''', source, count=1, flags=re.S)
+    source = source.replace('短時間の新系列と実装・時間の異なる10分系列を合算しない。',
+                            '更新途絶は送信側で応答の最新連番が進まない時間で、ロボット側の受信途絶ではない。欠落は終了後2秒の応答猶予後に判定した。')
+    source = source.replace('少数反復の室内結果で、有意差検定は行っていない。',
+                            '少数反復で有意差検定は行っていない。')
+    source = source.replace('Ch6／11の変化は小さく、Wi-Fi同士の同一Ch最悪という順位とは異なった。APを通らなくても空中時間を共有し、要求・応答・ACKを繰り返す。',
+                            'Ch6／11の変化は小さく、Wi-Fi同士の同一Ch最悪という順位とは異なった。APを通らなくても空中時間を共有し、要求・応答・ACKを繰り返す。\n\n配置以外の条件順は反復内で無作為化した。欠落判定の猶予はUDP 1秒、ROS 2と連続ESP-NOW 2秒。端末・経路・期限起点が違う系列の絶対値で方式の優劣は決めない。')
+    source = re.sub(r'\\pagestyle\{empty\}(?:\\raggedbottom)*',
+                    lambda _: r'\pagestyle{empty}\raggedbottom',source,count=1)
+    source = source.replace('PC APはIntel BE200、PC STAはMT7921E。',
+                            'PC AP（アクセスポイント）はIntel BE200、PC STA（接続端末）はMT7921E。')
+    source = source.replace('C5は受動観測専用、通信性能は端末ログで測る。',
+                            'SDRは受信信号をソフトウェアで解析する方式。C5は観測専用、通信性能は端末ログで測る。')
+    source = source.replace('新系列のESP-NOW 200 Hz。TCPなし／負荷、反復平均。',
+                            'ESP-NOW。TCPなし／負荷、p99・超過とも反復平均。')
+    source = source.replace('新系列のBLE停止', 'BLE停止').replace('新1ホップ系列', '1ホップ系列')
+    source = source.replace('20秒行列', '20秒試験')
+    start = source.index(r'\small\begin{tabular}{@{}crr@{}}',source.index(r'\subsection{Wi-FiからESP-NOWへの影響}'))
+    end = source.index(r'\end{tabular}',start)+len(r'\end{tabular}')
+    import json
+    from statistics import mean
+    esp = json.loads((ROOT/'experiments/data/coexistence/espnow-summary.json').read_text())
+    table = r'\small\begin{tabular}{@{}crr@{}}\toprule Hz / Ch & p99 [ms] & 20 ms超過 [\%]\\\midrule'+'\n'
+    for hz in (100,200):
+        for ch in (6,7,11):
+            off = esp[f'bidirectional-espnow-wifioff-hz{hz}-ch{ch}']['espnow']
+            on = esp[f'bidirectional-espnow-wifiheavy-hz{hz}-ch{ch}']['espnow']
+            table += f'{hz} / {ch} & {mean(r["rtt_p99_ms"] for r in off):.2f} / {mean(r["rtt_p99_ms"] for r in on):.2f} & {mean(r["planned_deadline20_pct"] for r in off):.3f} / {mean(r["planned_deadline20_pct"] for r in on):.3f}'+r'\\'+'\n'
+    table += r'\bottomrule\end{tabular}'
+    source = source[:start]+table+source[end:]
+    source = source.replace(r'\subsection{ESP-NOWからWi-Fiへの速度変化}',
+                            r'''\subsection{ESP-NOWからWi-Fiへの速度変化}
+20秒試験のCh11・200 HzではWi-Fi実受信平均0.411→0.275 Mbps、低下率平均34.0\%。ただし反復は−28.4〜77.9\%と増減が混在した。
+''',1)
+    source = source.replace('今回の比は室内の観測値で、方式固有の固定した低下率ではない。',
+                            'これらの比を方式固有の低下率とはしない。')
+    source = source.replace('ESP-NOW／BLE共存 &', '外部無線 &')
+    source = source.replace('接続相手へのデータ送信、2 ms生成要求、PHY 1 Mbps設定',
+                            '244 byte、2 ms生成要求、PHY 1 Mbps設定')
+    return source
+
+
 def revise_reports():
     full = ROOT/'reports/full.tex'
     source = scrub_history(full.read_text())
@@ -389,7 +537,7 @@ def revise_reports():
     source = source.replace(marker, marker+explanation, 1)
     full.write_text(re.sub(r'\n{3,}', '\n\n', source))
     short = ROOT/'reports/twitter.tex'
-    short.write_text(re.sub(r'\n{3,}', '\n\n', twitter_verdicts(scrub_history(short.read_text()))))
+    short.write_text(re.sub(r'\n{3,}', '\n\n', twitter_standalone(twitter_verdicts(scrub_history(short.read_text())))))
 
 
 if __name__ == '__main__':

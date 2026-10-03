@@ -112,3 +112,5 @@ USB割当は取得コード既定でESP32-1=ttyUSB0、2=ttyUSB1、3=ttyUSB2、C5
 `make coexistence`の解析は非公開rawを必要とします。公開cloneでは`python3 experiments/scripts/check_bidirectional.py`と`python3 experiments/scripts/render_bidirectional.py`で検算・再描画できます。`make report-sources`の最後に`write_bidirectional_reports.py`が両方のLaTeXへ測定値と目的・解釈を統合します。
 
 その最終処理として`clarify_report_conclusions.py`を呼び出し、要旨・全体結論、通信経路と指標の説明、各比較の判定・根拠・考察を反映します。会話の文脈を渡さない独立AIの査読と再査読を受けて改訂した文章です。実測データや集計値は変更していません。この文章整形だけを単独で繰り返すのではなく、`make report-sources`で全段階を順に再生成してください。
+
+X版はさらに、詳細版や会話を渡さない単独査読を反映しています。ESP32-C5の受信役、系列別の機器・通信方向・要求負荷、指標の観測点と実験条件を3ページ内に記載しています。`python3 experiments/scripts/render_two_team.py --compact-only`でX版の図1だけを再生成できます。本文や図のデータを減らさず、縦方向の配置を調整した図です。

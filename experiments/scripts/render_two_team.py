@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Figures for simultaneously loaded Wi-Fi teams, using measured FFT and UDP/TCP."""
 import json
+import sys
 from pathlib import Path
 import numpy as np
 import matplotlib
@@ -16,7 +17,7 @@ def save(fig,name):
  for ext in ('pdf','png'):fig.savefig(F/(name+'.'+ext),bbox_inches='tight',dpi=220)
  plt.close(fig)
 def panel(cases,name,xlim,compact=False):
- fig=plt.figure(figsize=(12,4.9 if compact else 6.5),layout='constrained');gs=fig.add_gridspec(2 if compact else 3,len(cases),height_ratios=[.65,3] if compact else [.65,3,1]);axs=[]
+ fig=plt.figure(figsize=(12,3 if compact else 6.5),layout='constrained');gs=fig.add_gridspec(2 if compact else 3,len(cases),height_ratios=[.85,2.4] if compact else [.65,3,1]);axs=[]
  for i,(key,title) in enumerate(cases):
   a=np.load(D/(key+'-r1-spectrum.npz'));f=a['frequency_mhz'];z=a['power_dbfs'];s=S[key];r=json.loads((D/(key+'-r1.json')).read_text());own=sum(r['delivered_payload_mbps']);other=r['other_delivered_mbps']
   top=fig.add_subplot(gs[0,i]);top.axis('off');top.text(.5,.83,title,ha='center',fontsize=14,weight='bold');top.text(.5,.37,f'自 {own:.2f} / 他 {other:.2f} Mbps（画像の試行）',ha='center',fontsize=9);top.text(.5,0,f'{s["runs"]}反復 RTT p99 {s["pooled_p99_ms"]:.1f} ms',ha='center',fontsize=10)
@@ -29,6 +30,9 @@ def panel(cases,name,xlim,compact=False):
  fig.suptitle('自チーム：Ch6 / 20 MHz / 大容量TCP＋100 Hz UDP操縦｜白点線：自チーム名目帯域',fontsize=12)
  save(fig,name)
 base='team-heavy-'
+if '--compact-only' in sys.argv:
+ panel([(base+'ch7-w20-b0','他チーム待機（Ch7）'),(base+'ch6-w20-b1','両チーム：同一Ch6'),(base+'ch7-w20-b1','両チーム：隣接Ch7'),(base+'ch11-w20-b1','両チーム：分離Ch11')],'two-team-blue-green-compact',(2410,2480),True)
+ raise SystemExit(0)
 panel([(base+'ch7-w20-b0','他チーム待機（Ch7）'),(base+'ch6-w20-b1','両チーム：同一Ch6'),(base+'ch7-w20-b1','両チーム：隣接Ch7'),(base+'ch11-w20-b1','両チーム：分離Ch11')],'two-team-blue-green',(2410,2480))
 panel([(base+'ch7-w20-b0','他チーム待機（Ch7）'),(base+'ch6-w20-b1','両チーム：同一Ch6'),(base+'ch7-w20-b1','両チーム：隣接Ch7'),(base+'ch11-w20-b1','両チーム：分離Ch11')],'two-team-blue-green-compact',(2410,2480),True)
 panel([(base+'ch1-w20-b1','両チーム：Ch1 / 20 MHz'),(base+'ch1-w40-b1','両チーム：Ch1 / 40 MHz')],'two-team-width',(2390,2460))
