@@ -163,7 +163,7 @@ ESP-NOW Ch6・64 byte要求／応答を20/50/100/200 Hz、別系統Wi-Fi TCP待�
 \begin{center}\includegraphics[width=.86\textwidth]{../experiments/figures/coexistence/ble-mutual-narrow-blue-green.pdf}\captionof{figure}{BLE停止・広告・接続データ、Wi-Fi負荷中・反復1。2450--2470 MHz拡大は広告3周波数とWi-Fi Ch6の名目帯域の外。}\end{center}
 \begin{multicols}{2}\fontsize{10}{14}\selectfont\raggedcolumns
 
-\section{BLEとWi-Fiの相互影響}
+\section{独立BLEリンクとWi-Fiの相互影響}
 \subsection{周波数の使い方と実験の目的}
 \textbf{目的：}ホッピングするBLEを追加したとき、双方の配送とWi-Fi指令が保たれるかを調べる。
 legacy広告は2402・2426・2480 MHzの3周波数、接続データは2 MHz間隔の37チャネルを使う。
@@ -192,7 +192,7 @@ Bluetooth音声と同じチップ内の共存制御は別の試験が必要で�
 \columnbreak
 \section{SDRと配置比較の解釈}
 C5は中心周波数2442 MHz・80 MS/s・16,380 I/Q・48 MHzアナログ帯域・固定ゲイン20・FFT1024。DC除去とHann窓を用い、各比較図内で色尺度を共通にした。
-各行約205 $\mu$s、名目RF観測時間比約0.4\%で、縦軸は\textbf{間欠取得順}である。
+縦軸は\textbf{取得番号（上ほど先）}。1行は約205 $\mu$sの受信記録のスペクトルである。転送・処理待ちの未記録時間を省いて並べたため、上下の行は連続波形ではない。RF記録時間は経過時間の約0.4\%。縦の長さから送信継続時間は求められない。
 緑は青より受信電力が強いという意味で、干渉や通信失敗そのものではない。dBFSはデジタル振幅基準の未校正値で、dBm・占有率・成功率へ変換しない。
 細線は狭帯域成分の手掛かりだが、全てをBLEと同定したり連続ホッピングを復元したりはできない。
 Ch11の一部はC5のアナログ帯域端へかかり、弱い色を無干渉の証拠としない。

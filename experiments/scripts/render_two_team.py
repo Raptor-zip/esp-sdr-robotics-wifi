@@ -22,7 +22,7 @@ def panel(cases,name,xlim,compact=False):
   a=np.load(D/(key+'-r1-spectrum.npz'));f=a['frequency_mhz'];z=a['power_dbfs'];s=S[key];r=json.loads((D/(key+'-r1.json')).read_text());own=sum(r['delivered_payload_mbps']);other=r['other_delivered_mbps']
   top=fig.add_subplot(gs[0,i]);top.axis('off');top.text(.5,.83,title,ha='center',fontsize=14,weight='bold');top.text(.5,.37,f'自 {own:.2f} / 他 {other:.2f} Mbps（画像の試行）',ha='center',fontsize=9);top.text(.5,0,f'{s["runs"]}反復 RTT p99 {s["pooled_p99_ms"]:.1f} ms',ha='center',fontsize=10)
   ax=fig.add_subplot(gs[1,i]);axs.append(ax);im=ax.imshow(z,origin='upper',aspect='auto',extent=(f[0],f[-1],len(z),0),cmap=CM,vmin=-90,vmax=-45,rasterized=True)
-  ax.set(xlim=xlim,xlabel='周波数 [MHz]',ylabel='取得順（間欠取得）' if i==0 else '');ax.set_xticks(np.arange(xlim[0],xlim[1]+1,20))
+  ax.set(xlim=xlim,xlabel='周波数 [MHz]',ylabel='取得番号（上ほど先）' if i==0 else '');ax.set_xticks(np.arange(xlim[0],xlim[1]+1,20))
   for edge in (2427,2447):ax.axvline(edge,color='white',ls='--',lw=.9)
   if not compact:
    b=fig.add_subplot(gs[2,i]);mean=10*np.log10(np.maximum(np.mean(10**(z/10),axis=0),1e-16));b.plot(f,mean,color='#167bce',lw=1);b.axvspan(2427,2447,color='#29b75d',alpha=.12);b.set(xlim=xlim,ylim=(-90,-40),xlabel='周波数 [MHz]',ylabel='平均FFT [dBFS]' if i==0 else '');b.grid(alpha=.2)
@@ -67,7 +67,7 @@ for ax,w in zip(axes,(20,40)):
  im=ax.imshow(p,origin='upper',aspect='auto',extent=(f[0],f[-1],len(p),0),cmap=CM,vmin=-90,vmax=-45,rasterized=True)
  ax.set(xlim=(2400,2450),title=f'他チームCh1 / {w} MHz',xlabel='周波数 [MHz]');ax.set_xticks([2400,2420,2440])
  for edge in (2427,2447):ax.axvline(edge,color='white',ls='--',lw=.8)
-axes[0].set_ylabel('間欠取得順');fig.colorbar(im,ax=axes,label='dBFS',shrink=.8);save(fig,'two-team-width-compact')
+axes[0].set_ylabel('取得番号（上ほど先）');fig.colorbar(im,ax=axes,label='dBFS',shrink=.8);save(fig,'two-team-width-compact')
 fig,ax=plt.subplots(figsize=(5.2,2.5));ax.set(xlim=(0,10),ylim=(0,4.2));ax.axis('off')
 box(.1,2.7,2.6,1,'ESP32-3\n操縦役','#167bce');box(3.5,2.7,2.8,1,'観測PC\nAP Ch6','#167bce');box(7.1,2.7,2.8,1,'ラップトップ2\nロボット役','#167bce')
 for x,y in ((2.7,3.5),(6.3,7.1)):ax.annotate('',xy=(y,3.2),xytext=(x,3.2),arrowprops=dict(arrowstyle='<->',color='#167bce'))

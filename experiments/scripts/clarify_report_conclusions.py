@@ -121,7 +121,7 @@ VERDICTS = [
      '振幅の立上りは観測したが、AGC固有の追従時間は判定できなかった。C5単独の周波数ドリフトも判定できない。',
      'STF候補の繰返し電力はHardware AGCで変化した一方、固定ゲインでも最初の窓から約2.8 dB上昇した。周波数差候補には複数の群があった。',
      '固定ゲインでも起きる変化には、パケットの選び方・受信フィルター・雑音が寄与する。周波数差も複数送信機の差を含む。振幅の変化を全てAGC、群の変化を全て温度ドリフトと呼ぶ根拠はない。'),
-    ('section', 'Wi-FiとBLEの共存観測',
+    ('section', 'BLE広告の受信スペクトル観測',
      'BLE広告ONで2480 MHz付近の狭帯域バーストが増えた。3広告周波数全ての信号同定はできなかった。',
      '2480 MHz付近の最大電力は約20.6 dB増えたが、平均は約1.27 dBの増加。2402 MHzにはOFF時も強い成分があり、2426 MHzの差は小さかった。',
      '稀な強い送信は最大画像には目立っても平均への寄与は小さい。ON/OFFで信号源の手掛かりは得られるが、細線全てをBLEと断定できない。この受信観測だけでWi-Fi速度への影響は測れず、通信性能は双方向共存節の停止対照で評価する。'),
@@ -135,6 +135,7 @@ VERDICTS = [
 def scrub_history(source):
     """Retain experimental limitations; remove requests and work history."""
     replacements = {
+        r'\section{Wi-FiとBLEの共存観測}': r'\section{BLE広告の受信スペクトル観測}',
         '電子レンジは指定により見送った。': '',
         '使用者の終了希望により残り5試行を省略した。': '',
         'ESP-NOW長時間系列は各600秒の19試行で、実ロボット': 'ESP-NOW長時間系列は各600秒の19試行である。実ロボット',
@@ -516,6 +517,54 @@ C5は受動観測専用、通信性能は端末ログで測る。基本指令は
     source = source.replace('ESP-NOW／BLE共存 &', '外部無線 &')
     source = source.replace('接続相手へのデータ送信、2 ms生成要求、PHY 1 Mbps設定',
                             '244 byte、2 ms生成要求、PHY 1 Mbps設定')
+    source = source.replace(r'\section{BLEとWi-Fiの相互影響}',
+                            r'\section{独立BLEリンクとWi-Fiの相互影響}')
+    source = source.replace('各行約205 $\\mu$s、名目RF観測時間比約0.4\\%で、縦軸は\\textbf{間欠取得順}である。',
+                            '縦軸は\\textbf{取得番号（上ほど先）}。1行は約205 $\\mu$sの受信記録のスペクトルである。転送・処理待ちの未記録時間を省いて並べたため、上下の行は連続波形ではない。RF記録時間は経過時間の約0.4\\%。縦の長さから送信継続時間は求められない。')
+    return source
+
+
+def ble_scope_and_capture_explanation(source):
+    """Keep RF-only advertising observations distinct from link-quality tests."""
+    source = re.sub(r'% BEGIN BLE CAPTURE EXPLANATION [^\n]+\n.*?% END BLE CAPTURE EXPLANATION\n?', '', source, flags=re.S)
+    sections = [
+        (r'\subsection{BLEとWi-Fiの両方向の配送量}', 'sec:ble-mutual', r'''
+\noindent\textbf{評価対象の区別}\quad
+本節は独立したESP32--M5 ATOM LITEのBLEリンクと、PC AP→別のESP32のWi-Fiリンクについて、双方の実受信量とWi-Fi指令応答を測る通信性能実験である。
+BLE広告と接続通知を比較し、表のMbps・期限超過率は端末の通信記録から求めた。
+第\ref{sec:ble-advert-rf}節は別の送信機であるPCのBLE広告をC5で観測する受信実験で、接続通知の配送量を測っていない。
+その広告周波数の電力差と、本節の速度差・期限超過を同じ試行の結果として対応付けない。
+'''),
+        (r'\section{BLE広告の受信スペクトル観測}', 'sec:ble-advert-rf', r'''
+\noindent\textbf{目的と評価対象}\quad
+PCのBLE広告をOFF／ONし、既知の広告周波数に狭帯域成分が現れるかをC5で調べる。
+本節は受信スペクトルの実験で、BLE接続通知や双方の通信速度・指令応答を測った第\ref{sec:ble-mutual}節とは送信機・負荷条件・指標が異なる。
+したがって「2480 MHzの最大電力が20.6 dB増えた」は広告の見え方の結果であり、「Wi-Fi期限超過が0.067→0.483\%へ増えた」の根拠ではない。
+通信への相互影響は第\ref{sec:ble-mutual}節の独立したESP32--M5リンクの停止対照で評価する。
+'''),
+        (r'\subsection{間欠取得と比較指標}', 'sec:intermittent', r'''
+\noindent\textbf{画像の縦軸の読み方}\quad
+「取得順」または「取得番号」は、短い受信記録を取得した順番に並べた番号で、秒・ミリ秒の時間軸ではない。
+80 MS/sの図では1行が約205 $\mu$sのI/Q記録から計算したスペクトルを表し、上ほど先に取得した。
+次の取得までにUSB転送・処理・待ち時間が入るが、画像ではこの未記録時間を詰めて隣の行を描く。
+例えば50 ms間隔で取得すれば、約0.205 msを記録した後の約49.8 msは観測データに含まれない。
+上下に隣接する行を連続した波形と解釈したり、緑の縦の長さを送信継続時間・チャネル占有率へ換算したりはできない。
+「間引いた取得列」と注記した図では、取得済みの記録からも一部の行だけを選んで表示している。
+'''),
+    ]
+    for heading, label, text in sections:
+        if label:
+            source = source.replace(heading+r'\label{'+label+'}', heading)
+        block = ('\n% BEGIN BLE CAPTURE EXPLANATION '+(label or 'waterfall')+'\n'
+                 +(r'\label{'+label+'}\n' if label else '')+text
+                 +'% END BLE CAPTURE EXPLANATION\n')
+        assert heading in source, heading
+        source = source.replace(heading, heading+block, 1)
+    guide = '青緑SDR画像は受信した帯域の重なりを説明する補助で、画像の緑を通信成功、占有率、干渉原因の特定へ読み替えない。'
+    note = ('\n80 MS/sの図では各行が約205 $\\mu$sの短い受信記録を表し、行の間に記録していない時間がある。'
+            '縦軸は時間ではなく取得番号で、詳しい読み方は第\\ref{sec:intermittent}節に示す。')
+    source = source.replace(guide+note, guide)
+    source = source.replace(guide, guide+note, 1)
     return source
 
 
@@ -525,6 +574,7 @@ def revise_reports():
     source = inject_verdicts(source)
     source = reader_framework(source)
     source = simplify_details(source)
+    source = ble_scope_and_capture_explanation(source)
     # These are decisions about observed differences, not unperformed
     # significance tests or numerical estimates of statistical correlation.
     marker = r'\subsection{速度・期限・スペクトルを別々に見る理由}'

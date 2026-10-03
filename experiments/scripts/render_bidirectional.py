@@ -79,12 +79,12 @@ def spectrum(names, titles, stem, narrow=False):
         im=axis.imshow(p,origin='upper',aspect='auto',extent=(f[0],f[-1],len(p),0),
             cmap=CM,vmin=-90,vmax=-60 if narrow else -45,rasterized=True)
         axis.set(xlim=(2450,2470) if narrow else (2410,2480),xlabel='周波数 [MHz]',
-            ylabel='間欠取得順' if i==0 else '',title=title+f'\nWi-Fi実受信 {row["wifi"]["goodput_mbps"]:.3f} Mbps')
+            ylabel='取得番号（上ほど先）' if i==0 else '',title=title+f'\nWi-Fi実受信 {row["wifi"]["goodput_mbps"]:.3f} Mbps')
         if not narrow:
             for edge in (2427,2447):
                 axis.axvline(edge,color='white',ls='--',lw=.8)
     fig.colorbar(im,ax=axes.ravel().tolist(),label='未校正dBFS',shrink=.8)
-    fig.suptitle('Wi-Fi負荷中・反復1｜共通ゲイン・色尺度、各行約205 µsの間欠取得\n'
+    fig.suptitle('Wi-Fi負荷中・反復1｜1行＝約205 µsの受信記録。行間の未記録時間は省略。\n'
                  + ('2450–2470 MHz拡大：広告の3周波数は表示範囲外' if narrow else '白破線はWi-Fi Ch6の名目20 MHz帯域。色の割合を占有率として扱わない。'),fontsize=10)
     save(fig,FIGURES,stem)
 
