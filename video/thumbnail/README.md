@@ -1,6 +1,10 @@
 # YouTubeサムネイル
 
-`youtube-wifi-interference.jpg`（投稿用）と `youtube-wifi-interference.png`（保存用）：横16:9、1672×941。明るい写真合成と大きな日本語見出し。
+ショート動画用は `youtube-wifi-interference-9x16.jpg`（1080×1920、縦9:16）。保存用の生成原本は `youtube-wifi-interference-9x16.png`（941×1672）。上に見出し、中にロボット、下にSDRを配置した。
+
+横版 `youtube-wifi-interference.jpg` と `youtube-wifi-interference.png` は旧レイアウトの原本。
+
+縦版は内蔵imagegenで再構成し、投稿用JPEGはFFmpegで1080×1920へ変換した。縦版の生成プロンプトは `portrait-prompt.txt`。
 
 提供された実物ロボット写真と、室内SDR取得画像を参考に内蔵imagegenで制作した告知画像。図や配置は編集表現で、科学データの原本として使わない。元画像は `../public/input/robot-competition.jpg` と `../public/generated/sdr-ch6.png`。
 
