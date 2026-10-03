@@ -500,7 +500,7 @@ BLEのlegacy広告は3周波数、接続データは37チャネルから接続�
 '''
     (ROOT/'docs/coexistence-results.md').write_text(text)
     path=ROOT/'README.md';source=remove(path.read_text(),'MUTUAL OVERVIEW')
-    source=source.replace('計342通信試行と、','先行計342通信試行と、')
+    source=re.sub(r'(?:先行)*計342通信試行と、','先行計342通信試行と、',source)
     addition=f'''<!-- MUTUAL OVERVIEW BEGIN -->
 ## 双方向共存評価の追加
 
@@ -524,6 +524,8 @@ def main():
     full(esp,ble,brackets)
     twitter(esp,ble,brackets)
     overview(esp,ble,brackets)
+    from clarify_report_conclusions import revise_reports
+    revise_reports()
 
 
 if __name__=='__main__':

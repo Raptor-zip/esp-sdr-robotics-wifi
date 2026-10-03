@@ -110,3 +110,5 @@ USB割当は取得コード既定でESP32-1=ttyUSB0、2=ttyUSB1、3=ttyUSB2、C5
 `run_bidirectional.py espnow`／`ble`は実機取得用です。`--tcp-brackets`は別のTCP単独系列を取得します。ローカルNetworkManagerで期限付き試行用APを作り、終了時に通常Wi-Fiを復元して実験APを削除します。有線インターネットは維持します。測定中のBLEへの切替には、停止・バイナリ確認・書込みを順に行い、終了後に計測前のESP-NOW v2を復元します。独立無線機であり、同じESP32内の共存制御は対象に含めません。
 
 `make coexistence`の解析は非公開rawを必要とします。公開cloneでは`python3 experiments/scripts/check_bidirectional.py`と`python3 experiments/scripts/render_bidirectional.py`で検算・再描画できます。`make report-sources`の最後に`write_bidirectional_reports.py`が両方のLaTeXへ測定値と目的・解釈を統合します。
+
+その最終処理として`clarify_report_conclusions.py`を呼び出し、要旨・全体結論、通信経路と指標の説明、各比較の判定・根拠・考察を反映します。会話の文脈を渡さない独立AIの査読と再査読を受けて改訂した文章です。実測データや集計値は変更していません。この文章整形だけを単独で繰り返すのではなく、`make report-sources`で全段階を順に再生成してください。
